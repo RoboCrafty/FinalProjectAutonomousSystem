@@ -1,0 +1,26 @@
+ros2 topic pub --once /command/trajectory trajectory_msgs/msg/MultiDOFJointTrajectory "
+header:
+  frame_id: 'world'
+joint_names:
+- 'base_link'
+points:
+- transforms:
+  - translation:
+      x: -36.0
+      y: 10.0
+      z: 10.0
+    rotation:
+      x: 0.0
+      y: 0.0
+      z: -1.0
+      w: 0.0
+  velocities:
+  - linear: {x: 0.0, y: 0.0, z: 0.0}
+    angular: {x: 0.0, y: 0.0, z: 0.0}
+  accelerations:
+  - linear: {x: 0.0, y: 0.0, z: 0.0}
+    angular: {x: 0.0, y: 0.0, z: 0.0}
+  time_from_start:
+    sec: 1
+    nanosec: 0
+"
