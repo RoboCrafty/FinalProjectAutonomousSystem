@@ -49,7 +49,7 @@ private:
                 change_state(SEARCHING_CAVE, "Visual lost. Resuming 3D safety search.");
                 return;
             }
-            double stop_threshold = 1200000.0;
+            double stop_threshold = 1000000.0;
             current_yaw_ -= msg->x * 0.0015;
             if (msg->y < stop_threshold) {
                 tx_ += std::cos(current_yaw_) * 0.12;
