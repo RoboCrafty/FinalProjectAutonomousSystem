@@ -38,6 +38,12 @@ add_executable(controller_node src/controller_wrapper.cpp)
 
 target_link_libraries(controller_node controller_lib)
 
+
+add_executable(manual_pilot src/manual_pilot.cpp)
+ament_target_dependencies(manual_pilot rclcpp geometry_msgs trajectory_msgs)
+
+install(TARGETS manual_pilot DESTINATION lib/${PROJECT_NAME})
+
 ament_target_dependencies(controller_node
   rclcpp
   std_msgs
