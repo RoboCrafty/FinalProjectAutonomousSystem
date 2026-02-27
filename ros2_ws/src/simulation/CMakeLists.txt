@@ -132,14 +132,14 @@ ament_export_dependencies(
 
 # --- Install Unity Simulation binaries ---
 install(PROGRAMS
-  unity_sim/Simulation_LQ.x86_64
+  unity_sim/Simulation.x86_64
   unity_sim/UnityPlayer.so
   DESTINATION lib/${PROJECT_NAME}
 )
 
 # Also install the Data folder
 install(DIRECTORY
-  unity_sim/Simulation_LQ_Data
+  unity_sim/Simulation_Data
   DESTINATION lib/${PROJECT_NAME}
 )
 
@@ -148,5 +148,6 @@ install(PROGRAMS
   scripts/lantern_tracker.py
   DESTINATION lib/${PROJECT_NAME}
 )
+
 
 ament_package()
