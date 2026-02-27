@@ -30,7 +30,7 @@
  
    // Define goal point
    Eigen::Vector3d goal_position, goal_velocity;
-   goal_position << 0.0, 0.0, 0.0;
+   goal_position << -315.14, 8.38, 14.99;
    goal_velocity << 0.0, 0.0, 0.0;
  
    // Process some callbacks so that the odom callback can run

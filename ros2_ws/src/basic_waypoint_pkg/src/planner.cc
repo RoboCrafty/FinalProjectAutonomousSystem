@@ -6,10 +6,10 @@ BasicPlanner::BasicPlanner(const rclcpp::Node::SharedPtr & node)
 : node_(node),
   current_pose_(Eigen::Affine3d::Identity()),
   current_velocity_(Eigen::Vector3d::Zero()),
-  current_angular_velocity_(Eigen::Vector3d::Zero()), 
-  max_v_(0.2),
-  max_a_(0.2),
-  max_ang_v_(0.0), 
+  current_angular_velocity_(Eigen::Vector3d::Zero()),
+  max_v_(3.0),
+  max_a_(1.2),
+  max_ang_v_(0.0),
   max_ang_a_(0.0)
 {
   node_->declare_parameter("max_v", 0.5);
@@ -84,17 +84,45 @@ bool BasicPlanner::planTrajectory(
   /******* Configure trajectory (intermediate waypoints) *******/
   // ~~~~ begin solution
 
-  // Intermediate approach waypoint (midpoint toward entrance)
-  middle = mav_trajectory_generation::Vertex(dimension);
-  middle.addConstraint(mav_trajectory_generation::derivative_order::POSITION,
-                       Eigen::Vector3d(-157.57, 4.19, 10.0));
-  vertices.push_back(middle);
+  // New start and goal
+Eigen::Vector3d new_start(-36.0, 10.0, 15.0);
+Eigen::Vector3d new_goal(-315.14, 8.38, 14.99);
 
-  // Entrance point
-  middle = mav_trajectory_generation::Vertex(dimension);
-  middle.addConstraint(mav_trajectory_generation::derivative_order::POSITION,
-                       Eigen::Vector3d(-315.14, 8.38, 14.99));
-  vertices.push_back(middle);
+// Hardcoded waypoints
+std::vector<std::vector<Eigen::Vector3d>> waypoints = {
+    { new_start },                           // Start
+    { Eigen::Vector3d(-60.0, 10.2, 15.0) }, // intermediate 1
+    { Eigen::Vector3d(-85.0, 10.1, 15.1) }, // intermediate 2
+    { Eigen::Vector3d(-110.0, 10.0, 15.2) },// intermediate 3
+    { Eigen::Vector3d(-135.0, 9.8, 15.2) }, // intermediate 4
+    { Eigen::Vector3d(-160.0, 9.7, 15.3) }, // intermediate 5
+    { Eigen::Vector3d(-185.0, 9.6, 15.4) }, // intermediate 6
+    { Eigen::Vector3d(-205.0, 9.5, 15.5) }, // intermediate 7
+    { Eigen::Vector3d(-225.0, 9.3, 15.5) }, // intermediate 8
+    { Eigen::Vector3d(-245.0, 9.2, 15.6) }, // intermediate 9
+    { Eigen::Vector3d(-265.0, 9.0, 15.7) }, // intermediate 10
+    { Eigen::Vector3d(-285.0, 8.9, 15.6) }, // intermediate 11
+    { Eigen::Vector3d(-300.0, 8.7, 15.4) }, // intermediate 12
+    { Eigen::Vector3d(-310.0, 8.6, 15.2) }, // intermediate 13
+    { Eigen::Vector3d(-312.0, 8.5, 15.1) }, // intermediate 14
+    { Eigen::Vector3d(-313.5, 8.45, 15.05)},// intermediate 15
+    { Eigen::Vector3d(-314.0, 8.42, 15.0) },// intermediate 16
+    { Eigen::Vector3d(-314.5, 8.4, 14.99)}, // intermediate 17
+    { Eigen::Vector3d(-315.0, 8.39, 14.99)},// intermediate 18
+    { new_goal }                             // Goal
+};
+
+
+  for(const auto& wp : waypoints) {
+      mav_trajectory_generation::Vertex middle(dimension);
+      for(size_t i = 0; i < wp.size(); i++){
+          if(i == 0) middle.addConstraint(mav_trajectory_generation::derivative_order::POSITION, wp[0]);
+          if(i == 1) middle.addConstraint(mav_trajectory_generation::derivative_order::VELOCITY, wp[1]);
+          if(i == 2) middle.addConstraint(mav_trajectory_generation::derivative_order::ACCELERATION, wp[2]);
+
+      }
+      vertices.push_back(middle);
+  }
 
   // ~~~~ end solution
 
@@ -291,3 +319,5 @@ void BasicPlanner::drawMavTrajectory(
         marker_array->markers[i].action = visualization_msgs::msg::Marker::ADD;
     }
 }
+
+
