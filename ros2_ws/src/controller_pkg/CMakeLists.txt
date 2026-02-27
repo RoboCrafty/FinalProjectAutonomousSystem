@@ -38,12 +38,6 @@ add_executable(controller_node src/controller_wrapper.cpp)
 
 target_link_libraries(controller_node controller_lib)
 
-
-add_executable(manual_pilot src/manual_pilot.cpp)
-ament_target_dependencies(manual_pilot rclcpp geometry_msgs trajectory_msgs)
-
-install(TARGETS manual_pilot DESTINATION lib/${PROJECT_NAME})
-
 ament_target_dependencies(controller_node
   rclcpp
   std_msgs
@@ -66,7 +60,16 @@ install(
   DESTINATION lib
 )
 
+install(
+  DIRECTORY include/
+  DESTINATION include/${PROJECT_NAME}
+)
+
 install(DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
+)
+
+install(DIRECTORY config
   DESTINATION share/${PROJECT_NAME}
 )
 
@@ -81,5 +84,10 @@ ament_export_dependencies(
   tf2_eigen
   Eigen3
 )
+
+add_executable(manual_pilot src/manual_pilot.cpp)
+ament_target_dependencies(manual_pilot rclcpp geometry_msgs trajectory_msgs)
+
+install(TARGETS manual_pilot DESTINATION lib/${PROJECT_NAME})
 
 ament_package()
