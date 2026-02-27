@@ -7,8 +7,8 @@ BasicPlanner::BasicPlanner(const rclcpp::Node::SharedPtr & node)
   current_pose_(Eigen::Affine3d::Identity()),
   current_velocity_(Eigen::Vector3d::Zero()),
   current_angular_velocity_(Eigen::Vector3d::Zero()),
-  max_v_(0.2),
-  max_a_(0.2),
+  max_v_(2.0),
+  max_a_(0.5),
   max_ang_v_(0.0),
   max_ang_a_(0.0)
 {
@@ -126,36 +126,33 @@ bool BasicPlanner::planTrajectory(
   Eigen::Vector3d new_goal(-315.14, 8.38, 14.99);
 
   // Hardcoded intermediate waypoints (DO NOT include start here)
-  std::vector<std::vector<Eigen::Vector3d>> waypoints = {
-      { Eigen::Vector3d(-60.0, 10.2, 15.0) },
-      { Eigen::Vector3d(-85.0, 10.1, 15.1) },
-      { Eigen::Vector3d(-110.0, 10.0, 15.2) },
-      { Eigen::Vector3d(-135.0, 9.8, 15.2) },
-      { Eigen::Vector3d(-160.0, 9.7, 15.3) },
-      { Eigen::Vector3d(-185.0, 9.6, 15.4) },
-      { Eigen::Vector3d(-205.0, 9.5, 15.5) },
-      { Eigen::Vector3d(-225.0, 9.3, 15.5) },
-      { Eigen::Vector3d(-245.0, 9.2, 15.6) },
-      { Eigen::Vector3d(-265.0, 9.0, 15.7) },
-      { Eigen::Vector3d(-285.0, 8.9, 15.6) },
-      { Eigen::Vector3d(-300.0, 8.7, 15.4) },
-      { Eigen::Vector3d(-310.0, 8.6, 15.2) },
-      { Eigen::Vector3d(-312.0, 8.5, 15.1) },
-      { Eigen::Vector3d(-313.5, 8.45, 15.05) },
-      { Eigen::Vector3d(-314.0, 8.42, 15.0) },
-      { Eigen::Vector3d(-314.5, 8.4, 14.99) },
-      { Eigen::Vector3d(-315.0, 8.39, 14.99) }
+  std::vector<Eigen::Vector3d> waypoints = {
+      Eigen::Vector3d(-60.0, 10.2, 15.0),
+      Eigen::Vector3d(-85.0, 10.1, 15.1),
+      Eigen::Vector3d(-110.0, 10.0, 15.2),
+      Eigen::Vector3d(-135.0, 9.8, 15.2),
+      Eigen::Vector3d(-160.0, 9.7, 15.3),
+      Eigen::Vector3d(-185.0, 9.6, 15.4),
+      Eigen::Vector3d(-205.0, 9.5, 15.5),
+      Eigen::Vector3d(-225.0, 9.3, 15.5),
+      Eigen::Vector3d(-245.0, 9.2, 15.6),
+      Eigen::Vector3d(-265.0, 9.0, 15.7),
+      Eigen::Vector3d(-285.0, 8.9, 15.6),
+      Eigen::Vector3d(-300.0, 8.7, 15.4),
+      Eigen::Vector3d(-310.0, 8.6, 15.2),
+      Eigen::Vector3d(-312.0, 8.5, 15.1),
+      Eigen::Vector3d(-313.5, 8.45, 15.05),
+      Eigen::Vector3d(-314.0, 8.42, 15.0),
+      Eigen::Vector3d(-314.5, 8.4, 14.99),
+      Eigen::Vector3d(-315.0, 8.39, 14.99)
   };
 
   // Push intermediate waypoints into vertices
   for (const auto& wp : waypoints) {
       mav_trajectory_generation::Vertex middle(dimension);
-
       // POSITION
       middle.addConstraint(
-          mav_trajectory_generation::derivative_order::POSITION,
-          wp[0]);
-
+          mav_trajectory_generation::derivative_order::POSITION, wp);
       vertices.push_back(middle);
   }
 
