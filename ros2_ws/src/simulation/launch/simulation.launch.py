@@ -105,6 +105,14 @@ def generate_launch_description():
         remappings=[("/current_state", "/current_state_est")],
     )
 
+    trajectory_generator = Node(
+        package="trajectory_generator_pkg",
+        executable="trajectory_generator_node",
+        name="trajectory_generator_node",
+        output="screen",
+    )
+
+
     # Static TF publishers (ROS2 CLI style args; verify for your ROS2 distro)
     static_tf_nodes = [
         Node(
@@ -160,6 +168,7 @@ def generate_launch_description():
             state_estimate_corruptor_disabled,
             w_to_unity,
             controller_node,
+            trajectory_generator,
             *static_tf_nodes,
         ]
     )
