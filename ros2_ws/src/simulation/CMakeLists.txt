@@ -130,24 +130,4 @@ ament_export_dependencies(
   Eigen3
 )
 
-# --- Install Unity Simulation binaries ---
-install(PROGRAMS
-  unity_sim/Simulation.x86_64
-  unity_sim/UnityPlayer.so
-  DESTINATION lib/${PROJECT_NAME}
-)
-
-# Also install the Data folder
-install(DIRECTORY
-  unity_sim/Simulation_Data
-  DESTINATION lib/${PROJECT_NAME}
-)
-
-# Install the python scripts so they are available in the install folder
-install(PROGRAMS
-  scripts/lantern_tracker.py
-  DESTINATION lib/${PROJECT_NAME}
-)
-
-
 ament_package()
