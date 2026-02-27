@@ -26,22 +26,11 @@ find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIRS})
 
 # --- Libraries ----------------------------------------------------------------
-add_library(controller_lib SHARED src/controller_node.cpp)
-target_include_directories(controller_lib
-  PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include>
-    ${EIGEN3_INCLUDE_DIRS}
-)
-ament_target_dependencies(controller_lib
-  rclcpp
-  nav_msgs
-  mav_msgs
-  trajectory_msgs
-  Eigen3
-  tf2
-  tf2_ros
-  tf2_eigen
+add_library(controller_lib SHARED IMPORTED)
+# Path to the precompiled .so inside the repository
+set_target_properties(controller_lib PROPERTIES
+  IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/lib/libcontroller_lib.so"
+  INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/include"
 )
 
 # --- Executable ---------------------------------------------------------------
@@ -61,11 +50,14 @@ ament_target_dependencies(controller_node
 )
 
 # --- Install -----------------------------------------------------------------
-install(TARGETS controller_node controller_lib
-  EXPORT export_controller_lib
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
+install(TARGETS controller_node
   RUNTIME DESTINATION lib/${PROJECT_NAME}
+)
+
+install(
+  FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/libcontroller_lib.so
+  DESTINATION lib
 )
 
 install(
@@ -82,9 +74,6 @@ install(DIRECTORY config
 )
 
 # --- Export ------------------------------------------------------------------
-ament_export_libraries(controller_lib)
-ament_export_include_directories(include)
-ament_export_targets(export_controller_lib HAS_LIBRARY_TARGET)
 
 ament_export_dependencies(
   rclcpp
@@ -95,5 +84,10 @@ ament_export_dependencies(
   tf2_eigen
   Eigen3
 )
+
+add_executable(manual_pilot src/manual_pilot.cpp)
+ament_target_dependencies(manual_pilot rclcpp geometry_msgs trajectory_msgs)
+
+install(TARGETS manual_pilot DESTINATION lib/${PROJECT_NAME})
 
 ament_package()
