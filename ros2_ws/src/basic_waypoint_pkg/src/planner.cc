@@ -105,8 +105,7 @@ bool BasicPlanner::planTrajectory(
     current_velocity_);
 
   // add waypoint to list
-  vertices.push_back(start);
-
+  
   /******* Configure trajectory (intermediate waypoints) *******/
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //  To Do: Set up trajectory waypoints
@@ -121,71 +120,42 @@ bool BasicPlanner::planTrajectory(
   
   // ~~~~ begin solution
 
+
+  // New hardcoded start and goal positions
+  Eigen::Vector3d new_start(-36.0, 10.0, 15.0);
+  Eigen::Vector3d new_goal(-315.14, 8.38, 14.99);
+
+  // Hardcoded intermediate waypoints (DO NOT include start here)
   std::vector<std::vector<Eigen::Vector3d>> waypoints = {
-    // p1
-    { Eigen::Vector3d(10.0,  0.0,  3.0) },
-    // h1
-    //{ Eigen::Vector3d(20, 2.0, 3.0)},
-    // h2
-    { Eigen::Vector3d(25, 5.0, 2.0)},
-    // p2
-    { Eigen::Vector3d(30.0, 10.0, 3.0) },
-    // h3
-    { Eigen::Vector3d(34.0, 16.0, 8.0)},
-    // p3
-    { Eigen::Vector3d(35.0, 25.0, 13.0) },
-    // p4
-    { Eigen::Vector3d(35.0, 35.0, 6.0) },
-    // h4
-    { Eigen::Vector3d(32.0, 38.0, 8.0)},
-    // p5
-    { Eigen::Vector3d(25.0, 39.0, 11.0) },
-    // p6 - center tunnel
-    { Eigen::Vector3d(16.0, 39.0, 11.0) },
-    // h5 - exit tunnel
-    { Eigen::Vector3d(8.0, 39.0, 11.0) },
-    // h6
-    { Eigen::Vector3d(0.0, 30.0, 9.0) },
-    // h7
-    { Eigen::Vector3d(0.0, 11.0, 5.0) },
-    // p1
-    { Eigen::Vector3d(10.0,  0.0,  3.0) },
-    // h1
-    //{ Eigen::Vector3d(20, 2.0, 3.0)},
-    // h2
-    { Eigen::Vector3d(25, 5.0, 2.0)},
-    // p2
-    { Eigen::Vector3d(30.0, 10.0,  3.0) },
-    // h3
-    { Eigen::Vector3d(34.0, 16.0, 8.0)},
-    // p3
-    { Eigen::Vector3d(35.0, 25.0,  13.0) },
-    // p4
-    { Eigen::Vector3d(35.0, 35.0, 6.0) },
-    // h4
-    { Eigen::Vector3d(32.0, 38.0, 8.0)},
-    // p5
-    { Eigen::Vector3d(25.0, 39.0, 11.0) },
-    // p6 - entrance tunnel
-    { Eigen::Vector3d(16.0, 39.0, 11.0) },
-    // h7 - cenrer tunnel - STOP
-    { Eigen::Vector3d(13.0, 39.0, 11.0), Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero() },
-    // h5 - exit tunnel
-    { Eigen::Vector3d(8.0, 39.0, 11.0) },
-    // h6
-    { Eigen::Vector3d(0.0, 30.0, 9.0) },
+      { Eigen::Vector3d(-60.0, 10.2, 15.0) },
+      { Eigen::Vector3d(-85.0, 10.1, 15.1) },
+      { Eigen::Vector3d(-110.0, 10.0, 15.2) },
+      { Eigen::Vector3d(-135.0, 9.8, 15.2) },
+      { Eigen::Vector3d(-160.0, 9.7, 15.3) },
+      { Eigen::Vector3d(-185.0, 9.6, 15.4) },
+      { Eigen::Vector3d(-205.0, 9.5, 15.5) },
+      { Eigen::Vector3d(-225.0, 9.3, 15.5) },
+      { Eigen::Vector3d(-245.0, 9.2, 15.6) },
+      { Eigen::Vector3d(-265.0, 9.0, 15.7) },
+      { Eigen::Vector3d(-285.0, 8.9, 15.6) },
+      { Eigen::Vector3d(-300.0, 8.7, 15.4) },
+      { Eigen::Vector3d(-310.0, 8.6, 15.2) },
+      { Eigen::Vector3d(-312.0, 8.5, 15.1) },
+      { Eigen::Vector3d(-313.5, 8.45, 15.05) },
+      { Eigen::Vector3d(-314.0, 8.42, 15.0) },
+      { Eigen::Vector3d(-314.5, 8.4, 14.99) },
+      { Eigen::Vector3d(-315.0, 8.39, 14.99) }
   };
 
-
-
-  for(const auto& wp : waypoints) {
+  // Push intermediate waypoints into vertices
+  for (const auto& wp : waypoints) {
       mav_trajectory_generation::Vertex middle(dimension);
-      for(size_t i = 0; i < wp.size(); i++){
-          if(i == 0) middle.addConstraint(mav_trajectory_generation::derivative_order::POSITION, wp[0]);
-          if(i == 1) middle.addConstraint(mav_trajectory_generation::derivative_order::VELOCITY, wp[1]);
-          if(i == 2) middle.addConstraint(mav_trajectory_generation::derivative_order::ACCELERATION, wp[2]);
 
-      }
+      // POSITION
+      middle.addConstraint(
+          mav_trajectory_generation::derivative_order::POSITION,
+          wp[0]);
+
       vertices.push_back(middle);
   }
 
