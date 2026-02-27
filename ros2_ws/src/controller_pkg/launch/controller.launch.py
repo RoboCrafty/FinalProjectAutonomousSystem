@@ -2,6 +2,8 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
+from launch_ros.substitutions import FindPackageShare
+from launch.substitutions import PathJoinSubstitution
 from ament_index_python.packages import get_package_share_directory
 import os
 
@@ -22,7 +24,7 @@ def generate_launch_description():
         executable='controller_node',
         name='controller_node',
         output='screen',
-        parameters=[LaunchConfiguration('config_file')],
+        parameters=[PathJoinSubstitution([FindPackageShare("controller_pkg"), "config", "controller_params.yaml"])],
         # emulate "clear_params='true'" by forcing parameter override behavior
         emulate_tty=True
     )
