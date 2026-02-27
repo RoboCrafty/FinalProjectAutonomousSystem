@@ -125,7 +125,7 @@ def generate_launch_description():
             package="tf2_ros",
             executable="static_transform_publisher",
             name="sim_depth_camera",
-            arguments=["0", "0", "0", "0", "0", "0", "/depth_camera", "/Quadrotor/Sensors/DepthCamera"],
+            arguments=["0", "0", "0", "0", "0", "-1.57", "/depth_camera", "/Quadrotor/Sensors/DepthCamera"],
             output="screen",
         ),
         Node(
