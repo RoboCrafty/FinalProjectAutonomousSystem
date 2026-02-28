@@ -30,13 +30,14 @@ public:
             "/next_setpoint", 10, std::bind(&TrajectoryGeneratorNode::goalCallback, this, std::placeholders::_1));
 
         playback_timer_ = this->create_wall_timer(10ms, std::bind(&TrajectoryGeneratorNode::playbackCallback, this));
-        RCLCPP_INFO(this->get_logger(), "Fixed Reactive Trajectory Generator Ready.");
+        RCLCPP_INFO(this->get_logger(), "Adaptive Orientation Trajectory Generator Ready.");
     }
 
 private:
     void odomCallback(const nav_msgs::msg::Odometry::SharedPtr msg) {
         current_pos_ << msg->pose.pose.position.x, msg->pose.pose.position.y, msg->pose.pose.position.z;
         current_vel_ << msg->twist.twist.linear.x, msg->twist.twist.linear.y, msg->twist.twist.linear.z;
+        current_ori_ = msg->pose.pose.orientation;
         has_odom_ = true;
     }
 
@@ -46,27 +47,36 @@ private:
             return;
         }
 
+        // Check if the incoming message has a valid orientation set.
+        // If all fields are 0, it is uninitialized, so we keep the drone's current pose.
+        bool orientation_provided = (std::abs(msg->pose.orientation.x) + 
+                                     std::abs(msg->pose.orientation.y) + 
+                                     std::abs(msg->pose.orientation.z) + 
+                                     std::abs(msg->pose.orientation.w)) > 0.01;
+
+        geometry_msgs::msg::Quaternion target_ori;
+        if (orientation_provided) target_ori = msg->pose.orientation;
+        else target_ori = current_ori_;
+
         const int dimension = 3;
         const int derivative_to_optimize = mav_trajectory_generation::derivative_order::ACCELERATION;
         mav_trajectory_generation::Vertex::Vector vertices;
 
-        // Start point
+        // Start point (Current position/velocity)
         mav_trajectory_generation::Vertex start(dimension);
         start.makeStartOrEnd(current_pos_, derivative_to_optimize);
         start.addConstraint(mav_trajectory_generation::derivative_order::VELOCITY, current_vel_);
         vertices.push_back(start);
 
-        // End point
+        // End point (Target position)
         mav_trajectory_generation::Vertex end(dimension);
         Eigen::Vector3d goal_pos(msg->pose.position.x, msg->pose.position.y, msg->pose.position.z);
         end.makeStartOrEnd(goal_pos, derivative_to_optimize);
         end.addConstraint(mav_trajectory_generation::derivative_order::VELOCITY, Eigen::Vector3d::Zero());
         vertices.push_back(end);
 
-        // Explicitly calculate segment time to avoid Nonlinear optimization failures
+        // Optimization
         std::vector<double> segment_times = estimateSegmentTimes(vertices, max_v_, max_a_);
-        
-        // Use Linear optimization (Order 10) to avoid stack issues with Nonlinear solver
         mav_trajectory_generation::PolynomialOptimization<10> opt(dimension);
         opt.setupFromVertices(vertices, segment_times, derivative_to_optimize);
         opt.solveLinear();
@@ -74,7 +84,7 @@ private:
         mav_trajectory_generation::Trajectory trajectory;
         opt.getTrajectory(&trajectory);
 
-        // Thread-safe clear and populate
+        // Sample trajectory and populate points
         std::vector<trajectory_msgs::msg::MultiDOFJointTrajectoryPoint> new_points;
         for (double t = 0.0; t <= trajectory.getMaxTime(); t += 0.01) {
             trajectory_msgs::msg::MultiDOFJointTrajectoryPoint point;
@@ -84,7 +94,9 @@ private:
 
             geometry_msgs::msg::Transform tf;
             tf.translation.x = p(0); tf.translation.y = p(1); tf.translation.z = p(2);
-            tf.rotation.w = 1.0; 
+            
+            // Set the rotation (Either from mission or kept from current state)
+            tf.rotation = target_ori;
 
             geometry_msgs::msg::Twist vel_msg, acc_msg;
             vel_msg.linear.x = v(0); vel_msg.linear.y = v(1); vel_msg.linear.z = v(2);
@@ -115,7 +127,10 @@ private:
     rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr sub_odom_;
     rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr sub_goal_;
     rclcpp::TimerBase::SharedPtr playback_timer_;
+    
     Eigen::Vector3d current_pos_, current_vel_;
+    geometry_msgs::msg::Quaternion current_ori_; //stores orientation from Odom
+    
     double max_v_, max_a_;
     bool has_odom_;
     std::vector<trajectory_msgs::msg::MultiDOFJointTrajectoryPoint> trajectory_points_;
