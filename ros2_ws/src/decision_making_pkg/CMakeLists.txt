@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(mission_control_pkg)
+project(decision_making_pkg)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -12,16 +12,16 @@ find_package(nav_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(trajectory_msgs REQUIRED)
 
-add_executable(mission_node src/mission_node.cpp)
+add_executable(state_machine_node src/state_machine.cpp)
 
-ament_target_dependencies(mission_node 
+ament_target_dependencies(state_machine_node 
   rclcpp 
   nav_msgs 
   geometry_msgs
   trajectory_msgs
 )
 
-install(TARGETS mission_node
+install(TARGETS state_machine_node
   DESTINATION lib/${PROJECT_NAME}
 )
 
