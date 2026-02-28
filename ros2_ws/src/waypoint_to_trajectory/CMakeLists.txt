@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(basic_waypoint_pkg)
+project(waypoint_to_trajectory)
 
 # ==== General build options ====
 if(NOT CMAKE_CXX_STANDARD)

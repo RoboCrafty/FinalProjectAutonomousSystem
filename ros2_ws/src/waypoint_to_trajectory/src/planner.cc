@@ -10,7 +10,9 @@ BasicPlanner::BasicPlanner(const rclcpp::Node::SharedPtr & node)
   max_v_(2.0),
   max_a_(0.5),
   max_ang_v_(0.0),
-  max_ang_a_(0.0)
+  max_ang_a_(0.0),
+  goal_received_(false),
+  odom_received_(false)
 {
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //  To Do: Load Trajectory Parameters from parameter file (ROS2)
@@ -51,8 +53,45 @@ BasicPlanner::BasicPlanner(const rclcpp::Node::SharedPtr & node)
   // Subscriber for Odometry
   sub_odom_ =
     node_->create_subscription<nav_msgs::msg::Odometry>(
-      "odom", 10,
+      "/current_state_est", 10,
       std::bind(&BasicPlanner::uavOdomCallback, this, std::placeholders::_1));
+
+  sub_goal_ = node_->create_subscription<geometry_msgs::msg::PoseStamped>(
+    "goal_pose",
+    10,
+    std::bind(&BasicPlanner::goalCallback, this, std::placeholders::_1)
+);
+}
+
+// Goal callback
+void BasicPlanner::goalCallback(
+    const geometry_msgs::msg::PoseStamped::SharedPtr msg)
+{
+  goal_position_ = Eigen::Vector3d(
+      msg->pose.position.x,
+      msg->pose.position.y,
+      msg->pose.position.z);
+
+  goal_orientation_ = Eigen::Quaterniond(
+      msg->pose.orientation.w,
+      msg->pose.orientation.x,
+      msg->pose.orientation.y,
+      msg->pose.orientation.z);
+
+  goal_received_ = true;
+
+  RCLCPP_INFO(node_->get_logger(), "Received new goal");
+
+  if (!odom_received_) {
+    RCLCPP_WARN(node_->get_logger(), "No odom yet, cannot plan");
+    return;
+  }
+
+  mav_trajectory_generation::Trajectory trajectory;
+
+  if (planTrajectory(goal_position_, Eigen::Vector3d::Zero(), &trajectory)) {
+    publishTrajectory(trajectory);
+  }
 }
 
 // Callback to get current Pose of UAV
@@ -63,6 +102,8 @@ void BasicPlanner::uavOdomCallback(const nav_msgs::msg::Odometry::SharedPtr odom
 
   // store current velocity
   tf2::fromMsg(odom->twist.twist.linear, current_velocity_);
+
+  odom_received_ = true;
 }
 
 // Method to set maximum speed.
@@ -78,129 +119,47 @@ bool BasicPlanner::planTrajectory(
   const Eigen::VectorXd & goal_vel,
   mav_trajectory_generation::Trajectory * trajectory)
 {
-  // 3 Dimensional trajectory => through Cartesian space, no orientation
-  const int dimension = 3;
-
-  // Array for all waypoints and their constraints
+  const int dimension = 4;
   mav_trajectory_generation::Vertex::Vector vertices;
+  const int derivative_to_optimize = mav_trajectory_generation::derivative_order::ACCELERATION;
 
-  // Optimize up to 4th order derivative (SNAP)
-  const int derivative_to_optimize =
-    mav_trajectory_generation::derivative_order::SNAP;
-
-  // we have 2 vertices:
-  // Start = current position
-  // End   = desired position and velocity
   mav_trajectory_generation::Vertex start(dimension), end(dimension);
 
+  double current_yaw = atan2(current_pose_.rotation()(1,0), current_pose_.rotation()(0,0));
+  Eigen::Vector4d start_state;
+  start_state << current_pose_.translation(), current_yaw;
+
   /******* Configure start point *******/
-  // set start point constraints to current position and set all derivatives to zero
-  start.makeStartOrEnd(
-    current_pose_.translation(),
-    derivative_to_optimize);
-
-  // set start point's velocity to be constrained to current velocity
-  start.addConstraint(
-    mav_trajectory_generation::derivative_order::VELOCITY,
-    current_velocity_);
-
-  // add waypoint to list
-  
-  /******* Configure trajectory (intermediate waypoints) *******/
-  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //  To Do: Set up trajectory waypoints
-  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //
-  // In this section, you need to
-  // - load waypoint definition (pos, vel, acc) per dimension from params
-  // - dynamically set constraints for each (and only where needed)
-  // - push waypoints to vertices
-  //
-
-  
-  // ~~~~ begin solution
-
-
-  // New hardcoded start and goal positions
-  Eigen::Vector3d new_start(-36.0, 10.0, 15.0);
-  Eigen::Vector3d new_goal(-315.14, 8.38, 14.99);
-
-  // Hardcoded intermediate waypoints (DO NOT include start here)
-  std::vector<Eigen::Vector3d> waypoints = {
-      Eigen::Vector3d(-60.0, 10.2, 15.0),
-      Eigen::Vector3d(-85.0, 10.1, 15.1),
-      Eigen::Vector3d(-110.0, 10.0, 15.2),
-      Eigen::Vector3d(-135.0, 9.8, 15.2),
-      Eigen::Vector3d(-160.0, 9.7, 15.3),
-      Eigen::Vector3d(-185.0, 9.6, 15.4),
-      Eigen::Vector3d(-205.0, 9.5, 15.5),
-      Eigen::Vector3d(-225.0, 9.3, 15.5),
-      Eigen::Vector3d(-245.0, 9.2, 15.6),
-      Eigen::Vector3d(-265.0, 9.0, 15.7),
-      Eigen::Vector3d(-285.0, 8.9, 15.6),
-      Eigen::Vector3d(-300.0, 8.7, 15.4),
-      Eigen::Vector3d(-310.0, 8.6, 15.2),
-      Eigen::Vector3d(-312.0, 8.5, 15.1),
-      Eigen::Vector3d(-313.5, 8.45, 15.05),
-      Eigen::Vector3d(-314.0, 8.42, 15.0),
-      Eigen::Vector3d(-314.5, 8.4, 14.99),
-      Eigen::Vector3d(-315.0, 8.39, 14.99)
-  };
-
-  // Push intermediate waypoints into vertices
-  for (const auto& wp : waypoints) {
-      mav_trajectory_generation::Vertex middle(dimension);
-      // POSITION
-      middle.addConstraint(
-          mav_trajectory_generation::derivative_order::POSITION, wp);
-      vertices.push_back(middle);
-  }
-
-  // ~~~~ end solution
-
-
-
-  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  start.makeStartOrEnd(start_state, derivative_to_optimize);
+  Eigen::Vector4d start_vel_4d;
+  start_vel_4d << current_velocity_, 0.0; // assuming zero angular velocity
+  start.addConstraint(mav_trajectory_generation::derivative_order::VELOCITY, start_vel_4d);
+  vertices.push_back(start);
 
   /******* Configure end point *******/
-  // set end point constraints to desired position and set all derivatives to zero
-  end.makeStartOrEnd(
-    goal_pos,
-    derivative_to_optimize);
+  double goal_yaw = atan2(2.0 * (goal_orientation_.w() * goal_orientation_.z() + goal_orientation_.x() * goal_orientation_.y()),
+                          1.0 - 2.0 * (goal_orientation_.y() * goal_orientation_.y() + goal_orientation_.z() * goal_orientation_.z()));
 
-  // set end point's velocity to be constrained to desired velocity
-  end.addConstraint(
-    mav_trajectory_generation::derivative_order::VELOCITY,
-    goal_vel);
+  Eigen::Vector4d end_state;
+  end_state << goal_pos, goal_yaw;
+  end.makeStartOrEnd(end_state, derivative_to_optimize);
 
-  // add waypoint to list
+  Eigen::Vector4d goal_vel_4d;
+  goal_vel_4d << goal_vel, 0.0; // assuming zero angular velocity at goal
+  end.addConstraint(mav_trajectory_generation::derivative_order::VELOCITY, goal_vel_4d);
   vertices.push_back(end);
 
-  // estimate initial segment times
-  std::vector<double> segment_times;
-  segment_times = estimateSegmentTimes(vertices, max_v_, max_a_);
+  // estimate segment times
+  std::vector<double> segment_times = estimateSegmentTimes(vertices, max_v_, max_a_);
 
-  // Set up polynomial solver with default params
   mav_trajectory_generation::NonlinearOptimizationParameters parameters;
-
-  // set up optimization problem
   const int N = 10;
-  mav_trajectory_generation::PolynomialOptimizationNonLinear<N> opt(
-    dimension, parameters);
-  opt.setupFromVertices(
-    vertices, segment_times,
-    derivative_to_optimize);
+  mav_trajectory_generation::PolynomialOptimizationNonLinear<N> opt(dimension, parameters);
+  opt.setupFromVertices(vertices, segment_times, derivative_to_optimize);
+  opt.addMaximumMagnitudeConstraint(mav_trajectory_generation::derivative_order::VELOCITY, max_v_);
+  opt.addMaximumMagnitudeConstraint(mav_trajectory_generation::derivative_order::ACCELERATION, max_a_);
 
-  // constrain velocity and acceleration
-  opt.addMaximumMagnitudeConstraint(
-    mav_trajectory_generation::derivative_order::VELOCITY, max_v_);
-  opt.addMaximumMagnitudeConstraint(
-    mav_trajectory_generation::derivative_order::ACCELERATION, max_a_);
-
-  // solve trajectory
   opt.optimize();
-
-  // get trajectory as polynomial parameters
   opt.getTrajectory(trajectory);
 
   return true;

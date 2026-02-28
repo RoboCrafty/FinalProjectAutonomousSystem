@@ -42,6 +42,9 @@ public:
     double v_max, double a_max,
     mav_trajectory_generation::Trajectory * trajectory);
 
+  // Goal callback
+  void goalCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg);
+
   bool publishTrajectory(const mav_trajectory_generation::Trajectory & trajectory);
 
   void drawMavTrajectory(
@@ -56,6 +59,17 @@ private:
   rclcpp::Publisher<mav_planning_msgs::msg::PolynomialTrajectory4D>::SharedPtr pub_trajectory_;
   rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr sub_odom_;
 
+    // Goal subscriber
+  rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr sub_goal_;
+
+  // Goal state
+  Eigen::Vector3d goal_position_;
+  Eigen::Quaterniond goal_orientation_;
+
+  bool goal_received_;
+  bool odom_received_;
+
+  
   Eigen::Affine3d current_pose_;
   Eigen::Vector3d current_velocity_;
   Eigen::Vector3d current_angular_velocity_;

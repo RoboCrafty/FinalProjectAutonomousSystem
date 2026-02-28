@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="3">
-  <name>basic_waypoint_pkg</name>
+  <name>waypoint_to_trajectory</name>
   <version>0.0.0</version>
-  <description>The basic_waypoint_pkg package</description>
+  <description>The waypoint_to_trajectory package</description>
 
   <maintainer email="lukas.pries@tum.de">Lukas Pries</maintainer>
   <license>TODO</license>
