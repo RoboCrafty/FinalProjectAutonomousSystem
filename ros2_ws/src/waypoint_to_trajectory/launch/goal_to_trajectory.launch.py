@@ -17,15 +17,15 @@ def generate_launch_description():
 
     # Path to trajectory_config.yaml
     trajectory_config = PathJoinSubstitution([
-        FindPackageShare("basic_waypoint_pkg"),
+        FindPackageShare("waypoint_to_trajectory"),
         "config",
         "trajectory_config.yaml"
     ])
 
     # Trajectory planner node
     planner_node = Node(
-        package="basic_waypoint_pkg",
-        executable="basic_waypoint_node",   # ROS1: type="basic_waypoint_pkg"
+        package="waypoint_to_trajectory",
+        executable="waypoint_to_trajectory_node",   # ROS1: type="basic_waypoint_pkg"
         name="planner",
         output="screen",
         parameters=[trajectory_config]

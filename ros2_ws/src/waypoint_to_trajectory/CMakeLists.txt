@@ -35,12 +35,12 @@ find_package(yaml-cpp REQUIRED)
 
 # ==== Executable ====
 # You can keep the original target name or pick something clearer like planner_node.
-add_executable(basic_waypoint_node
+add_executable(waypoint_to_trajectory_node
   src/planner.cc
   src/planner_node.cc
 )
 
-target_include_directories(basic_waypoint_node
+target_include_directories(waypoint_to_trajectory_node
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
@@ -49,7 +49,7 @@ target_include_directories(basic_waypoint_node
 
 
 # Pull in include dirs + link flags for all ament packages
-ament_target_dependencies(basic_waypoint_node
+ament_target_dependencies(waypoint_to_trajectory_node
   rclcpp
   mav_msgs
   std_msgs
@@ -67,7 +67,7 @@ ament_target_dependencies(basic_waypoint_node
 # ==== Installation ====
 install(
   TARGETS
-    basic_waypoint_node
+    waypoint_to_trajectory_node
   DESTINATION lib/${PROJECT_NAME}
 )
 
