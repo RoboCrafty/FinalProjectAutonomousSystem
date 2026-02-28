@@ -106,12 +106,15 @@ def generate_launch_description():
     )
 
     # Static TF publishers (ROS2 CLI style args; verify for your ROS2 distro)
+    # Static TF publishers
     static_tf_nodes = [
+        # 1. Spin the drone's body 180 degrees so Odometry (X) points Forward
         Node(
             package="tf2_ros",
             executable="static_transform_publisher",
             name="sim_true_body",
-            arguments=["0", "0", "0", "0", "0", "0", "/Quadrotor/TrueState", "/true_body"],
+            # changed yaw to 3.14159
+            arguments=["0", "0", "0", "3.14159", "0", "0", "/Quadrotor/TrueState", "/true_body"], 
             output="screen",
         ),
         Node(
@@ -135,18 +138,24 @@ def generate_launch_description():
             arguments=["0", "0.05", "0", "0", "0", "0", "/camera", "/Quadrotor/RGBCameraRight"],
             output="screen",
         ),
+        
+        # 2. Counter-spin the Semantic Camera so it still looks forward
         Node(
             package="tf2_ros",
             executable="static_transform_publisher",
             name="camera_to_body",
-            arguments=["0", "0", "0", "0", "0", "0", "/true_body", "/camera"],
+            # changed yaw to -3.14159
+            arguments=["0", "0", "0", "-3.14159", "0", "0", "/true_body", "/camera"],
             output="screen",
         ),
+        
+        # 3. Counter-spin the Depth Camera so it still looks forward
         Node(
             package="tf2_ros",
             executable="static_transform_publisher",
             name="depth_camera_to_body",
-            arguments=["0", "0", "0", "0", "0", "0", "/true_body", "/depth_camera"],
+            # changed yaw to -3.14159
+            arguments=["0", "0", "0", "-3.14159", "0", "0", "/true_body", "/depth_camera"],
             output="screen",
         ),
     ]
