@@ -61,7 +61,7 @@ private:
                     target_sent_ = true;
                 }
                 
-                if (isReached(-315.14, 8.38, 15.0)) {
+                if (isReached(-328.14, 8.38, 15.0)) {
                     // NEW: Reset the Octomap before entering the cave
                     if (octomap_reset_client_->wait_for_service(1s)) {
                         auto request = std::make_shared<std_srvs::srv::Empty::Request>();

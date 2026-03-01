@@ -16,8 +16,8 @@ using namespace std::chrono_literals;
 class TrajectoryGeneratorNode : public rclcpp::Node {
 public:
     TrajectoryGeneratorNode() : Node("trajectory_generator_node"), has_odom_(false), current_traj_idx_(0) {
-        this->declare_parameter("max_v", 15.0); 
-        this->declare_parameter("max_a", 5.0); 
+        this->declare_parameter("max_v", 7.0); 
+        this->declare_parameter("max_a", 2.0); 
         max_v_ = this->get_parameter("max_v").as_double();
         max_a_ = this->get_parameter("max_a").as_double();
 

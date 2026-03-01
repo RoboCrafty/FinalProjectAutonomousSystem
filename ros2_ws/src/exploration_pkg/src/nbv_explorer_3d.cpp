@@ -134,7 +134,7 @@ private:
         // Lookahead Planning
         if (has_target_) {
             double dist = std::sqrt(std::pow(target_x_ - current_x_, 2) + std::pow(target_y_ - current_y_, 2) + std::pow(target_z_ - current_z_, 2));
-            if (dist > 3.0) return;
+            if (dist > 6.0) return;
         }
 
         double best_score = -9999.0;
@@ -144,7 +144,7 @@ private:
         std::mt19937 gen(rd());
         std::uniform_real_distribution<> yaw_dist(-0.8, 0.8);   // Look left/right
         std::uniform_real_distribution<> pitch_dist(-0.8, 0.8); // NEW: Look up/down
-        std::uniform_real_distribution<> dist_dist(6.0, 12.0);  // 3D Leap distance
+        std::uniform_real_distribution<> dist_dist(6.0, 16.0);  // 3D Leap distance
 
         // Sample 60 points in a 3D forward cone
         for (int i = 0; i < 60; ++i) {
