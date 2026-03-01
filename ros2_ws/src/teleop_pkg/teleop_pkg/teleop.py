@@ -36,9 +36,9 @@ class TeleopNode(Node):
         self.current_vyaw = 0.0
         
         # Physics settings
-        self.max_speed = 4.0  
+        self.max_speed = 5.0 #max speed 
         self.max_yaw_rate = 1.0 
-        self.acceleration = 3.0  # How fast it reaches max speed (lower = smoother)
+        self.acceleration = 4.0  # How fast it reaches max speed (lower = smoother)
         self.yaw_accel = 2.0     # How fast it reaches max turn speed
         
         self.dt = 0.02
