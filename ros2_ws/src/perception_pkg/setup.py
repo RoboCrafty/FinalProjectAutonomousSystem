@@ -1,4 +1,4 @@
-import os               # <--- 1. ADD THIS
+import os
 from glob import glob
 from setuptools import find_packages, setup
 
@@ -16,18 +16,14 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='root',
-    maintainer_email='root@todo.todo',
-    description='TODO: Package description',
-    license='TODO: License declaration',
-    extras_require={
-        'test': [
-            'pytest',
-        ],
-    },
+    maintainer='Ryan',
+    maintainer_email='ryan@todo.todo',
+    description='Lantern tracking and perception package',
+    license='Apache License 2.0',
     entry_points={
         'console_scripts': [
-            'lantern_detector = perception_pkg.lantern_detector:main',
+            # This allows you to run: ros2 run perception_pkg lantern_tracker
+            'lantern_tracker = perception_pkg.lantern_tracker:main',
         ],
     },
 )
