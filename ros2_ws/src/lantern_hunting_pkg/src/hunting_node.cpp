@@ -65,7 +65,8 @@ private:
         actively_hunting_ = true;
 
         double stop_threshold = 800000.0;
-        current_yaw_ -= msg->x * 0.001; // Centering
+        double centering_gain = 0.0005; 
+        current_yaw_ -= msg->x * centering_gain;
 
         if (msg->y < stop_threshold) {
             // Synced speeds to match manual_pilot.cpp
@@ -96,11 +97,11 @@ private:
             }
         } else if (state_ == CLEARING_ZONE) {
             if (tz_ < (clearing_target_z_ - 0.1)) {
-                tz_ += 0.4; // Vertical Climb
+                tz_ += 0.2; // Vertical Climb
                 reach_time_ = this->now();
             } else {
-                tx_ += std::cos(current_yaw_) * 0.12; // Forward Burst
-                ty_ += std::sin(current_yaw_) * 0.12;
+                tx_ += std::cos(current_yaw_) * 0.05; // Forward Burst
+                ty_ += std::sin(current_yaw_) * 0.05;
                 if ((this->now() - reach_time_).seconds() >= 10.0) {
                     if (state_ != DONE) {
                         RCLCPP_INFO(this->get_logger(), "Zone cleared. DONE.");
