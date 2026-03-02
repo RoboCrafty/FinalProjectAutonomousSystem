@@ -42,6 +42,13 @@ private:
         if (msg->data && !is_exploring_) {
             RCLCPP_INFO(this->get_logger(), "3D EXPLORATION ACTIVATED! Taking control of the cavern.");
             is_exploring_ = true;
+            
+            has_target_ = false;
+            
+        } else if (!msg->data && is_exploring_) {
+            // ADDED: Properly deactivate exploration when receiving a False signal
+            RCLCPP_INFO(this->get_logger(), "3D EXPLORATION DEACTIVATED! Handing over to Hunter.");
+            is_exploring_ = false;
         }
     }
 
