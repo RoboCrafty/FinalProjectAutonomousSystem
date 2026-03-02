@@ -10,6 +10,7 @@ using namespace std::chrono_literals;
 enum class MissionState {
     WAYPOINT_HOVER,
     APPROACH_CAVE,
+    ENTER_CAVE,
     WAIT_FOR_MAP,        // State to allow sensors to fill Octomap after reset
     EXPLORE_CAVE,
     MISSION_COMPLETED,
@@ -61,16 +62,17 @@ private:
                 break;
 
             case MissionState::APPROACH_CAVE:
+                // Ensure explorer is disabled during approach
                 explore_msg.data = false;
                 explore_pub_->publish(explore_msg);
 
                 if (!target_sent_) {
-                    sendTarget(-330.14, 8.38, 15.0); // Hardcoded cave entrance
+                    sendTarget(-310.14, 8.38, 15.0); // Coordinate just outside the cave
                     RCLCPP_INFO(this->get_logger(), "Approaching cave entrance...");
                     target_sent_ = true;
                 }
                 
-                if (isReached(-330.14, 8.38, 15.0)) {
+                if (isReached(-310.14, 8.38, 15.0)) {
                     // Reset the Octomap to clear the outside world data
                     if (octomap_reset_client_->wait_for_service(1s)) {
                         auto request = std::make_shared<std_srvs::srv::Empty::Request>();
@@ -78,8 +80,26 @@ private:
                         RCLCPP_INFO(this->get_logger(), "Octomap reset triggered.");
                     }
                     
+                    // Move to the next state and reset target flag
+                    current_state_ = MissionState::ENTER_CAVE;
+                    target_sent_ = false; 
+                }
+                break;
+            
+            case MissionState::ENTER_CAVE:
+                explore_msg.data = false;
+                explore_pub_->publish(explore_msg);
+
+                if(!target_sent_) {
+                    sendTarget(-330.14, 8.38, 15.0); // Coordinate inside the cave
+                    RCLCPP_INFO(this->get_logger(), "Entering cave...");
+                    target_sent_ = true;
+                }
+
+                if (isReached(-330.14, 8.38, 15.0)) {
                     start_wait_time_ = this->now();
-                    current_state_ = MissionState::WAIT_FOR_MAP; 
+                    current_state_ = MissionState::WAIT_FOR_MAP; // Wait for sensor data to populate
+                    target_sent_ = false;
                 }
                 break;
 
