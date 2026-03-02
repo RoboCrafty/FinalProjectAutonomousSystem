@@ -41,20 +41,6 @@ source install/setup.bash
 
 ```
 
-### Running the Mission
-
-1. Launch the Unity Simulation environment.
-2. Launch the ROS bridge and simulation nodes:
-
-```bash
-ros2 launch simulation simulation.launch.py
-
-```
-
-3. The mission begins automatically with the state_machine_node.
-
----
-
 ## Project Requirements Fulfillment
 
 * Autonomous Navigation: The system requires no manual waypoints inside the cave, relying entirely on the frontier exploration algorithm.
