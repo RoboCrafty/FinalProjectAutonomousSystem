@@ -12,12 +12,14 @@
 #include <algorithm>
 
 // --- TUNABLE PARAMETERS ---
-const int MIN_CLUSTER_SIZE = 150;           // Minimum frontiers to be a valid goal
+const int MIN_CLUSTER_SIZE = 150;           // Minimum number of frontier voxels to consider a valid cluster
+const int ABSOLUTE_MIN_SIZE = 50;           // Absolute minimum cluster size to even consider (for dynamic scaling)
 const double CLUSTER_DIST_THRESHOLD = 1.2;  // Distance for grouping frontier voxels
-const double TARGET_DISTANCE_OFFSET = 4.0;  // Stop 3m before the cluster center
+const double TARGET_DISTANCE_OFFSET = 4.0;  // Stop 4m before the cluster center
 const double REACHED_THRESHOLD = 1.2;       // Distance to consider setpoint reached
 const double FORBIDDEN_RADIUS = 8.0;        // Ignore frontiers near previous graph nodes
 const double HEADING_BIAS = 2.0;            // Score multiplier for clusters in front
+const double MAX_PLANNING_DIST = 40.0;      // Max distance to attempt a direct flight
 // --------------------------
 
 struct GraphNode {
@@ -49,7 +51,10 @@ public:
 
         pub_target_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("/next_setpoint", 10);
         
-        RCLCPP_INFO(this->get_logger(), "Sappu Frontier Explorer v2 (Event-Driven) Ready.");
+        // Initialize dynamic threshold
+        current_min_size_ = MIN_CLUSTER_SIZE;
+
+        RCLCPP_INFO(this->get_logger(), "Sappu Frontier Explorer v3 (Dynamic Scaling) Ready.");
     }
 
 private:
@@ -74,39 +79,61 @@ private:
             addNode(); 
         }
 
-        auto clusters = findFrontierClusters();
-
         if (state_ == State::EXPLORING) {
-            bool found_reachable_cluster = false;
-            octomap::point3d chosen_cluster;
+            bool found_goal = false;
+            octomap::point3d chosen_cluster; // for debug porpuse only
+            
+            // Attempt to find clusters by gradually reducing the threshold
+            while (current_min_size_ >= ABSOLUTE_MIN_SIZE) {
+                // Get clusters based on the CURRENT dynamic threshold
+                auto scored_clusters = findFrontierClusters(current_min_size_); 
+                
+                for (const auto& pair : scored_clusters) {
+                    octomap::point3d center = pair.second;
+                    
+                    // Safety: Skip clusters that are too far away
+                    if ((center - current_pos_).norm() > MAX_PLANNING_DIST) continue;
 
-            for (const auto& cluster_center : clusters) {
-                // Check if we can actually fly to this cluster's candidate point
-                octomap::point3d direction = (cluster_center - current_pos_).normalized();
-                octomap::point3d candidate_target = cluster_center - (direction * TARGET_DISTANCE_OFFSET);
+                    octomap::point3d dir = (center - current_pos_).normalized();
+                    octomap::point3d candidate = center - (dir * TARGET_DISTANCE_OFFSET);
 
-                if (isPathClear(current_pos_, candidate_target)) {
-                    chosen_cluster = cluster_center;
-                    current_target_ = candidate_target;
-                    found_reachable_cluster = true;
-                    break; // Found the best possible reachable goal!
-                } else {
-                    RCLCPP_DEBUG(this->get_logger(), "Best cluster blocked by wall, checking next...");
+                    // Safety: Raycast check to ensure we don't fly through a wall
+                    if (isPathClear(current_pos_, candidate)) {
+                        current_target_ = candidate;
+                        chosen_cluster = center; // for debug porpuse only
+                        found_goal = true;
+                        
+                        // If we found a cluster, gradually recover the threshold for the next jump
+                        current_min_size_ = std::min(MIN_CLUSTER_SIZE, current_min_size_ + 20);
+                        RCLCPP_INFO(this->get_logger(), "Goal found with threshold: %d", current_min_size_);
+                        break; 
+                    }
                 }
+                
+                if (found_goal) break;
+
+                // No reachable clusters at this size, lower the bar and try again
+                current_min_size_ -= 30; 
+                RCLCPP_INFO(this->get_logger(), "No clusters found. Reducing threshold to: %d", current_min_size_);
             }
 
-            if (!found_reachable_cluster) {
-                RCLCPP_WARN(this->get_logger(), "No clusters are reachable via straight line. Backtracking...");
+            if (!found_goal) {
+                RCLCPP_WARN(this->get_logger(), "Even at minimum threshold, no paths found. Backtracking...");
                 state_ = State::BACKTRACKING;
-                return; 
+                current_min_size_ = MIN_CLUSTER_SIZE; // Reset for when we finish backtracking
+                computeNextGoal(); // Immediately start moving back
+                return;
             }
 
             RCLCPP_INFO(this->get_logger(), "EXPLORING: Heading to reachable cluster at [%.1f, %.1f]", chosen_cluster.x(), chosen_cluster.y());
-            addNode(); 
+            addNode();
             publishTarget(current_target_);
             has_target_ = true;
         }
         else { // BACKTRACKING
+            // During backtracking, we ONLY switch back to exploring if we find a HIGH QUALITY cluster
+            auto clusters = findFrontierClusters(MIN_CLUSTER_SIZE);
+
             if (!clusters.empty()) {
                 RCLCPP_INFO(this->get_logger(), "Found new path during backtracking! Switching to EXPLORING.");
                 state_ = State::EXPLORING;
@@ -147,7 +174,8 @@ private:
         return true; 
     }
 
-    std::vector<octomap::point3d> findFrontierClusters() {
+    // Updated to accept dynamic minimum size
+    std::vector<std::pair<double, octomap::point3d>> findFrontierClusters(int min_size) {
         std::vector<octomap::point3d> frontiers;
         double res = octree_->getResolution();
 
@@ -168,9 +196,9 @@ private:
                 // Detect if node is a frontier (has unknown neighbor)
                 bool is_frontier = false;
                 octomap::point3d neighbors[6] = {
-                    {p.x()+res, p.y(), p.z()}, {p.x()-res, p.y(), p.z()},
-                    {p.x(), p.y()+res, p.z()}, {p.x(), p.y()-res, p.z()},
-                    {p.x(), p.y(), p.z()+res}, {p.x(), p.y(), p.z()-res}
+                    {p.x()+(float)res, p.y(), p.z()}, {p.x()-(float)res, p.y(), p.z()},
+                    {p.x(), p.y()+(float)res, p.z()}, {p.x(), p.y()-(float)res, p.z()},
+                    {p.x(), p.y(), p.z()+(float)res}, {p.x(), p.y(), p.z()-(float)res}
                 };
                 for(auto& n : neighbors) {
                     if (octree_->search(n) == nullptr) { is_frontier = true; break; }
@@ -196,35 +224,30 @@ private:
             if (!found) clusters.push_back({f});
         }
 
-        // Scoring: Size + Heading Bias
+        // Scoring: Size + Progress Alignment Bias
         std::vector<std::pair<double, octomap::point3d>> scored_clusters;
         for (auto& c : clusters) {
-            if (c.size() >= (size_t)MIN_CLUSTER_SIZE) {
+            if (c.size() >= (size_t)min_size) {
                 octomap::point3d avg(0,0,0);
                 for (auto& p : c) avg += p;
                 octomap::point3d center = avg * (1.0/c.size());
 
-                if (!isPathClear(current_pos_, center)) continue; // Skip this cluster if a wall is in the way
-
-                double angle = atan2(center.y() - current_pos_.y(), center.x() - current_pos_.x());
-                double rel_angle = std::remainder(angle - current_yaw_, 2 * M_PI);
-                
+                // Use graph progress instead of yaw for stable forward bias
                 double score = (double)c.size();
-                if (std::abs(rel_angle) < (M_PI / 2.0)) score *= HEADING_BIAS; 
+                if (graph_.size() >= 2) {
+                    octomap::point3d progress_vec = (graph_.back().position - graph_[graph_.size()-2].position).normalized();
+                    octomap::point3d cluster_vec = (center - current_pos_).normalized();
+                    if (progress_vec.dot(cluster_vec) > 0.4) {
+                        score *= HEADING_BIAS; 
+                    }
+                }
 
                 scored_clusters.push_back({score, center});
             }
         }
 
         std::sort(scored_clusters.rbegin(), scored_clusters.rend());
-        
-        RCLCPP_INFO(this->get_logger(), "Found %zu clusters. Best score: %.1f (Size: ~%zu)", 
-                    scored_clusters.size(), scored_clusters.empty() ? 0.0 : scored_clusters[0].first, 
-                    scored_clusters.empty() ? 0 : (size_t)(scored_clusters[0].first / (scored_clusters[0].first > (double)MIN_CLUSTER_SIZE * HEADING_BIAS ? HEADING_BIAS : 1.0)));
-
-        std::vector<octomap::point3d> result;
-        for (auto& sc : scored_clusters) result.push_back(sc.second);
-        return result;
+        return scored_clusters;
     }
 
     void addNode() {
@@ -257,6 +280,7 @@ private:
     std::shared_ptr<octomap::OcTree> octree_;
     octomap::point3d current_pos_, current_target_;
     double current_yaw_;
+    int current_min_size_;
     bool is_active_, has_odom_ = false, has_target_ = false;
 
     rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr sub_odom_;
