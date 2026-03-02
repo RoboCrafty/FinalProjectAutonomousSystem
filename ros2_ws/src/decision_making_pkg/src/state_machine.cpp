@@ -5,7 +5,6 @@
 #include <std_srvs/srv/empty.hpp>
 #include <geometry_msgs/msg/vector3.hpp> // Required for lantern data
 #include <cmath>
-#include <std_msgs/msg/bool.hpp>
 
 using namespace std::chrono_literals;
 
@@ -13,6 +12,7 @@ enum class MissionState {
     WAYPOINT_HOVER,
     APPROACH_CAVE,
     EXPLORE_CAVE,
+    STABILIZING,
     HUNTING_LANTERN,    // Added hunting phase
     MISSION_COMPLETED,
 };
@@ -60,6 +60,8 @@ public:
                         current_state_ = MissionState::MISSION_COMPLETED;
                     } else {
                         RCLCPP_INFO(this->get_logger(), "Lantern %d/4 secured! Resuming exploration...", lanterns_found_);
+                        rclcpp::sleep_for(2s);
+                        
                         current_state_ = MissionState::EXPLORE_CAVE;
                         
                         // Wake the explorer back up immediately
@@ -73,21 +75,24 @@ public:
 private:
     // Callback to trigger the switch from exploration to hunting
     void lanternCallback(const geometry_msgs::msg::Vector3::SharedPtr msg) {
-        // Trigger condition: If exploring and yellow blob area > 50
         if (current_state_ == MissionState::EXPLORE_CAVE && msg->y > 200.0) {
-            RCLCPP_INFO(this->get_logger(), "LANTERN SPOTTED! Area: %.2f. Switching to HUNTING_LANTERN.", msg->y);
-            current_state_ = MissionState::HUNTING_LANTERN;
+            RCLCPP_INFO(this->get_logger(), "LANTERN SPOTTED! Area: %.2f. Stabilizing for 2s...", msg->y);
             
-            // Disable exploration node
             auto toggle = std_msgs::msg::Bool();
             toggle.data = false;
             explore_pub_->publish(toggle);
-            
-            // ADDED: Enable the hunter node
-            toggle.data = true;
-            hunt_pub_->publish(toggle);
-            
-            target_sent_ = false; 
+
+            // Switch to STABILIZING instead of HUNTING_LANTERN
+            current_state_ = MissionState::STABILIZING; 
+
+            auto buffer_timer = std::make_shared<rclcpp::TimerBase::SharedPtr>();
+            *buffer_timer = this->create_wall_timer(2s, [this, buffer_timer]() {
+                RCLCPP_INFO(this->get_logger(), "Drone stable. Transitioning to HUNTING_LANTERN.");
+                
+                // NOW move to the state that actually triggers the hunter
+                current_state_ = MissionState::HUNTING_LANTERN; 
+                (*buffer_timer)->cancel(); 
+            });
         }
     }
 
@@ -138,6 +143,11 @@ private:
                 RCLCPP_INFO_ONCE(this->get_logger(), "Handing control over to Exploration Node...");
                 break;
             }
+            
+            case MissionState::STABILIZING:
+                // Do nothing here! This is our "Brake" period.
+                // The drone will just drift/hover while the timer runs.
+                break;
 
             case MissionState::HUNTING_LANTERN:
             {
