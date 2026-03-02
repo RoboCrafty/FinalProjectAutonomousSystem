@@ -1,5 +1,3 @@
-This updated README reflects the transition to the master-slave architecture, the inclusion of the C++ Hunting node, the 3D NBV Explorer, and the optimized performance configurations for virtual machine environments.
-
 # Autonomous System Project 2026 - Cave Exploration Drone
 
 This workspace contains the ROS 2 (Jazzy) packages necessary to simulate and control a quadrotor drone for an autonomous cave exploration mission. The architecture is modular, separating high-level mission logic from real-time trajectory generation, 3D exploration, and visual pursuit.
@@ -108,8 +106,3 @@ ros2 run lantern_hunting_pkg hunting_node
 
 ```
 
-
-
-```
-
-Would you like me to help you create a **final zip of this workspace** or generate a **one-click cleanup script** to automate the cache-clearing routine?
