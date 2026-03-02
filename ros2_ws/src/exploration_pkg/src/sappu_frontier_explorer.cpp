@@ -11,240 +11,258 @@
 #include <cmath>
 #include <algorithm>
 
-using namespace std::chrono_literals;
+// --- TUNABLE PARAMETERS ---
+const int MIN_CLUSTER_SIZE = 150;           // Minimum frontiers to be a valid goal
+const double CLUSTER_DIST_THRESHOLD = 1.2;  // Distance for grouping frontier voxels
+const double TARGET_DISTANCE_OFFSET = 4.0;  // Stop 3m before the cluster center
+const double REACHED_THRESHOLD = 1.2;       // Distance to consider setpoint reached
+const double FORBIDDEN_RADIUS = 8.0;        // Ignore frontiers near previous graph nodes
+const double HEADING_BIAS = 2.0;            // Score multiplier for clusters in front
+// --------------------------
 
-enum class NodeType { PATH, FORK };
-
-struct AreaNode {
+struct GraphNode {
     int id;
-    NodeType type;
     octomap::point3d position;
     int parent_id = -1;
-    bool left_taken = false;
-    bool right_taken = false;
-    bool is_closed = false; 
 };
 
-enum class ExplorerMode { EXPLORING, BACKTRACKING };
-
-struct FrontierCandidates {
-    octomap::point3d left_avg;
-    octomap::point3d right_avg;
-    bool has_left = false;
-    bool has_right = false;
-};
+enum class State { EXPLORING, BACKTRACKING };
 
 class SappuFrontierExplorer : public rclcpp::Node {
 public:
-    SappuFrontierExplorer() : Node("sappu_frontier_explorer"), 
-                               mode_(ExplorerMode::EXPLORING), 
-                               is_active_(false), 
-                               has_odom_(false),
-                               last_fork_id_(-1) {
+    SappuFrontierExplorer() : Node("sappu_frontier_explorer"), state_(State::EXPLORING), is_active_(false), has_target_(false) {
         
-        sub_enable_ = this->create_subscription<std_msgs::msg::Bool>(
-            "/enable_exploration", 10, [this](const std_msgs::msg::Bool::SharedPtr msg) { is_active_ = msg->data; });
-
         sub_odom_ = this->create_subscription<nav_msgs::msg::Odometry>(
-            "/current_state_est", 10, [this](const nav_msgs::msg::Odometry::SharedPtr msg) {
-                current_pos_ = octomap::point3d(msg->pose.pose.position.x, msg->pose.pose.position.y, msg->pose.pose.position.z);
-                has_odom_ = true;
-                tf2::Quaternion q(msg->pose.pose.orientation.x, msg->pose.pose.orientation.y, msg->pose.pose.orientation.z, msg->pose.pose.orientation.w);
-                double r, p; tf2::Matrix3x3(q).getRPY(r, p, current_yaw_);
-            });
-        
+            "/current_state_est", 10, std::bind(&SappuFrontierExplorer::odomCallback, this, std::placeholders::_1));
+
         sub_map_ = this->create_subscription<octomap_msgs::msg::Octomap>(
             "/octomap_binary", 1, [this](const octomap_msgs::msg::Octomap::SharedPtr msg) {
                 octomap::AbstractOcTree* tree = octomap_msgs::msgToMap(*msg);
                 if (tree) octree_.reset(dynamic_cast<octomap::OcTree*>(tree));
             });
 
+        sub_enable_ = this->create_subscription<std_msgs::msg::Bool>(
+            "/enable_exploration", 10, [this](const std_msgs::msg::Bool::SharedPtr msg) { 
+                is_active_ = msg->data;
+                // RCLCPP_INFO(this->get_logger(), "Exploration %s", is_active_ ? "ENABLED" : "DISABLED");
+            });
+
         pub_target_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("/next_setpoint", 10);
-        timer_ = this->create_wall_timer(800ms, std::bind(&SappuFrontierExplorer::plannerLoop, this));
+        
+        RCLCPP_INFO(this->get_logger(), "Sappu Frontier Explorer v2 (Event-Driven) Ready.");
     }
 
 private:
-    void plannerLoop() {
-        if (!is_active_ || !octree_ || !has_odom_) return;
+    void odomCallback(const nav_msgs::msg::Odometry::SharedPtr msg) {
+        current_pos_ = octomap::point3d(msg->pose.pose.position.x, msg->pose.pose.position.y, msg->pose.pose.position.z);
+        tf2::Quaternion q(msg->pose.pose.orientation.x, msg->pose.pose.orientation.y, msg->pose.pose.orientation.z, msg->pose.pose.orientation.w);
+        double r, p; tf2::Matrix3x3(q).getRPY(r, p, current_yaw_);
+        has_odom_ = true;
 
-        if (mode_ == ExplorerMode::EXPLORING && isPathBlocked(1.8)) {
-            RCLCPP_ERROR(this->get_logger(), "EMERGENCY: Wall within 1.8m. Backtracking.");
-            mode_ = ExplorerMode::BACKTRACKING;
-            if (!graph_.empty()) graph_.back().is_closed = true;
-            return;
+        if (!is_active_ || !octree_) return;
+
+        // Trigger planning if no target exists or if the current one is reached
+        if (!has_target_ || (current_pos_ - current_target_).norm() < REACHED_THRESHOLD) {
+            RCLCPP_INFO(this->get_logger(), "Target reached. Recomputing goal...");
+            computeNextGoal();
         }
-
-        if (mode_ == ExplorerMode::EXPLORING) handleExploration();
-        else handleBacktracking();
     }
 
-    void handleExploration() {
-        std::vector<octomap::point3d> frontiers = getGlobalFrontiers();
-        FrontierCandidates candidates = splitFrontiers(frontiers);
-        octomap::point3d target_pt;
-        bool is_actual_fork = false;
+    void computeNextGoal() {
+        if (graph_.empty()) {
+            RCLCPP_INFO(this->get_logger(), "Initializing Graph at Start Position.");
+            addNode(); 
+        }
 
-        if (candidates.has_left && candidates.has_right) {
-            // PROBE LOGIC: Look 4 meters ahead between candidates to see the fork wall early
-            for (double step = 0.2; step <= 0.8; step += 0.1) {
-                octomap::point3d check_pt = candidates.left_avg * step + candidates.right_avg * (1.0 - step);
-                // Check if this point or anything 1.5m behind it is a wall
-                for (double depth = 0.0; depth <= 4.0; depth += 0.5) {
-                    octomap::point3d probe = current_pos_ + (check_pt - current_pos_).normalized() * depth;
-                    auto node = octree_->search(probe);
-                    if (node != nullptr && octree_->isNodeOccupied(node)) {
-                        is_actual_fork = true; break;
-                    }
+        auto clusters = findFrontierClusters();
+
+        if (state_ == State::EXPLORING) {
+            bool found_reachable_cluster = false;
+            octomap::point3d chosen_cluster;
+
+            for (const auto& cluster_center : clusters) {
+                // Check if we can actually fly to this cluster's candidate point
+                octomap::point3d direction = (cluster_center - current_pos_).normalized();
+                octomap::point3d candidate_target = cluster_center - (direction * TARGET_DISTANCE_OFFSET);
+
+                if (isPathClear(current_pos_, candidate_target)) {
+                    chosen_cluster = cluster_center;
+                    current_target_ = candidate_target;
+                    found_reachable_cluster = true;
+                    break; // Found the best possible reachable goal!
+                } else {
+                    RCLCPP_DEBUG(this->get_logger(), "Best cluster blocked by wall, checking next...");
                 }
-                if (is_actual_fork) break;
             }
 
-            if (is_actual_fork) {
-                // Prevent duplicate fork nodes if we already made one nearby
-                bool too_close_to_last_fork = false;
-                if (last_fork_id_ != -1 && (current_pos_ - graph_[last_fork_id_].position).norm() < 10.0) {
-                    too_close_to_last_fork = true;
-                }
-
-                if (!too_close_to_last_fork) {
-                    createNewNode(true);
-                    last_fork_id_ = graph_.size() - 1;
-                }
-
-                // Sharp nudge to clear the corner
-                double nudge_angle = current_yaw_ + (M_PI / 3.0); 
-                target_pt = octomap::point3d(
-                    current_pos_.x() + 3.0 * cos(nudge_angle),
-                    current_pos_.y() + 3.0 * sin(nudge_angle),
-                    current_pos_.z()
-                );
-                RCLCPP_INFO(this->get_logger(), "Fork Predicted Ahead. Executing sharp Left Nudge.");
-            } else {
-                target_pt = (candidates.left_avg + candidates.right_avg) * 0.5;
+            if (!found_reachable_cluster) {
+                RCLCPP_WARN(this->get_logger(), "No clusters are reachable via straight line. Backtracking...");
+                state_ = State::BACKTRACKING;
+                return; 
             }
-        } else if (candidates.has_left) {
-            target_pt = candidates.left_avg;
-        } else if (candidates.has_right) {
-            target_pt = candidates.right_avg;
-        } else {
-            mode_ = ExplorerMode::BACKTRACKING;
-            return;
+
+            RCLCPP_INFO(this->get_logger(), "EXPLORING: Heading to reachable cluster at [%.1f, %.1f]", chosen_cluster.x(), chosen_cluster.y());
+            addNode(); 
+            publishTarget(current_target_);
+            has_target_ = true;
         }
-
-        if (graph_.empty() || ((current_pos_ - graph_.back().position).norm() > 7.0 && !is_actual_fork)) {
-            createNewNode(false);
-        }
-
-        checkLoopClosure();
-        publishTarget(target_pt);
-    }
-
-    void handleBacktracking() {
-        if (graph_.empty()) return;
-        AreaNode& curr = graph_.back();
-        auto candidates = splitFrontiers(getGlobalFrontiers());
-
-        if (curr.type == NodeType::FORK && candidates.has_right && !curr.right_taken) {
-            curr.right_taken = true;
-            mode_ = ExplorerMode::EXPLORING;
-            publishTarget(candidates.right_avg);
-        } else {
-            if (curr.parent_id == -1) { is_active_ = false; return; }
-            octomap::point3d p_pos = graph_[curr.parent_id].position;
-            publishTarget(p_pos);
-            if ((current_pos_ - p_pos).norm() < 2.0) graph_.pop_back();
-        }
-    }
-
-    bool isPathBlocked(double dist) {
-        for (double a = -0.3; a <= 0.3; a += 0.3) {
-            octomap::point3d p(current_pos_.x() + dist * cos(current_yaw_ + a),
-                               current_pos_.y() + dist * sin(current_yaw_ + a),
-                               current_pos_.z());
-            auto n = octree_->search(p);
-            if (n != nullptr && octree_->isNodeOccupied(n)) return true;
-        }
-        return false;
-    }
-
-    FrontierCandidates splitFrontiers(const std::vector<octomap::point3d>& frontiers) {
-        FrontierCandidates c;
-        std::vector<octomap::point3d> lg, rg;
-        for (const auto& f : frontiers) {
-            double angle = atan2(f.y() - current_pos_.y(), f.x() - current_pos_.x());
-            double rel = angle - current_yaw_;
-            while (rel > M_PI) rel -= 2.0 * M_PI;
-            while (rel < -M_PI) rel += 2.0 * M_PI;
-            if (std::abs(rel) < (M_PI / 2.0)) {
-                if (rel > 0.15) lg.push_back(f);
-                else if (rel < -0.15) rg.push_back(f);
+        else { // BACKTRACKING
+            if (!clusters.empty()) {
+                RCLCPP_INFO(this->get_logger(), "Found new path during backtracking! Switching to EXPLORING.");
+                state_ = State::EXPLORING;
+                computeNextGoal(); 
+                return;
             }
-        }
-        auto avg = [](const std::vector<octomap::point3d>& v) {
-            octomap::point3d s(0,0,0); for (auto p : v) s += p; return s * (1.0/v.size());
-        };
-        if (!lg.empty()) { c.left_avg = avg(lg); c.has_left = true; }
-        if (!rg.empty()) { c.right_avg = avg(rg); c.has_right = true; }
-        return c;
-    }
 
-    void createNewNode(bool fork) {
-        AreaNode n;
-        n.id = graph_.size();
-        n.position = current_pos_;
-        n.parent_id = graph_.empty() ? -1 : graph_.back().id;
-        n.type = fork ? NodeType::FORK : NodeType::PATH;
-        n.left_taken = fork;
-        graph_.push_back(n);
-        RCLCPP_INFO(this->get_logger(), "Node %d Created (%s)", n.id, (fork ? "FORK" : "PATH"));
-    }
+            if (graph_.size() <= 1) {
+                is_active_ = false;
+                RCLCPP_INFO(this->get_logger(), "BACK TO START. Mission Complete.");
+                return;
+            }
 
-    void checkLoopClosure() {
-        if (graph_.size() < 4) return;
-        for (size_t i = 0; i < graph_.size() - 3; ++i) {
-            if ((current_pos_ - graph_[i].position).norm() < 6.0) {
-                mode_ = ExplorerMode::BACKTRACKING; break;
+            // Move toward the parent of the current graph node
+            int parent_idx = graph_.back().parent_id;
+            current_target_ = graph_[parent_idx].position;
+            
+            RCLCPP_INFO(this->get_logger(), "BACKTRACKING: Moving to Node %d at [%.1f, %.1f]", parent_idx, current_target_.x(), current_target_.y());
+            
+            publishTarget(current_target_);
+            has_target_ = true;
+            
+            // Pop the node once we reach its parent
+            if ((current_pos_ - current_target_).norm() < REACHED_THRESHOLD) {
+                graph_.pop_back();
             }
         }
     }
 
-    std::vector<octomap::point3d> getGlobalFrontiers() {
-        std::vector<octomap::point3d> frs; if (!octree_) return frs;
-        double r = octree_->getResolution();
+    bool isPathClear(octomap::point3d start, octomap::point3d end) {
+        octomap::point3d direction = (end - start).normalized();
+        double dist = (end - start).norm();
+        octomap::point3d hit_point;
+        // Raycast from current position to target. If it hits a wall before reaching target, path is blocked.
+        if (octree_->castRay(start, direction, hit_point, true, dist)) {
+            return false; // Hit an occupied voxel
+        }
+        return true; 
+    }
+
+    std::vector<octomap::point3d> findFrontierClusters() {
+        std::vector<octomap::point3d> frontiers;
+        double res = octree_->getResolution();
+
         for (auto it = octree_->begin_leafs(); it != octree_->end_leafs(); ++it) {
             if (!octree_->isNodeOccupied(*it)) {
                 octomap::point3d p = it.getCoordinate();
-                octomap::point3d n[6] = {{p.x()+r,p.y(),p.z()}, {p.x()-r,p.y(),p.z()}, {p.x(),p.y()+r,p.z()}, 
-                                         {p.x(),p.y()-r,p.z()}, {p.x(),p.y(),p.z()+r}, {p.x(),p.y(),p.z()-r}};
-                for(int i=0; i<6; i++) if(octree_->search(n[i]) == nullptr) { frs.push_back(p); break; }
+                
+                // IGNORE ENTRANCE: Check distance to all previous graph nodes
+                bool too_close_to_history = false;
+                for (const auto& node : graph_) {
+                    if ((p - node.position).norm() < FORBIDDEN_RADIUS) {
+                        too_close_to_history = true;
+                        break;
+                    }
+                }
+                if (too_close_to_history) continue;
+
+                // Detect if node is a frontier (has unknown neighbor)
+                bool is_frontier = false;
+                octomap::point3d neighbors[6] = {
+                    {p.x()+res, p.y(), p.z()}, {p.x()-res, p.y(), p.z()},
+                    {p.x(), p.y()+res, p.z()}, {p.x(), p.y()-res, p.z()},
+                    {p.x(), p.y(), p.z()+res}, {p.x(), p.y(), p.z()-res}
+                };
+                for(auto& n : neighbors) {
+                    if (octree_->search(n) == nullptr) { is_frontier = true; break; }
+                }
+                if (is_frontier) frontiers.push_back(p);
             }
         }
-        return frs;
+
+        if (frontiers.empty()) return {};
+
+        // Sort for clustering stability
+        std::sort(frontiers.begin(), frontiers.end(), [](auto& a, auto& b){ return a.x() < b.x(); });
+
+        std::vector<std::vector<octomap::point3d>> clusters;
+        for (auto& f : frontiers) {
+            bool found = false;
+            for (auto& cluster : clusters) {
+                if ((f - cluster.back()).norm() < CLUSTER_DIST_THRESHOLD) {
+                    cluster.push_back(f);
+                    found = true; break;
+                }
+            }
+            if (!found) clusters.push_back({f});
+        }
+
+        // Scoring: Size + Heading Bias
+        std::vector<std::pair<double, octomap::point3d>> scored_clusters;
+        for (auto& c : clusters) {
+            if (c.size() >= (size_t)MIN_CLUSTER_SIZE) {
+                octomap::point3d avg(0,0,0);
+                for (auto& p : c) avg += p;
+                octomap::point3d center = avg * (1.0/c.size());
+
+                if (!isPathClear(current_pos_, center)) continue; // Skip this cluster if a wall is in the way
+
+                double angle = atan2(center.y() - current_pos_.y(), center.x() - current_pos_.x());
+                double rel_angle = std::remainder(angle - current_yaw_, 2 * M_PI);
+                
+                double score = (double)c.size();
+                if (std::abs(rel_angle) < (M_PI / 2.0)) score *= HEADING_BIAS; 
+
+                scored_clusters.push_back({score, center});
+            }
+        }
+
+        std::sort(scored_clusters.rbegin(), scored_clusters.rend());
+        
+        RCLCPP_INFO(this->get_logger(), "Found %zu clusters. Best score: %.1f (Size: ~%zu)", 
+                    scored_clusters.size(), scored_clusters.empty() ? 0.0 : scored_clusters[0].first, 
+                    scored_clusters.empty() ? 0 : (size_t)(scored_clusters[0].first / (scored_clusters[0].first > (double)MIN_CLUSTER_SIZE * HEADING_BIAS ? HEADING_BIAS : 1.0)));
+
+        std::vector<octomap::point3d> result;
+        for (auto& sc : scored_clusters) result.push_back(sc.second);
+        return result;
+    }
+
+    void addNode() {
+        GraphNode n;
+        n.id = graph_.size();
+        n.position = current_pos_;
+        n.parent_id = graph_.empty() ? -1 : graph_.back().id;
+        graph_.push_back(n);
+        RCLCPP_INFO(this->get_logger(), ">>> NODE %d CREATED at [%.1f, %.1f]", n.id, n.position.x(), n.position.y());
     }
 
     void publishTarget(octomap::point3d t) {
-        auto m = geometry_msgs::msg::PoseStamped();
-        m.header.stamp = this->now(); m.header.frame_id = "world";
-        m.pose.position.x = t.x(); m.pose.position.y = t.y(); m.pose.position.z = t.z();
-        double y = atan2(t.y() - current_pos_.y(), t.x() - current_pos_.x());
-        tf2::Quaternion q; q.setRPY(0, 0, y);
-        m.pose.orientation.x = q.x(); m.pose.orientation.y = q.y();
-        m.pose.orientation.z = q.z(); m.pose.orientation.w = q.w();
-        pub_target_->publish(m);
+        auto msg = geometry_msgs::msg::PoseStamped();
+        msg.header.stamp = this->now();
+        msg.header.frame_id = "world";
+        msg.pose.position.x = t.x();
+        msg.pose.position.y = t.y();
+        msg.pose.position.z = t.z();
+        
+        double yaw = atan2(t.y() - current_pos_.y(), t.x() - current_pos_.x());
+        tf2::Quaternion q; q.setRPY(0, 0, yaw);
+        msg.pose.orientation.x = q.x(); msg.pose.orientation.y = q.y();
+        msg.pose.orientation.z = q.z(); msg.pose.orientation.w = q.w();
+        
+        pub_target_->publish(msg);
     }
 
-    ExplorerMode mode_;
-    std::vector<AreaNode> graph_;
+    State state_;
+    std::vector<GraphNode> graph_;
     std::shared_ptr<octomap::OcTree> octree_;
-    octomap::point3d current_pos_;
+    octomap::point3d current_pos_, current_target_;
     double current_yaw_;
-    bool is_active_, has_odom_;
-    int last_fork_id_;
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr sub_enable_;
+    bool is_active_, has_odom_ = false, has_target_ = false;
+
     rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr sub_odom_;
     rclcpp::Subscription<octomap_msgs::msg::Octomap>::SharedPtr sub_map_;
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr sub_enable_;
     rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr pub_target_;
-    rclcpp::TimerBase::SharedPtr timer_;
 };
 
 int main(int argc, char** argv) {
