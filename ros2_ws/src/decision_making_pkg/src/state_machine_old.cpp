@@ -10,54 +10,44 @@ using namespace std::chrono_literals;
 enum class MissionState {
     WAYPOINT_HOVER,
     APPROACH_CAVE,
-    STABILIZE_BEFORE_ERRT,   // NEW
-    EXPLORE_CAVE,
+    EXPLORE_CAVE,        // NEW STATE
     MISSION_COMPLETED,
 };
 
 class StateMachineNode : public rclcpp::Node {
 public:
-    StateMachineNode()
-    : Node("state_machine_node"),
-      current_state_(MissionState::WAYPOINT_HOVER),
-      has_odom_(false),
-      target_sent_(false),
-      errt_enabled_(false)
-    {
+    StateMachineNode() : Node("state_machine_node"), current_state_(MissionState::WAYPOINT_HOVER), has_odom_(false), target_sent_(false) {
         target_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("/next_setpoint", 10);
+        
+        // NEW: Publisher to wake up the Python Explorer
         explore_pub_ = this->create_publisher<std_msgs::msg::Bool>("/enable_exploration", 10);
+        
+        // NEW: Client to reset the Octomap
         octomap_reset_client_ = this->create_client<std_srvs::srv::Empty>("/octomap_server/reset");
-
+        
         odom_sub_ = this->create_subscription<nav_msgs::msg::Odometry>(
-            "/current_state_est", 10,
-            [this](const nav_msgs::msg::Odometry::SharedPtr msg) {
+            "/current_state_est", 10, [this](const nav_msgs::msg::Odometry::SharedPtr msg) {
                 current_pos_ = msg->pose.pose.position;
                 current_ori_ = msg->pose.pose.orientation;
                 has_odom_ = true;
             });
 
-        // 🔥 Changed from 500ms (2Hz) → 100ms (10Hz)
-        mission_timer_ = this->create_wall_timer(
-            100ms,
-            std::bind(&StateMachineNode::stateMachineTick, this));
-
+        mission_timer_ = this->create_wall_timer(500ms, std::bind(&StateMachineNode::stateMachineTick, this));
         RCLCPP_INFO(this->get_logger(), "State Machine Ready");
     }
 
 private:
-
     void stateMachineTick() {
         if (!has_odom_) return;
 
         switch (current_state_) {
-
             case MissionState::WAYPOINT_HOVER:
                 if (!target_sent_) {
                     sendTarget(-36.0, 10.0, 25.0, 0.0, 0.0, 1.0, 0.0);
                     RCLCPP_INFO(this->get_logger(), "Climbing...");
                     target_sent_ = true;
                 }
-
+                
                 if (isReached(-36.0, 10.0, 25.0)) {
                     current_state_ = MissionState::APPROACH_CAVE;
                     target_sent_ = false;
@@ -66,53 +56,32 @@ private:
 
             case MissionState::APPROACH_CAVE:
                 if (!target_sent_) {
-                    sendTarget(-328.14, 8.38, 15.0);
+                    sendTarget(-328.14, 8.38, 15.0); //sendTarget(-315.14, 8.38, 15.0);
                     RCLCPP_INFO(this->get_logger(), "Approaching cave entrance...");
                     target_sent_ = true;
                 }
-
+                
                 if (isReached(-315.14, 8.38, 15.0)) {
-
+                    // NEW: Reset the Octomap before entering the cave
                     if (octomap_reset_client_->wait_for_service(1s)) {
                         auto request = std::make_shared<std_srvs::srv::Empty::Request>();
                         octomap_reset_client_->async_send_request(request);
-                        RCLCPP_INFO(this->get_logger(), "Octomap reset triggered.");
+                        RCLCPP_INFO(this->get_logger(), "Octomap reset triggered. Deleting outside world!");
+                    } else {
+                        RCLCPP_WARN(this->get_logger(), "Octomap reset service not available!");
                     }
-
-                    hover_reference_ = current_pos_;
-                    stabilize_start_time_ = this->now();
-
-                    current_state_ = MissionState::STABILIZE_BEFORE_ERRT;
-                    RCLCPP_INFO(this->get_logger(), "Stabilizing before ERRT...");
-                }
-                break;
-
-            case MissionState::STABILIZE_BEFORE_ERRT:
-                // 🔥 Hold position for smooth transition
-                sendTarget(
-                    hover_reference_.x,
-                    hover_reference_.y,
-                    hover_reference_.z
-                );
-
-                if ((this->now() - stabilize_start_time_).seconds() > 1.5) {
-                    current_state_ = MissionState::EXPLORE_CAVE;
+                    
+                    current_state_ = MissionState::EXPLORE_CAVE; 
                 }
                 break;
 
             case MissionState::EXPLORE_CAVE:
             {
-                // 🔥 Enable ERRT only once
-                if (!errt_enabled_) {
-                    std_msgs::msg::Bool explore_msg;
-                    explore_msg.data = true;
-                    explore_pub_->publish(explore_msg);
-
-                    errt_enabled_ = true;
-                    RCLCPP_INFO(this->get_logger(), "Control handed to ERRT");
-                }
-
-                // 🔥 Stop sending position targets
+                // NEW: Continuously publish 'True' to keep the Python node active
+                std_msgs::msg::Bool explore_msg;
+                explore_msg.data = true;
+                explore_pub_->publish(explore_msg);
+                RCLCPP_INFO_ONCE(this->get_logger(), "Handing control over to Exploration Node...");
                 break;
             }
 
@@ -122,10 +91,7 @@ private:
         }
     }
 
-    void sendTarget(double x, double y, double z,
-                    double qx = 0.0, double qy = 0.0,
-                    double qz = 0.0, double qw = 0.0)
-    {
+    void sendTarget(double x, double y, double z, double qx = 0.0, double qy = 0.0, double qz = 0.0, double qw = 0.0) {
         auto msg = geometry_msgs::msg::PoseStamped();
         msg.header.stamp = this->now();
         msg.header.frame_id = "world";
@@ -140,11 +106,9 @@ private:
     }
 
     bool isReached(double tx, double ty, double tz) {
-        double dist = std::sqrt(
-            std::pow(tx - current_pos_.x, 2) +
-            std::pow(ty - current_pos_.y, 2) +
-            std::pow(tz - current_pos_.z, 2)
-        );
+        double dist = std::sqrt(std::pow(tx - current_pos_.x, 2) +
+                                std::pow(ty - current_pos_.y, 2) +
+                                std::pow(tz - current_pos_.z, 2));
         return dist < 1.5;
     }
 
@@ -153,17 +117,9 @@ private:
     rclcpp::Client<std_srvs::srv::Empty>::SharedPtr octomap_reset_client_;
     rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_sub_;
     rclcpp::TimerBase::SharedPtr mission_timer_;
-
     geometry_msgs::msg::Point current_pos_;
-    geometry_msgs::msg::Point hover_reference_;
     geometry_msgs::msg::Quaternion current_ori_;
-
-    rclcpp::Time stabilize_start_time_;
-
-    bool has_odom_;
-    bool target_sent_;
-    bool errt_enabled_;   // NEW
-
+    bool has_odom_, target_sent_;
     MissionState current_state_;
 };
 

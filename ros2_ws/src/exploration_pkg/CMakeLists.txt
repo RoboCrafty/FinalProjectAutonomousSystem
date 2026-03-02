@@ -9,12 +9,14 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(std_srvs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(octomap_msgs REQUIRED)
 find_package(octomap REQUIRED) # The native C++ library
+find_package(Eigen3 REQUIRED) # For ERRT explorer
 
 
 add_executable(nbv_explorer_3d_node src/nbv_explorer_3d.cpp)
@@ -27,22 +29,35 @@ target_include_directories(nbv_explorer_3d_node PUBLIC
 
 target_include_directories(errt_explorer_3d_node PUBLIC
   ${OCTOMAP_INCLUDE_DIRS}
+  
 )
 
 ament_target_dependencies(nbv_explorer_3d_node
   rclcpp std_msgs geometry_msgs nav_msgs 
   tf2 tf2_ros tf2_geometry_msgs octomap_msgs
 )
+# ament_target_dependencies(errt_explorer_3d_node
+#   rclcpp std_msgs geometry_msgs nav_msgs 
+#   tf2 tf2_ros tf2_geometry_msgs octomap_msgs
+# )
 ament_target_dependencies(errt_explorer_3d_node
-  rclcpp std_msgs geometry_msgs nav_msgs 
-  tf2 tf2_ros tf2_geometry_msgs octomap_msgs
+  rclcpp
+  nav_msgs
+  geometry_msgs
+  std_msgs
+  std_srvs
+  octomap
+  octomap_msgs
+  tf2
 )
-
 
 
 # --- FIXED: Uppercase OCTOMAP variables ---
 target_link_libraries(nbv_explorer_3d_node ${OCTOMAP_LIBRARIES})
 target_link_libraries(errt_explorer_3d_node ${OCTOMAP_LIBRARIES})
+target_link_libraries(errt_explorer_3d_node
+  Eigen3::Eigen
+)
 
 install(TARGETS
   nbv_explorer_3d_node
