@@ -49,6 +49,12 @@ public:
             "/hunting_done", 10, [this](const std_msgs::msg::Bool::SharedPtr msg) {
                 if (msg->data && current_state_ == MissionState::HUNTING_LANTERN) {
                     lanterns_found_++; // Increment our counter!
+
+                    RCLCPP_INFO(this->get_logger(), 
+                        "SUCCESS: Secured Lantern #%d", lanterns_found_);
+                    RCLCPP_INFO(this->get_logger(), 
+                        "LANTERN POSITION -> X: %.2f, Y: %.2f, Z: %.2f", 
+                        current_pos_.x, current_pos_.y, current_pos_.z);
                     
                     // Turn off the hunter immediately
                     std_msgs::msg::Bool toggle_msg;
