@@ -78,23 +78,22 @@ private:
     double scoreCandidate(double cx, double cy, double cz, double cand_yaw, double distance) {
         if (!octree_) return -9999.0;
 
-        // --- THE FIX: Line-of-Sight Raycasting ---
-        // Shoot a 3D laser from the drone to the target. If it hits rock, DO NOT GO THERE.
+        // --- UPGRADE: Line-of-Sight Raycasting ---
+        // Shoots a virtual laser to the target. If it hits rock, the path is invalid.
         octomap::point3d origin(current_x_, current_y_, current_z_);
         octomap::point3d direction(cx - current_x_, cy - current_y_, cz - current_z_);
         octomap::point3d hit_pt;
         
         bool hit = octree_->castRay(origin, direction, hit_pt, true, distance);
         if (hit) {
-            return -9999.0; // VETO! There is a wall blocking the path to this point.
+            return -9999.0; // VETO! Wall detected in the path.
         }
 
-        // 1. Safety Check: 3D Spherical Forcefield (2.5m radius)
-        double safe_r = 5.0;
+        // --- UPGRADE: 3D Spherical Forcefield (5.0m safety radius) ---
+        double safe_r = 5.0; 
         double res = octree_->getResolution();
-        if (res <= 0.0) res = 0.2; // Fallback to prevent divide-by-zero
+        if (res <= 0.0) res = 0.2; 
         
-        // Step by 2*res to calculate faster and prevent the drone's brain from freezing
         double step_safe = res * 2.0; 
         for (double dx = -safe_r; dx <= safe_r; dx += step_safe) {
             for (double dy = -safe_r; dy <= safe_r; dy += step_safe) {
@@ -103,7 +102,7 @@ private:
                     
                     octomap::OcTreeNode* node = octree_->search(cx + dx, cy + dy, cz + dz);
                     if (node && octree_->isNodeOccupied(node)) {
-                        return -9999.0; // VETO! Target destination is too close to a wall.
+                        return -9999.0; // VETO! Too close to an obstacle.
                     }
                 }
             }
@@ -112,7 +111,7 @@ private:
         // 2. Information Gain: Count Unknown Voxels
         double score = 0.0;
         double search_r = 10.0; 
-        double step_search = res * 4.0; // Check every 4th voxel to save massive CPU power
+        double step_search = res * 4.0; 
         for (double dx = -search_r; dx <= search_r; dx += step_search) {
             for (double dy = -search_r; dy <= search_r; dy += step_search) {
                 for (double dz = -search_r; dz <= search_r; dz += step_search) {
@@ -126,7 +125,7 @@ private:
             }
         }
 
-        // 3. Straight-line bonus
+        // 3. Straight-line bonus (Smoothness)
         double yaw_diff = std::abs(cand_yaw - current_yaw_);
         while (yaw_diff > M_PI) yaw_diff -= 2.0 * M_PI;
         while (yaw_diff < -M_PI) yaw_diff += 2.0 * M_PI;
@@ -138,10 +137,10 @@ private:
     void explorationLoop() {
         if (!is_exploring_ || !octree_) return;
 
-        // Lookahead Planning
+        // Lookahead Planning: Wait until close to target before replanning
         if (has_target_) {
             double dist = std::sqrt(std::pow(target_x_ - current_x_, 2) + std::pow(target_y_ - current_y_, 2) + std::pow(target_z_ - current_z_, 2));
-            if (dist > 3.0) return;
+            if (dist > 6.0) return; // UPGRADE: Increased distance check for smoother flight
         }
 
         double best_score = -9999.0;
@@ -149,22 +148,20 @@ private:
 
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_real_distribution<> yaw_dist(-0.8, 0.8);   // Look left/right
-        std::uniform_real_distribution<> pitch_dist(-0.8, 0.8); // NEW: Look up/down
-        std::uniform_real_distribution<> dist_dist(6.0, 12.0);  // 3D Leap distance
+        std::uniform_real_distribution<> yaw_dist(-0.8, 0.8);   
+        std::uniform_real_distribution<> pitch_dist(-0.8, 0.8); // UPGRADE: Sample vertical space
+        std::uniform_real_distribution<> dist_dist(6.0, 15.0);  // UPGRADE: Increased leap max to 15m
 
-        // Sample 60 points in a 3D forward cone
         for (int i = 0; i < 60; ++i) {
             double angle_yaw = current_yaw_ + yaw_dist(gen);
             double angle_pitch = pitch_dist(gen);
             double distance = dist_dist(gen);
 
-            // 3D Spherical Coordinate Math
+            // UPGRADE: 3D Spherical Coordinate Math
             double cand_x = current_x_ + distance * std::cos(angle_yaw) * std::cos(angle_pitch);
             double cand_y = current_y_ + distance * std::sin(angle_yaw) * std::cos(angle_pitch);
             double cand_z = current_z_ + distance * std::sin(angle_pitch);
 
-            // Keep Z bounded inside the cave so it doesn't try to fly through the floor
             if (cand_z < -100.0) cand_z = -100.0;
             if (cand_z > 100.0) cand_z = 100.0;
 
@@ -172,9 +169,7 @@ private:
 
             if (score > best_score) {
                 best_score = score;
-                best_x = cand_x;
-                best_y = cand_y;
-                best_z = cand_z;
+                best_x = cand_x; best_y = cand_y; best_z = cand_z;
             }
         }
 
