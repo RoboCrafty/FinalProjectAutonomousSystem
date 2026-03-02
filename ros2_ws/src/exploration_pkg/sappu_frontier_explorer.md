@@ -1,18 +1,4 @@
-# README.md
-
-## Architecture Overview
-
-The system operates as a continuous reactive pipeline:
-Decision Making -> Frontier Explorer -> Trajectory Generator -> Controller -> Simulation.
-
-* Decision Making (state_machine.cpp): Sequentially manages mission phases: climbing, approaching the cave entrance, and handing over control to the explorer. It includes a service call to reset the Octomap upon entering the cave to ensure a clean mapping environment.
-* Frontier Explorer (sappu_frontier_explorer.cpp): The core autonomous engine. It analyzes the occupancy grid to determine movement and builds a persistent memory of the cave's topology.
-* Trajectory Generator: Receives 3D setpoints and generates physically feasible 4D polynomial trajectories sampled at 100Hz.
-* Controller: A geometric controller that calculates rotor speeds based on trajectory commands and current state estimation.
-
----
-
-## Exploration Algorithm Logic
+# Exploration Algorithm Logic
 
 The sappu_frontier_explorer implements a Depth-First Search (DFS) approach on a topological graph to handle the unique challenges of sub-terrain environments, such as forks and loops.
 
