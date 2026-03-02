@@ -5,6 +5,7 @@
 #include <std_srvs/srv/empty.hpp>
 #include <geometry_msgs/msg/vector3.hpp> // Required for lantern data
 #include <cmath>
+#include <std_msgs/msg/bool.hpp>
 
 using namespace std::chrono_literals;
 
@@ -40,21 +41,51 @@ public:
 
         mission_timer_ = this->create_wall_timer(500ms, std::bind(&StateMachineNode::stateMachineTick, this));
         RCLCPP_INFO(this->get_logger(), "State Machine Ready");
+        
+        hunt_pub_ = this->create_publisher<std_msgs::msg::Bool>("/enable_hunting", 10);
+        
+        // ADDED: Subscriber to listen for when the Hunter is finished
+        hunt_done_sub_ = this->create_subscription<std_msgs::msg::Bool>(
+            "/hunting_done", 10, [this](const std_msgs::msg::Bool::SharedPtr msg) {
+                if (msg->data && current_state_ == MissionState::HUNTING_LANTERN) {
+                    lanterns_found_++; // Increment our counter!
+                    
+                    // Turn off the hunter immediately
+                    std_msgs::msg::Bool toggle_msg;
+                    toggle_msg.data = false;
+                    hunt_pub_->publish(toggle_msg);
+
+                    if (lanterns_found_ >= 4) {
+                        RCLCPP_INFO(this->get_logger(), "Lantern %d/4 secured! ALL LANTERNS FOUND. Mission Complete.", lanterns_found_);
+                        current_state_ = MissionState::MISSION_COMPLETED;
+                    } else {
+                        RCLCPP_INFO(this->get_logger(), "Lantern %d/4 secured! Resuming exploration...", lanterns_found_);
+                        current_state_ = MissionState::EXPLORE_CAVE;
+                        
+                        // Wake the explorer back up immediately
+                        toggle_msg.data = true;
+                        explore_pub_->publish(toggle_msg);
+                    }
+                }
+            });
     }
 
 private:
     // Callback to trigger the switch from exploration to hunting
     void lanternCallback(const geometry_msgs::msg::Vector3::SharedPtr msg) {
         // Trigger condition: If exploring and yellow blob area > 50
-        if (current_state_ == MissionState::EXPLORE_CAVE && msg->y > 50.0) {
+        if (current_state_ == MissionState::EXPLORE_CAVE && msg->y > 200.0) {
             RCLCPP_INFO(this->get_logger(), "LANTERN SPOTTED! Area: %.2f. Switching to HUNTING_LANTERN.", msg->y);
-            
             current_state_ = MissionState::HUNTING_LANTERN;
             
-            // Disable exploration node so the Hunter Node can take control
+            // Disable exploration node
             auto toggle = std_msgs::msg::Bool();
             toggle.data = false;
             explore_pub_->publish(toggle);
+            
+            // ADDED: Enable the hunter node
+            toggle.data = true;
+            hunt_pub_->publish(toggle);
             
             target_sent_ = false; 
         }
@@ -109,8 +140,14 @@ private:
             }
 
             case MissionState::HUNTING_LANTERN:
-                // Standby: hunting_node.py is now controlling the drone via /command/trajectory
+            {
+                // ADDED: Continuously publish 'True' to keep the Hunter active
+                std_msgs::msg::Bool hunt_msg;
+                hunt_msg.data = true;
+                hunt_pub_->publish(hunt_msg);
+                RCLCPP_INFO_ONCE(this->get_logger(), "Handing control over to Hunting Node...");
                 break;
+            }
 
             case MissionState::MISSION_COMPLETED:
                 RCLCPP_INFO_ONCE(this->get_logger(), "Mission completed");
@@ -144,6 +181,7 @@ private:
     geometry_msgs::msg::Point current_pos_;
     geometry_msgs::msg::Quaternion current_ori_;
     bool has_odom_, target_sent_;
+    int lanterns_found_; // ADDED: Counter for the lanterns
 
     rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr target_pub_;
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr explore_pub_;
@@ -151,6 +189,8 @@ private:
     rclcpp::Client<std_srvs::srv::Empty>::SharedPtr octomap_reset_client_;
     rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_sub_;
     rclcpp::TimerBase::SharedPtr mission_timer_;
+    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr hunt_pub_;
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr hunt_done_sub_;
 };
 
 int main(int argc, char** argv) {
