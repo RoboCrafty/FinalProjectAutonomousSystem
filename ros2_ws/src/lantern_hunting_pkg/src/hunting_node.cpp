@@ -75,7 +75,7 @@ private:
             ty_ += std::sin(current_yaw_) * hunt_speed;
 
             // Dive condition
-            if (msg->y > 50000.0) {
+            if (msg->y > 30000.0) {
                 tz_ -= msg->z * 0.002;
             }
         } else {
