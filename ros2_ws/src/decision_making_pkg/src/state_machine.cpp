@@ -8,30 +8,28 @@
 using namespace std::chrono_literals;
 
 enum class MissionState {
-    WAYPOINT_HOVER,
-    APPROACH_CAVE,
-    ENTER_CAVE,
-    WAIT_FOR_MAP,        // State to allow sensors to fill Octomap after reset
-    EXPLORE_CAVE,
+    APPROACH_CAVE,      // Hover, Approach, and Enter
+    EXPLORE_CAVE,       // Wait for map and start frontier exploration
     MISSION_COMPLETED,
 };
 
 class StateMachineNode : public rclcpp::Node {
 public:
-    StateMachineNode() : Node("state_machine_node"), current_state_(MissionState::WAYPOINT_HOVER), has_odom_(false), target_sent_(false) {
+    StateMachineNode() : Node("state_machine_node"), current_state_(MissionState::APPROACH_CAVE), sub_step_(0), has_odom_(false), target_sent_(false) {
+
         target_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("/next_setpoint", 10);
-        
-        // Publisher to enable/disable the Frontier Explorer node
         explore_pub_ = this->create_publisher<std_msgs::msg::Bool>("/enable_exploration", 10);
-        
-        // Client to reset the Octomap before entering the cave
         octomap_reset_client_ = this->create_client<std_srvs::srv::Empty>("/octomap_server/reset");
         
         odom_sub_ = this->create_subscription<nav_msgs::msg::Odometry>(
             "/current_state_est", 10, [this](const nav_msgs::msg::Odometry::SharedPtr msg) {
                 current_pos_ = msg->pose.pose.position;
-                current_ori_ = msg->pose.pose.orientation;
                 has_odom_ = true;
+            });
+
+        explore_finished_sub_ = this->create_subscription<std_msgs::msg::Bool>(
+            "/exploration_complete", 10, [this](const std_msgs::msg::Bool::SharedPtr msg) {
+                if (msg->data) exploration_finished_received_ = true;
             });
 
         mission_timer_ = this->create_wall_timer(500ms, std::bind(&StateMachineNode::stateMachineTick, this));
@@ -42,94 +40,89 @@ private:
     void stateMachineTick() {
         if (!has_odom_) return;
 
-        std_msgs::msg::Bool explore_msg;
-
         switch (current_state_) {
-            case MissionState::WAYPOINT_HOVER:
-                explore_msg.data = false;
-                explore_pub_->publish(explore_msg);
-
-                if (!target_sent_) {
-                    sendTarget(-36.0, 10.0, 25.0, 0.0, 0.0, 1.0, 0.0);
-                    RCLCPP_INFO(this->get_logger(), "Climbing...");
-                    target_sent_ = true;
-                }
-                
-                if (isReached(-36.0, 10.0, 25.0)) {
-                    current_state_ = MissionState::APPROACH_CAVE;
-                    target_sent_ = false;
-                }
-                break;
-
             case MissionState::APPROACH_CAVE:
-                // Ensure explorer is disabled during approach
-                explore_msg.data = false;
-                explore_pub_->publish(explore_msg);
-
-                if (!target_sent_) {
-                    sendTarget(-310.14, 8.38, 15.0); // Coordinate just outside the cave
-                    RCLCPP_INFO(this->get_logger(), "Approaching cave entrance...");
-                    target_sent_ = true;
-                }
-                
-                if (isReached(-310.14, 8.38, 15.0)) {
-                    // Reset the Octomap to clear the outside world data
-                    if (octomap_reset_client_->wait_for_service(1s)) {
-                        auto request = std::make_shared<std_srvs::srv::Empty::Request>();
-                        octomap_reset_client_->async_send_request(request);
-                        RCLCPP_INFO(this->get_logger(), "Octomap reset triggered.");
-                    }
-                    
-                    // Move to the next state and reset target flag
-                    current_state_ = MissionState::ENTER_CAVE;
-                    target_sent_ = false; 
-                }
-                break;
-            
-            case MissionState::ENTER_CAVE:
-                explore_msg.data = false;
-                explore_pub_->publish(explore_msg);
-
-                if(!target_sent_) {
-                    sendTarget(-330.14, 8.38, 15.0); // Coordinate inside the cave
-                    RCLCPP_INFO(this->get_logger(), "Entering cave...");
-                    target_sent_ = true;
-                }
-
-                if (isReached(-330.14, 8.38, 15.0)) {
-                    start_wait_time_ = this->now();
-                    current_state_ = MissionState::WAIT_FOR_MAP; // Wait for sensor data to populate
-                    target_sent_ = false;
-                }
-                break;
-
-            case MissionState::WAIT_FOR_MAP:
-                explore_msg.data = false;
-                explore_pub_->publish(explore_msg);
-
-                // Wait 4 seconds for sensors to perceive the interior before starting exploration
-                if ((this->now() - start_wait_time_) > 4s) {
-                    RCLCPP_INFO(this->get_logger(), "Sensors ready. Starting exploration...");
-                    current_state_ = MissionState::EXPLORE_CAVE;
-                }
+                handleApproachPhase();
                 break;
 
             case MissionState::EXPLORE_CAVE:
-            {
-                // Enable the Frontier Explorer node
-                explore_msg.data = true;
-                explore_pub_->publish(explore_msg);
-                RCLCPP_INFO_ONCE(this->get_logger(), "Control handed to Explorer.");
+                handleExplorationPhase();
                 break;
-            }
 
             case MissionState::MISSION_COMPLETED:
-                explore_msg.data = false;
-                explore_pub_->publish(explore_msg);
-                RCLCPP_INFO_ONCE(this->get_logger(), "Mission completed");
+                setExploration(false);
+                RCLCPP_INFO_ONCE(this->get_logger(), "Mission completed. Hovering at start.");
                 break;
         }
     }
+
+
+
+    //APPROACH STATE
+    void handleApproachPhase() {
+        setExploration(false); // Ensure explorer is OFF
+
+        // Climb to Hover point
+        if (sub_step_ == 0) {
+            if (!target_sent_) { sendTarget(-36.0, 10.0, 25.0, 0.0, 0.0, 1.0, 0.0); target_sent_ = true; RCLCPP_INFO(this->get_logger(), "Climbing..."); }
+            if (isReached(-36.0, 10.0, 25.0)) { sub_step_++; target_sent_ = false; }
+        }
+        //Approach Entrance
+        else if (sub_step_ == 1) {
+            if (!target_sent_) { sendTarget(-310.14, 8.38, 15.0); target_sent_ = true; RCLCPP_INFO(this->get_logger(), "Approaching Entrance..."); }
+            if (isReached(-310.14, 8.38, 15.0)) { 
+                resetOctomap(); // Clear old map data before entering
+                sub_step_++; target_sent_ = false; 
+            }
+        }
+        //Enter Cave
+        else if (sub_step_ == 2) {
+            if (!target_sent_) { sendTarget(-330.14, 8.38, 15.0); target_sent_ = true; RCLCPP_INFO(this->get_logger(), "Entering Cave..."); }
+            if (isReached(-330.14, 8.38, 15.0)) {
+                start_wait_time_ = this->now();
+                current_state_ = MissionState::EXPLORE_CAVE; // Move to next major Phase
+                sub_step_ = 0; // Reset sub_step for next phase if needed
+                target_sent_ = false;
+            }
+        }
+    }
+
+
+
+    //EXPLORATION STATE
+    void handleExplorationPhase() {
+        //Wait for map sensors to fill after the reset
+        if ((this->now() - start_wait_time_) < 4s) {
+            setExploration(false);
+            return;
+        }
+
+        // Once sensors are ready, start the actual explorer
+        if (exploration_finished_received_) {
+            current_state_ = MissionState::MISSION_COMPLETED;
+        } else {
+            setExploration(true);
+            RCLCPP_INFO_ONCE(this->get_logger(), "Frontier Explorer active.");
+        }
+    }
+
+
+
+    // HELPER FUNCTIONS
+    void setExploration(bool enable) {
+        std_msgs::msg::Bool msg;
+        msg.data = enable;
+        explore_pub_->publish(msg);
+    }
+
+
+    void resetOctomap() {
+        if (octomap_reset_client_->wait_for_service(1s)) {
+            octomap_reset_client_->async_send_request(std::make_shared<std_srvs::srv::Empty::Request>());
+            RCLCPP_INFO(this->get_logger(), "Octomap reset.");
+        }
+    }
+
 
     void sendTarget(double x, double y, double z, double qx = 0.0, double qy = 0.0, double qz = 0.0, double qw = 0.0) {
         auto msg = geometry_msgs::msg::PoseStamped();
@@ -145,24 +138,32 @@ private:
         target_pub_->publish(msg);
     }
 
+
     bool isReached(double tx, double ty, double tz) {
-        double dist = std::sqrt(std::pow(tx - current_pos_.x, 2) +
-                                std::pow(ty - current_pos_.y, 2) +
-                                std::pow(tz - current_pos_.z, 2));
+        double dist = std::sqrt(std::pow(tx - current_pos_.x, 2) + std::pow(ty - current_pos_.y, 2) + std::pow(tz - current_pos_.z, 2));
         return dist < 1.5;
     }
 
+    // Members
+    MissionState current_state_;
+    int sub_step_;
+    bool has_odom_;
+    bool target_sent_;
+    bool exploration_finished_received_ = false;
+
+    geometry_msgs::msg::Point current_pos_;
+    rclcpp::Time start_wait_time_;
+    
+    // Pubs/Subs
     rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr target_pub_;
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr explore_pub_;
-    rclcpp::Client<std_srvs::srv::Empty>::SharedPtr octomap_reset_client_;
     rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_sub_;
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr explore_finished_sub_;
+    rclcpp::Client<std_srvs::srv::Empty>::SharedPtr octomap_reset_client_;
     rclcpp::TimerBase::SharedPtr mission_timer_;
-    geometry_msgs::msg::Point current_pos_;
-    geometry_msgs::msg::Quaternion current_ori_;
-    bool has_odom_, target_sent_;
-    MissionState current_state_;
-    rclcpp::Time start_wait_time_;
 };
+
+
 
 int main(int argc, char** argv) {
     rclcpp::init(argc, argv);
