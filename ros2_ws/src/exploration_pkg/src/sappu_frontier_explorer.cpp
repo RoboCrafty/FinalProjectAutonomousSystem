@@ -13,13 +13,14 @@
 
 // --- TUNABLE PARAMETERS ---
 const int MIN_CLUSTER_SIZE = 150;           // Minimum number of frontier voxels to consider a valid cluster
-const int ABSOLUTE_MIN_SIZE = 50;           // Absolute minimum cluster size to even consider (for dynamic scaling)
+const int ABSOLUTE_MIN_SIZE = 60;           // Absolute minimum cluster size to even consider (for dynamic scaling)
 const double CLUSTER_DIST_THRESHOLD = 1.2;  // Distance for grouping frontier voxels
 const double TARGET_DISTANCE_OFFSET = 4.0;  // Stop 4m before the cluster center
 const double REACHED_THRESHOLD = 1.2;       // Distance to consider setpoint reached
 const double FORBIDDEN_RADIUS = 8.0;        // Ignore frontiers near previous graph nodes
 const double HEADING_BIAS = 2.0;            // Score multiplier for clusters in front
 const double MAX_PLANNING_DIST = 40.0;      // Max distance to attempt a direct flight
+const double LOCAL_BOX_SIZE = 50.0;         // Size of the local area to search for frontiers (to save CPU)
 // --------------------------
 
 struct GraphNode {
@@ -131,33 +132,75 @@ private:
             has_target_ = true;
         }
         else { // BACKTRACKING
-            // During backtracking, we ONLY switch back to exploring if we find a HIGH QUALITY cluster
-            auto clusters = findFrontierClusters(MIN_CLUSTER_SIZE);
+            // 1. Search for a NEW path during backtrack to resume exploring
+            int backoff_threshold = MIN_CLUSTER_SIZE;
+            bool found_new_path = false;
 
-            if (!clusters.empty()) {
-                RCLCPP_INFO(this->get_logger(), "Found new path during backtracking! Switching to EXPLORING.");
-                state_ = State::EXPLORING;
-                computeNextGoal(); 
-                return;
+            while (backoff_threshold >= (ABSOLUTE_MIN_SIZE)) {
+                auto clusters = findFrontierClusters(backoff_threshold);
+                for (const auto& pair : clusters) {
+                    octomap::point3d center = pair.second;
+                    octomap::point3d dir = (center - current_pos_).normalized();
+                    octomap::point3d candidate = center - (dir * TARGET_DISTANCE_OFFSET);
+
+                    if (isPathClear(current_pos_, candidate)) {
+                        RCLCPP_INFO(this->get_logger(), "New path found during backtrack! Resuming EXPLORING.");
+                        state_ = State::EXPLORING;
+                        current_min_size_ = backoff_threshold;
+                        current_target_ = candidate;
+                        publishTarget(current_target_);
+                        has_target_ = true;
+                        return; // Switch to Exploring and exit
+                    }
+                }
+                backoff_threshold -= 30;
             }
 
+            // 2. Mission Completion Check
             if (graph_.size() <= 1) {
                 is_active_ = false;
                 RCLCPP_INFO(this->get_logger(), "BACK TO START. Mission Complete.");
                 return;
             }
 
-            // Move toward the parent of the current graph node
-            int parent_idx = graph_.back().parent_id;
-            current_target_ = graph_[parent_idx].position;
-            
-            RCLCPP_INFO(this->get_logger(), "BACKTRACKING: Moving to Node %d at [%.1f, %.1f]", parent_idx, current_target_.x(), current_target_.y());
-            
+            // 3. Move toward the parent node safely
+            int target_id = graph_.back().parent_id;
+            octomap::point3d backtrack_pos;
+            bool found_parent = false;
+
+            for (const auto& node : graph_) {
+                if (node.id == target_id) {
+                    backtrack_pos = node.position;
+                    found_parent = true;
+                    break;
+                }
+            }
+
+            if (!found_parent) {
+                RCLCPP_ERROR(this->get_logger(), "Parent %d not found! Emergency Stop.", target_id);
+                is_active_ = false;
+                return;
+            }
+
+            // If the path to the parent is blocked, step slowly (1.5m) instead of blindly flying into walls.
+            if (!isPathClear(current_pos_, backtrack_pos)) {
+                RCLCPP_WARN(this->get_logger(), "Backtrack path to Node %d BLOCKED. Stepping slowly...", target_id);
+                octomap::point3d safe_dir = (backtrack_pos - current_pos_).normalized();
+                current_target_ = current_pos_ + (safe_dir * 1.5); 
+            } else {
+                current_target_ = backtrack_pos;
+            }
+
+            RCLCPP_INFO(this->get_logger(), "BACKTRACKING: Moving toward Parent Node %d at [%.1f, %.1f]", 
+                        target_id, current_target_.x(), current_target_.y());
+
             publishTarget(current_target_);
             has_target_ = true;
-            
-            // Pop the node once we reach its parent
-            if ((current_pos_ - current_target_).norm() < REACHED_THRESHOLD) {
+
+            // Only pop the node if we are actually at the ORIGINAL backtrack position,
+            // not just at the 1.5m safe-step.
+            if ((current_pos_ - backtrack_pos).norm() < REACHED_THRESHOLD) {
+                RCLCPP_INFO(this->get_logger(), "Reached Node %d. Popping from graph.", target_id);
                 graph_.pop_back();
             }
         }
@@ -166,11 +209,21 @@ private:
     bool isPathClear(octomap::point3d start, octomap::point3d end) {
         octomap::point3d direction = (end - start).normalized();
         double dist = (end - start).norm();
-        octomap::point3d hit_point;
-        // Raycast from current position to target. If it hits a wall before reaching target, path is blocked.
-        if (octree_->castRay(start, direction, hit_point, true, dist)) {
-            return false; // Hit an occupied voxel
-        }
+        octomap::point3d hit;
+
+        // 1. Check center line
+        if (octree_->castRay(start, direction, hit, true, dist)) return false;
+
+        // 2. Check ceiling clearance (+1.0m)
+        octomap::point3d start_up(start.x(), start.y(), start.z() + 1.0);
+        octomap::point3d end_up(end.x(), end.y(), end.z() + 1.0);
+        if (octree_->castRay(start_up, (end_up - start_up).normalized(), hit, true, dist)) return false;
+
+        // 3. Check floor clearance (-1.0m)
+        octomap::point3d start_down(start.x(), start.y(), start.z() - 1.0);
+        octomap::point3d end_down(end.x(), end.y(), end.z() - 1.0);
+        if (octree_->castRay(start_down, (end_down - start_down).normalized(), hit, true, dist)) return false;
+
         return true; 
     }
 
@@ -179,11 +232,15 @@ private:
         std::vector<octomap::point3d> frontiers;
         double res = octree_->getResolution();
 
-        for (auto it = octree_->begin_leafs(); it != octree_->end_leafs(); ++it) {
+        // Limit search to a local box to save CPU
+        octomap::point3d min_query(current_pos_.x() - LOCAL_BOX_SIZE, current_pos_.y() - LOCAL_BOX_SIZE, current_pos_.z() - LOCAL_BOX_SIZE);
+        octomap::point3d max_query(current_pos_.x() + LOCAL_BOX_SIZE, current_pos_.y() + LOCAL_BOX_SIZE, current_pos_.z() + LOCAL_BOX_SIZE);
+
+        for (auto it = octree_->begin_leafs_bbx(min_query, max_query); it != octree_->end_leafs_bbx(); ++it) {
             if (!octree_->isNodeOccupied(*it)) {
                 octomap::point3d p = it.getCoordinate();
                 
-                // IGNORE ENTRANCE: Check distance to all previous graph nodes
+                // IGNORE ENTRANCE/HISTORY
                 bool too_close_to_history = false;
                 for (const auto& node : graph_) {
                     if ((p - node.position).norm() < FORBIDDEN_RADIUS) {
@@ -193,7 +250,7 @@ private:
                 }
                 if (too_close_to_history) continue;
 
-                // Detect if node is a frontier (has unknown neighbor)
+                // Frontier check (touches unknown)
                 bool is_frontier = false;
                 octomap::point3d neighbors[6] = {
                     {p.x()+(float)res, p.y(), p.z()}, {p.x()-(float)res, p.y(), p.z()},
@@ -252,11 +309,20 @@ private:
 
     void addNode() {
         GraphNode n;
-        n.id = graph_.size();
+        n.id = node_count_++; // persistent counter
         n.position = current_pos_;
-        n.parent_id = graph_.empty() ? -1 : graph_.back().id;
+        if (graph_.empty()) {
+            n.parent_id = -1;
+        } else {
+            // If we are backtracking, connect to the target parent
+            if (state_ == State::BACKTRACKING) {
+                n.parent_id = graph_.back().parent_id; 
+            } else {
+                n.parent_id = graph_.back().id;
+            }
+        }
         graph_.push_back(n);
-        RCLCPP_INFO(this->get_logger(), ">>> NODE %d CREATED at [%.1f, %.1f]", n.id, n.position.x(), n.position.y());
+        RCLCPP_INFO(this->get_logger(), ">>> NODE %d CREATED (Parent: %d) at [%.1f, %.1f]", n.id, n.parent_id, n.position.x(), n.position.y());
     }
 
     void publishTarget(octomap::point3d t) {
@@ -281,7 +347,10 @@ private:
     octomap::point3d current_pos_, current_target_;
     double current_yaw_;
     int current_min_size_;
-    bool is_active_, has_odom_ = false, has_target_ = false;
+    int node_count_ = 0;
+    bool is_active_;
+    bool has_odom_ = false;
+    bool has_target_ = false;
 
     rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr sub_odom_;
     rclcpp::Subscription<octomap_msgs::msg::Octomap>::SharedPtr sub_map_;
