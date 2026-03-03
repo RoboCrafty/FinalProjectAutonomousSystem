@@ -12,6 +12,9 @@ find_package(nav_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(trajectory_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
+find_package(tf2 REQUIRED)               # NEW
+find_package(tf2_ros REQUIRED)           # NEW
+find_package(tf2_geometry_msgs REQUIRED)
 
 add_executable(state_machine_node src/state_machine.cpp)
 
@@ -21,6 +24,9 @@ ament_target_dependencies(state_machine_node
   geometry_msgs
   trajectory_msgs
   std_srvs
+  tf2                  # Add this
+  tf2_ros              # Add this
+  tf2_geometry_msgs
 )
 
 install(TARGETS state_machine_node
