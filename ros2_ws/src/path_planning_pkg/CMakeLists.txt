@@ -9,11 +9,13 @@ endif()
 # Find Dependencies
 # ---------------------------------------------------------
 find_package(ament_cmake REQUIRED)
+find_package(std_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(octomap_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
+find_package(ompl REQUIRED)
 
 # The actual Octomap C++ library (required to read the map)
 find_package(octomap REQUIRED)
@@ -24,6 +26,12 @@ find_package(mav_planning_msgs REQUIRED)
 
 # --> NEW: Find Eigen3 <--
 find_package(Eigen3 REQUIRED)
+include_directories(include ${OCTOMAP_INCLUDE_DIRS} ${OMPL_INCLUDE_DIRS})
+add_executable(rrt_planner src/rrt_planner.cpp)
+ament_target_dependencies(rrt_planner
+  rclcpp std_msgs geometry_msgs nav_msgs octomap_msgs ompl
+)
+target_link_libraries(rrt_planner ${OCTOMAP_LIBRARIES} ${OMPL_LIBRARIES})
 
 # ---------------------------------------------------------
 # Executables and Linking
@@ -51,7 +59,9 @@ target_link_libraries(path_planner_node ${OCTOMAP_LIBRARIES})
 # ---------------------------------------------------------
 # Install Targets
 # ---------------------------------------------------------
-install(TARGETS path_planner_node
+install(TARGETS 
+  path_planner_node
+  rrt_planner
   DESTINATION lib/${PROJECT_NAME}
 )
 

@@ -22,12 +22,12 @@ def generate_launch_description():
             executable='octomap_server_node',
             name='octomap_server',
             parameters=[
-                {'resolution': 0.6},              # Sweet spot for 3D C++ Raycasting
+                {'resolution': 4.5},              # Sweet spot for 3D C++ Raycasting
                 {'frame_id': 'world'},            # The global map frame
                 {'base_frame_id': 'true_body'},   # The drone's body frame
-                {'sensor_model.max_range': 40.0}, # See far enough for safe leaps, but ignore the void
-                {'occupancy_min_z': -50.0},        # Keeps the RViz 2D map visualization clean
-                {'occupancy_max_z': 50.0}, 
+                {'sensor_model.max_range': 60.0}, # See far enough for safe leaps, but ignore the void
+                {'occupancy_min_z': -100.0},        # Keeps the RViz 2D map visualization clean
+                {'occupancy_max_z': 100.0}, 
                 {'latch': True}
             ],
             remappings=[

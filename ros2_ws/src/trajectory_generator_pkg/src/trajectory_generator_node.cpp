@@ -1,5 +1,6 @@
 #include <rclcpp/rclcpp.hpp>
 #include <nav_msgs/msg/odometry.hpp>
+#include <nav_msgs/msg/path.hpp>
 #include <geometry_msgs/msg/pose_stamped.hpp>
 #include <trajectory_msgs/msg/multi_dof_joint_trajectory.hpp>
 #include <trajectory_msgs/msg/multi_dof_joint_trajectory_point.hpp>
@@ -26,11 +27,12 @@ public:
         sub_odom_ = this->create_subscription<nav_msgs::msg::Odometry>(
             "/current_state_est", 10, std::bind(&TrajectoryGeneratorNode::odomCallback, this, std::placeholders::_1));
 
-        sub_goal_ = this->create_subscription<geometry_msgs::msg::PoseStamped>(
-            "/next_setpoint", 10, std::bind(&TrajectoryGeneratorNode::goalCallback, this, std::placeholders::_1));
+        // UPGRADE: Now listening to the full RRT Path instead of a single setpoint
+        sub_path_ = this->create_subscription<nav_msgs::msg::Path>(
+            "/rrt_path", 10, std::bind(&TrajectoryGeneratorNode::pathCallback, this, std::placeholders::_1));
 
         playback_timer_ = this->create_wall_timer(10ms, std::bind(&TrajectoryGeneratorNode::playbackCallback, this));
-        RCLCPP_INFO(this->get_logger(), "Adaptive Orientation Trajectory Generator Ready.");
+        RCLCPP_INFO(this->get_logger(), "Fluid Multi-Waypoint Trajectory Generator Ready.");
     }
 
 private:
@@ -41,42 +43,70 @@ private:
         has_odom_ = true;
     }
 
-    void goalCallback(const geometry_msgs::msg::PoseStamped::SharedPtr msg) {
-        if (!has_odom_) {
-            RCLCPP_WARN(this->get_logger(), "Waiting for Odom feedback...");
+    void pathCallback(const nav_msgs::msg::Path::SharedPtr msg) {
+        if (!has_odom_ || msg->poses.empty()) {
+            RCLCPP_WARN(this->get_logger(), "Waiting for Odom feedback or received empty path...");
             return;
         }
 
-        // Check if the incoming message has a valid orientation set.
-        // If all fields are 0, it is uninitialized, so we keep the drone's current pose.
-        bool orientation_provided = (std::abs(msg->pose.orientation.x) + 
-                                     std::abs(msg->pose.orientation.y) + 
-                                     std::abs(msg->pose.orientation.z) + 
-                                     std::abs(msg->pose.orientation.w)) > 0.01;
+        // Grab the orientation from the final goal in the path
+        auto final_pose = msg->poses.back().pose;
+        bool orientation_provided = (std::abs(final_pose.orientation.x) + 
+                                     std::abs(final_pose.orientation.y) + 
+                                     std::abs(final_pose.orientation.z) + 
+                                     std::abs(final_pose.orientation.w)) > 0.01;
 
         geometry_msgs::msg::Quaternion target_ori;
-        if (orientation_provided) target_ori = msg->pose.orientation;
+        if (orientation_provided) target_ori = final_pose.orientation;
         else target_ori = current_ori_;
 
         const int dimension = 3;
         const int derivative_to_optimize = mav_trajectory_generation::derivative_order::ACCELERATION;
         mav_trajectory_generation::Vertex::Vector vertices;
 
-        // Start point (Current position/velocity)
+        // 1. START POINT: Lock to current position and current velocity
         mav_trajectory_generation::Vertex start(dimension);
         start.makeStartOrEnd(current_pos_, derivative_to_optimize);
         start.addConstraint(mav_trajectory_generation::derivative_order::VELOCITY, current_vel_);
         vertices.push_back(start);
 
-        // End point (Target position)
-        mav_trajectory_generation::Vertex end(dimension);
-        Eigen::Vector3d goal_pos(msg->pose.position.x, msg->pose.position.y, msg->pose.position.z);
-        end.makeStartOrEnd(goal_pos, derivative_to_optimize);
-        end.addConstraint(mav_trajectory_generation::derivative_order::VELOCITY, Eigen::Vector3d::Zero());
-        vertices.push_back(end);
+        // 2. INTERMEDIATE POINTS (Swoop through them without stopping)
+        Eigen::Vector3d last_added_pos = current_pos_;
+        
+        for (size_t i = 0; i < msg->poses.size() - 1; ++i) {
+            Eigen::Vector3d pos(msg->poses[i].pose.position.x, 
+                                msg->poses[i].pose.position.y, 
+                                msg->poses[i].pose.position.z);
+            
+            // Safety filter: Ignore waypoints that are closer than 0.5m to prevent math singularities
+            if ((pos - last_added_pos).norm() > 0.5) {
+                mav_trajectory_generation::Vertex intermediate(dimension);
+                intermediate.addConstraint(mav_trajectory_generation::derivative_order::POSITION, pos);
+                vertices.push_back(intermediate);
+                last_added_pos = pos;
+            }
+        }
 
-        // Optimization
-        std::vector<double> segment_times = estimateSegmentTimes(vertices, max_v_, max_a_);
+        // 3. END POINT: Target position, come to a complete stop (Zero Velocity)
+        mav_trajectory_generation::Vertex end(dimension);
+        Eigen::Vector3d goal_pos(final_pose.position.x, final_pose.position.y, final_pose.position.z);
+        
+        // Ensure the final point is also far enough from the last added intermediate point
+        if ((goal_pos - last_added_pos).norm() > 0.1 || vertices.size() == 1) {
+            end.makeStartOrEnd(goal_pos, derivative_to_optimize);
+            end.addConstraint(mav_trajectory_generation::derivative_order::VELOCITY, Eigen::Vector3d::Zero());
+            vertices.push_back(end);
+        }
+
+        // Run the polynomial optimization
+        std::vector<double> segment_times;
+        try {
+            segment_times = estimateSegmentTimes(vertices, max_v_, max_a_);
+        } catch (const std::exception& e) {
+            RCLCPP_ERROR(this->get_logger(), "Trajectory timing failed: %s", e.what());
+            return;
+        }
+
         mav_trajectory_generation::PolynomialOptimization<10> opt(dimension);
         opt.setupFromVertices(vertices, segment_times, derivative_to_optimize);
         opt.solveLinear();
@@ -84,7 +114,7 @@ private:
         mav_trajectory_generation::Trajectory trajectory;
         opt.getTrajectory(&trajectory);
 
-        // Sample trajectory and populate points
+        // Sample trajectory and populate points at 100Hz (0.01s)
         std::vector<trajectory_msgs::msg::MultiDOFJointTrajectoryPoint> new_points;
         for (double t = 0.0; t <= trajectory.getMaxTime(); t += 0.01) {
             trajectory_msgs::msg::MultiDOFJointTrajectoryPoint point;
@@ -94,8 +124,6 @@ private:
 
             geometry_msgs::msg::Transform tf;
             tf.translation.x = p(0); tf.translation.y = p(1); tf.translation.z = p(2);
-            
-            // Set the rotation (Either from mission or kept from current state)
             tf.rotation = target_ori;
 
             geometry_msgs::msg::Twist vel_msg, acc_msg;
@@ -108,9 +136,10 @@ private:
             new_points.push_back(point);
         }
 
+        // Safely overwrite the active playback path
         trajectory_points_ = new_points;
         current_traj_idx_ = 0;
-        RCLCPP_INFO(this->get_logger(), "Trajectory success! Pts: %zu", trajectory_points_.size());
+        RCLCPP_INFO(this->get_logger(), "Fluid Trajectory generated! Vertices: %zu, Pts: %zu", vertices.size(), trajectory_points_.size());
     }
 
     void playbackCallback() {
@@ -125,11 +154,11 @@ private:
 
     rclcpp::Publisher<trajectory_msgs::msg::MultiDOFJointTrajectory>::SharedPtr pub_trajectory_;
     rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr sub_odom_;
-    rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr sub_goal_;
+    rclcpp::Subscription<nav_msgs::msg::Path>::SharedPtr sub_path_;
     rclcpp::TimerBase::SharedPtr playback_timer_;
     
     Eigen::Vector3d current_pos_, current_vel_;
-    geometry_msgs::msg::Quaternion current_ori_; //stores orientation from Odom
+    geometry_msgs::msg::Quaternion current_ori_;
     
     double max_v_, max_a_;
     bool has_odom_;

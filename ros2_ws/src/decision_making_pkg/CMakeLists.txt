@@ -11,6 +11,7 @@ find_package(rclcpp REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(trajectory_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 
 add_executable(state_machine_node src/state_machine.cpp)
@@ -18,6 +19,7 @@ add_executable(state_machine_node src/state_machine.cpp)
 ament_target_dependencies(state_machine_node 
   rclcpp 
   nav_msgs 
+  std_msgs
   geometry_msgs
   trajectory_msgs
   std_srvs

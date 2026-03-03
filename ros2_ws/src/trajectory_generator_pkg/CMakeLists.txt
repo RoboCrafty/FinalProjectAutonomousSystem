@@ -12,21 +12,25 @@ find_package(nav_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(visualization_msgs REQUIRED)
 find_package(Eigen3 REQUIRED)
+find_package(trajectory_msgs REQUIRED)
 
 # Find university custom libraries
 find_package(mav_trajectory_generation REQUIRED)
 find_package(mav_planning_msgs REQUIRED)
 
-# Create the executable
+# ==========================================
+# Create the executable (ONCE)
+# ==========================================
 add_executable(trajectory_generator_node src/trajectory_generator_node.cpp)
 
-# Link dependencies (tf2 removed)
+# Link ALL dependencies in one clean block
 ament_target_dependencies(trajectory_generator_node
-  rclcpp
-  nav_msgs
-  geometry_msgs
-  visualization_msgs
-  mav_trajectory_generation
+  rclcpp 
+  nav_msgs 
+  geometry_msgs 
+  trajectory_msgs 
+  visualization_msgs 
+  mav_trajectory_generation 
   mav_planning_msgs
 )
 
