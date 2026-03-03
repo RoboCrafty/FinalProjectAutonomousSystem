@@ -26,7 +26,7 @@ sudo apt install -y \
     ros-jazzy-octomap \
     ros-jazzy-octomap-server \
     ros-jazzy-octomap-msgs \
-    ros-jazzy-depthimage-to-pointcloud2 \
+     ros-jazzy-depth-image-proc \
     ros-jazzy-cv-bridge \
     ros-jazzy-tf2-ros \
     ros-jazzy-tf2-geometry-msgs \
