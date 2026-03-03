@@ -5,6 +5,8 @@
 #include <std_srvs/srv/empty.hpp>
 #include <geometry_msgs/msg/vector3.hpp> // Required for lantern data
 #include <cmath>
+#include <tf2/LinearMath/Quaternion.h>
+#include <tf2/LinearMath/Matrix3x3.h>
 
 using namespace std::chrono_literals;
 
@@ -19,7 +21,7 @@ enum class MissionState {
 
 class StateMachineNode : public rclcpp::Node {
 public:
-    StateMachineNode() : Node("state_machine_node"), current_state_(MissionState::WAYPOINT_HOVER), has_odom_(false), target_sent_(false) {
+    StateMachineNode() : Node("state_machine_node"), current_state_(MissionState::WAYPOINT_HOVER), has_odom_(false), target_sent_(false), lanterns_found_(0){
         target_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("/next_setpoint", 10);
         
         // Publisher to wake up the Python Explorer
@@ -33,11 +35,21 @@ public:
         octomap_reset_client_ = this->create_client<std_srvs::srv::Empty>("/octomap_server/reset");
         
         odom_sub_ = this->create_subscription<nav_msgs::msg::Odometry>(
-            "/current_state_est", 10, [this](const nav_msgs::msg::Odometry::SharedPtr msg) {
-                current_pos_ = msg->pose.pose.position;
-                current_ori_ = msg->pose.pose.orientation;
-                has_odom_ = true;
-            });
+        "/current_state_est", 10, [this](const nav_msgs::msg::Odometry::SharedPtr msg) {
+            current_pos_ = msg->pose.pose.position;
+            
+            // Convert Quaternion to Euler angles to get Yaw
+            tf2::Quaternion q(
+                msg->pose.pose.orientation.x,
+                msg->pose.pose.orientation.y,
+                msg->pose.pose.orientation.z,
+                msg->pose.pose.orientation.w);
+            tf2::Matrix3x3 m(q);
+            double roll, pitch;
+            m.getRPY(roll, pitch, current_yaw_); // Store current heading
+            
+            has_odom_ = true;
+        });
 
         mission_timer_ = this->create_wall_timer(500ms, std::bind(&StateMachineNode::stateMachineTick, this));
         RCLCPP_INFO(this->get_logger(), "State Machine Ready");
@@ -48,8 +60,22 @@ public:
         hunt_done_sub_ = this->create_subscription<std_msgs::msg::Bool>(
             "/hunting_done", 10, [this](const std_msgs::msg::Bool::SharedPtr msg) {
                 if (msg->data && current_state_ == MissionState::HUNTING_LANTERN) {
-                    lanterns_found_++; // Increment our counter!
+                    bool is_actually_a_duplicate = false;
+                    for (const auto& saved_pos : secured_lanterns_) {
+                        double d = std::sqrt(std::pow(current_pos_.x - saved_pos.x, 2) + 
+                                             std::pow(current_pos_.y - saved_pos.y, 2));
+                        if (d < 50.0) { is_actually_a_duplicate = true; break; }
+                    }
 
+                    if (is_actually_a_duplicate) {
+                        RCLCPP_WARN(this->get_logger(), "POST-HUNT GUARD: Duplicate ignored at finish line.");
+                        current_state_ = MissionState::EXPLORE_CAVE;
+                        explore_pub_->publish(std_msgs::msg::Bool().set__data(true));
+                        return;
+                    }
+                    secured_lanterns_.push_back(current_pos_);
+                    lanterns_found_++;
+                    
                     RCLCPP_INFO(this->get_logger(), 
                         "SUCCESS: Secured Lantern #%d", lanterns_found_);
                     RCLCPP_INFO(this->get_logger(), 
@@ -81,21 +107,50 @@ public:
 private:
     // Callback to trigger the switch from exploration to hunting
     void lanternCallback(const geometry_msgs::msg::Vector3::SharedPtr msg) {
-        if (current_state_ == MissionState::EXPLORE_CAVE && msg->y > 200.0) {
-            RCLCPP_INFO(this->get_logger(), "LANTERN SPOTTED! Area: %.2f. Stabilizing for 2s...", msg->y);
+        if (current_state_ == MissionState::EXPLORE_CAVE && msg->y > 5000.0) {
             
+            // 1. Project the estimated lantern position in the world
+            // At area 5000, the drone is usually 2.5m away.
+            double estimated_dist = 2.5; 
+            double projected_x = current_pos_.x + (estimated_dist * std::cos(current_yaw_));
+            double projected_y = current_pos_.y + (estimated_dist * std::sin(current_yaw_));
+
+            // 2. High-Confidence Guard (50 meters)
+            // If this projected point is near a logged lantern, it's a duplicate.
+            bool is_duplicate = false;
+            const double guard_radius = 50.0; 
+
+            for (const auto& past_pos : secured_lanterns_) {
+                double dist = std::sqrt(std::pow(projected_x - past_pos.x, 2) + 
+                                        std::pow(projected_y - past_pos.y, 2));
+                if (dist < guard_radius) {
+                    is_duplicate = true;
+                    break;
+                }
+            }
+
+            if (is_duplicate) {
+                RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 5000, 
+                    "GUARD: Spotted an old lantern within 50m. Ignoring.");
+                return; 
+            }
+
+            // 3. New Lantern Confirmed -> Start Anti-Jerk Handover
+            RCLCPP_INFO(this->get_logger(), "NEW LANTERN VALIDATED! Area: %.2f. Braking...", msg->y);
+            
+            // Disable explorer immediately to stop momentum
             auto toggle = std_msgs::msg::Bool();
             toggle.data = false;
             explore_pub_->publish(toggle);
 
-            // Switch to STABILIZING instead of HUNTING_LANTERN
+            // Optional: Active Braking - command drone to hover at current spot
+            sendTarget(current_pos_.x, current_pos_.y, current_pos_.z);
+
             current_state_ = MissionState::STABILIZING; 
 
             auto buffer_timer = std::make_shared<rclcpp::TimerBase::SharedPtr>();
             *buffer_timer = this->create_wall_timer(2s, [this, buffer_timer]() {
-                RCLCPP_INFO(this->get_logger(), "Drone stable. Transitioning to HUNTING_LANTERN.");
-                
-                // NOW move to the state that actually triggers the hunter
+                RCLCPP_INFO(this->get_logger(), "Drone stable. Starting Hunt.");
                 current_state_ = MissionState::HUNTING_LANTERN; 
                 (*buffer_timer)->cancel(); 
             });
@@ -104,6 +159,28 @@ private:
 
     void stateMachineTick() {
         if (!has_odom_) return;
+        
+        // 1. Record Breadcrumbs every 5 meters
+        if (breadcrumbs_.empty() || isReached(breadcrumbs_.back().x, breadcrumbs_.back().y, breadcrumbs_.back().z) == false) {
+            if (breadcrumbs_.empty() || std::sqrt(std::pow(current_pos_.x - breadcrumbs_.back().x, 2) + 
+                std::pow(current_pos_.y - breadcrumbs_.back().y, 2)) > breadcrumb_spacing_) {
+                breadcrumbs_.push_back(current_pos_);
+            }
+        }
+
+        // 2. Autonomous Loop Detection
+        if (current_state_ == MissionState::EXPLORE_CAVE && breadcrumbs_.size() > 10) {
+            for (size_t i = 0; i < breadcrumbs_.size() - 10; ++i) { // Skip recent crumbs
+                double d = std::sqrt(std::pow(current_pos_.x - breadcrumbs_[i].x, 2) + 
+                                    std::pow(current_pos_.y - breadcrumbs_[i].y, 2));
+                if (d < loop_closure_radius_) {
+                    RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 5000, 
+                        "LOOP DETECTED! Returning to known junction area.");
+                    // This triggers the explorer to prioritize "Unknown" side-paths
+                    break; 
+                }
+            }
+        }
 
         switch (current_state_) {
             case MissionState::WAYPOINT_HOVER:
@@ -198,6 +275,12 @@ private:
     geometry_msgs::msg::Quaternion current_ori_;
     bool has_odom_, target_sent_;
     int lanterns_found_; // ADDED: Counter for the lanterns
+    std::vector<geometry_msgs::msg::Point> breadcrumbs_;
+    const double breadcrumb_spacing_ = 5.0; // Meters
+    const double loop_closure_radius_ = 4.0; // Meters
+    std::vector<geometry_msgs::msg::Point> secured_lanterns_;
+    const double lantern_proximity_threshold_ = 10.0;
+    double current_yaw_;
 
     rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr target_pub_;
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr explore_pub_;
