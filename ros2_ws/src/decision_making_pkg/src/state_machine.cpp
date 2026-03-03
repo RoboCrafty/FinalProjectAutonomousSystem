@@ -6,6 +6,8 @@
 #include <cmath>
 
 using namespace std::chrono_literals;
+int lanterns_detected_ = 0;
+const int TOTAL_LANTERNS_REQUIRED_ = 4;
 
 enum class MissionState {
     APPROACH_CAVE,      // Hover, Approach, and Enter
@@ -39,14 +41,58 @@ public:
                 if (msg->data) hunting_finished_received_ = true;
             });
 
-        lantern_sub_ = this->create_subscription<geometry_msgs::msg::Vector3>(
-            "/lantern/target_data", 10, [this](const geometry_msgs::msg::Vector3::SharedPtr msg) {
-                // If a lantern is found (z != 2.0) and we are currently exploring
-                if (msg->z != 2.0 && current_state_ == MissionState::EXPLORE_CAVE) {
-                    current_state_ = MissionState::HUNT_LANTERN;
-                    RCLCPP_INFO(this->get_logger(), "Lantern spotted! Pausing exploration.");
-                }
-            });
+        // lantern_sub_ = this->create_subscription<geometry_msgs::msg::Vector3>(
+        //     "/lantern/target_data", 10, [this](const geometry_msgs::msg::Vector3::SharedPtr msg) {
+            //     If a lantern is found (z != 2.0) and we are currently exploring
+            //     if (msg->z != 2.0 && current_state_ == MissionState::EXPLORE_CAVE) {
+            //         current_state_ = MissionState::HUNT_LANTERN;
+            //         RCLCPP_INFO(this->get_logger(), "Lantern spotted! Pausing exploration.");
+            //     }
+            // });
+//         if (msg->z != 2.0 && 
+//     current_state_ == MissionState::EXPLORE_CAVE &&
+//     !hunting_active_ &&
+//     lanterns_hunted_ < TOTAL_LANTERNS_REQUIRED_) 
+// {
+//     RCLCPP_INFO(this->get_logger(), 
+//         "Lantern detected! Starting hunt %d / %d", 
+//         lanterns_hunted_ + 1, TOTAL_LANTERNS_REQUIRED_);
+
+//     hunting_active_ = true;
+//     hunting_finished_received_ = false;
+// }
+lantern_sub_ = this->create_subscription<geometry_msgs::msg::Vector3>(
+    "/lantern/target_data", 10,
+    [this](const geometry_msgs::msg::Vector3::SharedPtr msg) {
+
+        if (current_state_ != MissionState::EXPLORE_CAVE)
+            return;
+
+        // z == 2.0 means no lantern
+        if (msg->z == 2.0)
+            return;
+
+        // Only count if below required amount
+        if (lanterns_detected_ < TOTAL_LANTERNS_REQUIRED_) {
+
+            lanterns_detected_++;
+
+            RCLCPP_INFO(this->get_logger(),
+                "Lantern %d detected!",
+                lanterns_detected_);
+
+            if (lanterns_detected_ >= TOTAL_LANTERNS_REQUIRED_) {
+
+                RCLCPP_INFO(this->get_logger(),
+                    "All %d lanterns detected. Mission complete.",
+                    TOTAL_LANTERNS_REQUIRED_);
+
+                current_state_ = MissionState::MISSION_COMPLETED;
+            }
+        }
+    });
+
+
 
         mission_timer_ = this->create_wall_timer(500ms, std::bind(&StateMachineNode::stateMachineTick, this));
         RCLCPP_INFO(this->get_logger(), "State Machine Ready");
@@ -110,35 +156,93 @@ private:
 
 
     //EXPLORATION STATE
-    void handleExplorationPhase() {
-        //Wait for map sensors to fill after the reset
-        if ((this->now() - start_wait_time_) < 4s) {
-            setExploration(false);
-            return;
-        }
+    // void handleExplorationPhase() {
+    //     //Wait for map sensors to fill after the reset
+    //     if ((this->now() - start_wait_time_) < 4s) {
+    //         setExploration(false);
+    //         return;
+    //     }
 
-        // Once sensors are ready, start the actual explorer
-        if (exploration_finished_received_) {
-            current_state_ = MissionState::MISSION_COMPLETED;
-        } else {
-            setExploration(true);
-            RCLCPP_INFO_ONCE(this->get_logger(), "Frontier Explorer active.");
-        }
+    //     // Once sensors are ready, start the actual explorer
+    //     if (exploration_finished_received_) {
+    //         current_state_ = MissionState::MISSION_COMPLETED;
+    //     } else {
+    //         setExploration(true);
+    //         RCLCPP_INFO_ONCE(this->get_logger(), "Frontier Explorer active.");
+    //     }
+    // }
+//     void handleExplorationPhase() {
+
+//     // Wait after cave entry
+//     if ((this->now() - start_wait_time_) < 4s) {
+//         setExploration(false);
+//         return;
+//     }
+
+//     // If currently hunting
+//     if (hunting_active_) {
+
+//         setExploration(false);
+//         setHunting(true);
+
+//         if (hunting_finished_received_) {
+
+//             lanterns_hunted_++;
+//             RCLCPP_INFO(this->get_logger(), 
+//                 "Lantern %d hunted successfully!", lanterns_hunted_);
+
+//             hunting_active_ = false;
+//             hunting_finished_received_ = false;
+
+//             setHunting(false);
+
+//             // Check if mission goal reached
+//             if (lanterns_hunted_ >= TOTAL_LANTERNS_REQUIRED_) {
+//                 RCLCPP_INFO(this->get_logger(), 
+//                     "All %d lanterns hunted! Mission complete.",
+//                     TOTAL_LANTERNS_REQUIRED_);
+
+//                 current_state_ = MissionState::MISSION_COMPLETED;
+//                 return;
+//             }
+//         }
+
+//         return;  // Don't run explorer while hunting
+//     }
+
+//     // Normal Exploration Mode
+//     setExploration(true);
+// }
+void handleExplorationPhase() {
+
+    if ((this->now() - start_wait_time_) < 4s) {
+        setExploration(false);
+        return;
     }
 
-
-
-    // HUNTING STATE
-    void handleHuntingPhase() {
-        setExploration(false); 
-        setHunting(true); 
-
-        if (hunting_finished_received_) {
-            RCLCPP_INFO(this->get_logger(), "Hunting complete. Resuming exploration.");
-            hunting_finished_received_ = false;
-            current_state_ = MissionState::EXPLORE_CAVE;
-        }
+    if (current_state_ != MissionState::MISSION_COMPLETED) {
+        setExploration(true);
     }
+}
+
+
+
+
+    // // HUNTING STATE
+    // void handleHuntingPhase() {
+    //     setExploration(false); 
+    //     setHunting(true); 
+
+    //     if (hunting_finished_received_) {
+    //         RCLCPP_INFO(this->get_logger(), "Hunting complete. Resuming exploration.");
+    //         hunting_finished_received_ = false;
+    //         current_state_ = MissionState::EXPLORE_CAVE;
+    //     }
+    //     else {
+    //         setHunting(false);
+    //         RCLCPP_INFO_ONCE(this->get_logger(), "Hunter active.");
+    //     }
+    // }
 
 
     // HELPER FUNCTIONS
