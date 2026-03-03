@@ -10,8 +10,14 @@
 #include <tf2/LinearMath/Matrix3x3.h>
 #include <random>
 #include <cmath>
+#include <stack> // NEW: Added for Breadcrumb Memory
 
 using namespace std::chrono_literals;
+
+// NEW: Data structure for our memory
+struct Breadcrumb {
+    double x, y, z;
+};
 
 class NBVExplorer3D : public rclcpp::Node {
 public:
@@ -24,7 +30,7 @@ public:
         sub_odom_ = this->create_subscription<nav_msgs::msg::Odometry>(
             "/current_state_est", 10, std::bind(&NBVExplorer3D::odomCb, this, std::placeholders::_1));
         
-        // Subscribe to the TRUE 3D Binary Map!
+        // Subscribe to the TRUE 3D Binary Map
         sub_map_ = this->create_subscription<octomap_msgs::msg::Octomap>(
             "/octomap_binary", 10, std::bind(&NBVExplorer3D::mapCb, this, std::placeholders::_1));
 
@@ -34,7 +40,10 @@ public:
         // Timer
         timer_ = this->create_wall_timer(500ms, std::bind(&NBVExplorer3D::explorationLoop, this));
 
-        RCLCPP_INFO(this->get_logger(), "3D NBV Explorer Initialized. Waiting for Activation...");
+        // Initialize the last dropped crumb
+        last_dropped_ = {0.0, 0.0, 0.0};
+
+        RCLCPP_INFO(this->get_logger(), "3D NBV Explorer (With Breadcrumbs) Initialized. Waiting for Activation...");
     }
 
 private:
@@ -61,7 +70,6 @@ private:
     }
 
     void mapCb(const octomap_msgs::msg::Octomap::SharedPtr msg) {
-        // Convert ROS message to native C++ OctoMap tree
         octomap::AbstractOcTree* tree = octomap_msgs::msgToMap(*msg);
         if (tree) {
             octree_.reset(dynamic_cast<octomap::OcTree*>(tree));
@@ -71,23 +79,21 @@ private:
     double scoreCandidate(double cx, double cy, double cz, double cand_yaw, double distance) {
         if (!octree_) return -9999.0;
 
-        // --- THE FIX: Line-of-Sight Raycasting ---
-        // Shoot a 3D laser from the drone to the target. If it hits rock, DO NOT GO THERE.
+        // Line-of-Sight Raycasting
         octomap::point3d origin(current_x_, current_y_, current_z_);
         octomap::point3d direction(cx - current_x_, cy - current_y_, cz - current_z_);
         octomap::point3d hit_pt;
         
         bool hit = octree_->castRay(origin, direction, hit_pt, true, distance);
         if (hit) {
-            return -9999.0; // VETO! There is a wall blocking the path to this point.
+            return -9999.0; 
         }
 
-        // 1. Safety Check: 3D Spherical Forcefield (2.5m radius)
+        // 1. Safety Check: 3D Spherical Forcefield (User Tuned: 5.0m radius)
         double safe_r = 5.0;
         double res = octree_->getResolution();
-        if (res <= 0.0) res = 0.2; // Fallback to prevent divide-by-zero
+        if (res <= 0.0) res = 0.2; 
         
-        // Step by 2*res to calculate faster and prevent the drone's brain from freezing
         double step_safe = res * 2.0; 
         for (double dx = -safe_r; dx <= safe_r; dx += step_safe) {
             for (double dy = -safe_r; dy <= safe_r; dy += step_safe) {
@@ -96,16 +102,16 @@ private:
                     
                     octomap::OcTreeNode* node = octree_->search(cx + dx, cy + dy, cz + dz);
                     if (node && octree_->isNodeOccupied(node)) {
-                        return -9999.0; // VETO! Target destination is too close to a wall.
+                        return -9999.0; 
                     }
                 }
             }
         }
 
-        // 2. Information Gain: Count Unknown Voxels
+        // 2. Information Gain
         double score = 0.0;
-        double search_r = 10.0; 
-        double step_search = res * 4.0; // Check every 4th voxel to save massive CPU power
+        double search_r = 18.0; 
+        double step_search = res * 4.0; 
         for (double dx = -search_r; dx <= search_r; dx += step_search) {
             for (double dy = -search_r; dy <= search_r; dy += step_search) {
                 for (double dz = -search_r; dz <= search_r; dz += step_search) {
@@ -142,9 +148,9 @@ private:
 
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_real_distribution<> yaw_dist(-0.8, 0.8);   // Look left/right
-        std::uniform_real_distribution<> pitch_dist(-0.8, 0.8); // NEW: Look up/down
-        std::uniform_real_distribution<> dist_dist(6.0, 15.0);  // 3D Leap distance
+        std::uniform_real_distribution<> yaw_dist(-1.2, 1.2);   
+        std::uniform_real_distribution<> pitch_dist(-0.8, 0.8); 
+        std::uniform_real_distribution<> dist_dist(6.0, 15.0);  
 
         // Sample 60 points in a 3D forward cone
         for (int i = 0; i < 60; ++i) {
@@ -152,12 +158,10 @@ private:
             double angle_pitch = pitch_dist(gen);
             double distance = dist_dist(gen);
 
-            // 3D Spherical Coordinate Math
             double cand_x = current_x_ + distance * std::cos(angle_yaw) * std::cos(angle_pitch);
             double cand_y = current_y_ + distance * std::sin(angle_yaw) * std::cos(angle_pitch);
             double cand_z = current_z_ + distance * std::sin(angle_pitch);
 
-            // Keep Z bounded inside the cave so it doesn't try to fly through the floor
             if (cand_z < -100.0) cand_z = -100.0;
             if (cand_z > 100.0) cand_z = 100.0;
 
@@ -176,6 +180,17 @@ private:
         msg.header.frame_id = "world";
 
         if (best_score > 0) {
+            // --- NEW: WE FOUND NEW SPACE! ---
+            // Drop a breadcrumb if we moved more than 5 meters from the last one
+            double dist_from_last = std::sqrt(std::pow(current_x_ - last_dropped_.x, 2) + 
+                                              std::pow(current_y_ - last_dropped_.y, 2) + 
+                                              std::pow(current_z_ - last_dropped_.z, 2));
+            if (dist_from_last > 8.0 || breadcrumbs_.empty()) {
+                breadcrumbs_.push({current_x_, current_y_, current_z_});
+                last_dropped_ = {current_x_, current_y_, current_z_};
+                RCLCPP_INFO(this->get_logger(), "Dropped Breadcrumb! Memory size: %zu", breadcrumbs_.size());
+            }
+
             target_x_ = best_x; target_y_ = best_y; target_z_ = best_z;
             has_target_ = true;
 
@@ -191,26 +206,53 @@ private:
 
             RCLCPP_INFO(this->get_logger(), "3D Leap to: (%.1f, %.1f, %.1f) | Score: %.1f", best_x, best_y, best_z, best_score);
             pub_target_->publish(msg);
-        } else {
-            RCLCPP_WARN(this->get_logger(), "Path blocked! Squeezing forward to force physical spin...");
             
-            // Physical Spin Fix: Command 1 meter forward in the new direction so the generator executes it!
-            double spin_yaw = current_yaw_ + 0.78;
-            target_x_ = current_x_ + 1.0 * std::cos(spin_yaw);
-            target_y_ = current_y_ + 1.0 * std::sin(spin_yaw);
-            target_z_ = current_z_; // Stay at current height during spin
-            has_target_ = true;
+        } else {
+            // --- NEW: DEAD END ESCAPE PLAN ---
+            if (!breadcrumbs_.empty()) {
+                Breadcrumb bc = breadcrumbs_.top();
+                breadcrumbs_.pop(); // Erase the crumb so we don't get stuck in a loop
 
-            tf2::Quaternion q;
-            q.setRPY(0, 0, spin_yaw);
+                RCLCPP_WARN(this->get_logger(), "Dead end! Reversing to Breadcrumb (%.1f, %.1f, %.1f). Left: %zu", bc.x, bc.y, bc.z, breadcrumbs_.size());
 
-            msg.pose.position.x = target_x_;
-            msg.pose.position.y = target_y_;
-            msg.pose.position.z = target_z_;
-            msg.pose.orientation.x = q.x(); msg.pose.orientation.y = q.y();
-            msg.pose.orientation.z = q.z(); msg.pose.orientation.w = q.w();
+                target_x_ = bc.x;
+                target_y_ = bc.y;
+                target_z_ = bc.z;
+                has_target_ = true;
 
-            pub_target_->publish(msg);
+                // Point the camera toward the breadcrumb as we fly there
+                double target_yaw = std::atan2(target_y_ - current_y_, target_x_ - current_x_);
+                tf2::Quaternion q;
+                q.setRPY(0, 0, target_yaw);
+
+                msg.pose.position.x = target_x_;
+                msg.pose.position.y = target_y_;
+                msg.pose.position.z = target_z_;
+                msg.pose.orientation.x = q.x(); msg.pose.orientation.y = q.y();
+                msg.pose.orientation.z = q.z(); msg.pose.orientation.w = q.w();
+
+                pub_target_->publish(msg);
+            } else {
+                // If the memory is completely empty, we either finished the whole map or are critically stuck.
+                RCLCPP_WARN(this->get_logger(), "Map Fully Explored or No Breadcrumbs! Spinning...");
+                
+                double spin_yaw = current_yaw_ + 0.78;
+                target_x_ = current_x_ + 1.0 * std::cos(spin_yaw);
+                target_y_ = current_y_ + 1.0 * std::sin(spin_yaw);
+                target_z_ = current_z_; 
+                has_target_ = true;
+
+                tf2::Quaternion q;
+                q.setRPY(0, 0, spin_yaw);
+
+                msg.pose.position.x = target_x_;
+                msg.pose.position.y = target_y_;
+                msg.pose.position.z = target_z_;
+                msg.pose.orientation.x = q.x(); msg.pose.orientation.y = q.y();
+                msg.pose.orientation.z = q.z(); msg.pose.orientation.w = q.w();
+
+                pub_target_->publish(msg);
+            }
         }
     }
 
@@ -221,6 +263,11 @@ private:
     rclcpp::TimerBase::SharedPtr timer_;
 
     std::shared_ptr<octomap::OcTree> octree_;
+    
+    // NEW variables
+    std::stack<Breadcrumb> breadcrumbs_;
+    Breadcrumb last_dropped_;
+    
     bool is_exploring_, has_target_;
     double current_x_, current_y_, current_z_, current_yaw_;
     double target_x_, target_y_, target_z_;
