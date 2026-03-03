@@ -10,6 +10,7 @@ using namespace std::chrono_literals;
 enum class MissionState {
     APPROACH_CAVE,      // Hover, Approach, and Enter
     EXPLORE_CAVE,       // Wait for map and start frontier exploration
+    HUNT_LANTERN,       // Activate hunter and wait for completion
     MISSION_COMPLETED,
 };
 
@@ -20,6 +21,7 @@ public:
         target_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("/next_setpoint", 10);
         explore_pub_ = this->create_publisher<std_msgs::msg::Bool>("/enable_exploration", 10);
         octomap_reset_client_ = this->create_client<std_srvs::srv::Empty>("/octomap_server/reset");
+        hunt_pub_ = this->create_publisher<std_msgs::msg::Bool>("/enable_hunting", 10);
         
         odom_sub_ = this->create_subscription<nav_msgs::msg::Odometry>(
             "/current_state_est", 10, [this](const nav_msgs::msg::Odometry::SharedPtr msg) {
@@ -30,6 +32,20 @@ public:
         explore_finished_sub_ = this->create_subscription<std_msgs::msg::Bool>(
             "/exploration_complete", 10, [this](const std_msgs::msg::Bool::SharedPtr msg) {
                 if (msg->data) exploration_finished_received_ = true;
+            });
+
+        hunting_done_sub_ = this->create_subscription<std_msgs::msg::Bool>(
+            "/hunting_done", 10, [this](const std_msgs::msg::Bool::SharedPtr msg) {
+                if (msg->data) hunting_finished_received_ = true;
+            });
+
+        lantern_sub_ = this->create_subscription<geometry_msgs::msg::Vector3>(
+            "/lantern/target_data", 10, [this](const geometry_msgs::msg::Vector3::SharedPtr msg) {
+                // If a lantern is found (z != 2.0) and we are currently exploring
+                if (msg->z != 2.0 && current_state_ == MissionState::EXPLORE_CAVE) {
+                    current_state_ = MissionState::HUNT_LANTERN;
+                    RCLCPP_INFO(this->get_logger(), "Lantern spotted! Pausing exploration.");
+                }
             });
 
         mission_timer_ = this->create_wall_timer(500ms, std::bind(&StateMachineNode::stateMachineTick, this));
@@ -47,6 +63,10 @@ private:
 
             case MissionState::EXPLORE_CAVE:
                 handleExplorationPhase();
+                break;
+
+            case MissionState::HUNT_LANTERN:
+                handleHuntingPhase();
                 break;
 
             case MissionState::MISSION_COMPLETED:
@@ -108,11 +128,31 @@ private:
 
 
 
+    // HUNTING STATE
+    void handleHuntingPhase() {
+        setExploration(false); 
+        setHunting(true); 
+
+        if (hunting_finished_received_) {
+            RCLCPP_INFO(this->get_logger(), "Hunting complete. Resuming exploration.");
+            hunting_finished_received_ = false;
+            current_state_ = MissionState::EXPLORE_CAVE;
+        }
+    }
+
+
     // HELPER FUNCTIONS
     void setExploration(bool enable) {
         std_msgs::msg::Bool msg;
         msg.data = enable;
         explore_pub_->publish(msg);
+    }
+
+
+    void setHunting(bool enable) {
+        std_msgs::msg::Bool msg;
+        msg.data = enable;
+        hunt_pub_->publish(msg);
     }
 
 
@@ -144,21 +184,23 @@ private:
         return dist < 1.5;
     }
 
+
     // Members
     MissionState current_state_;
     int sub_step_;
-    bool has_odom_;
-    bool target_sent_;
+    bool has_odom_, target_sent_;
     bool exploration_finished_received_ = false;
-
+    bool hunting_finished_received_ = false;
     geometry_msgs::msg::Point current_pos_;
     rclcpp::Time start_wait_time_;
     
-    // Pubs/Subs
     rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr target_pub_;
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr explore_pub_;
+    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr hunt_pub_;
     rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_sub_;
     rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr explore_finished_sub_;
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr hunting_done_sub_;
+    rclcpp::Subscription<geometry_msgs::msg::Vector3>::SharedPtr lantern_sub_;
     rclcpp::Client<std_srvs::srv::Empty>::SharedPtr octomap_reset_client_;
     rclcpp::TimerBase::SharedPtr mission_timer_;
 };

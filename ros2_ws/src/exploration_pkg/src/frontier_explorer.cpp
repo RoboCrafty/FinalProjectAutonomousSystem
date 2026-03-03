@@ -53,23 +53,30 @@ public:
                 bool was_active = is_active_;
                 is_active_ = msg->data;
 
-                if (!is_active_ && was_active && has_odom_) {
-                    last_check_pos_ = current_pos_;
-                    RCLCPP_INFO(this->get_logger(), "State machine took control. Passive safety monitoring started.");
-                }
-
+                // swithching from OFF to ON
                 if (is_active_ && !was_active && has_odom_) {
-                    RCLCPP_INFO(this->get_logger(), "Exploration re-enabled. Anchoring current position.");
-                    addNode(); // Store current position as new node on resume
+                    // case 1: If we are already exploring, just add the current position as a new node to anchor from
+                    if (state_ == State::EXPLORING) {
+                        RCLCPP_INFO(this->get_logger(), "Exploration re-enabled. Anchoring current position.");
+                        addNode(); 
+                    }
                     
+                    // case 2: Capture the entrance if it's the first time
                     if (!entrance_captured_) {
                         cave_entrance_x_ = current_pos_.x();
                         entrance_captured_ = true;
                     }
                 }
+
+                // switching from ON to OFF
+                if (!is_active_ && was_active && has_odom_) {
+                    last_check_pos_ = current_pos_;
+                    RCLCPP_INFO(this->get_logger(), "State machine took control. Passive safety monitoring started.");
+                }
             });
 
         pub_target_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("/next_setpoint", 10);
+        
         pub_finished_ = this->create_publisher<std_msgs::msg::Bool>("/exploration_complete", 10);
         
         // Initialize dynamic threshold
@@ -107,7 +114,7 @@ private:
 
         if (!has_target_ || reached) {
             if (reached && state_ == State::EXPLORING) {
-                RCLCPP_INFO(this->get_logger(), "EXPLORING: Saving Node %d @ [%.1f, %.1f, %.1f]. Parent node: %d.", node_count_, graph_.back().position.x(), graph_.back().position.y(), graph_.back().position.z(), graph_.back().id);
+                //RCLCPP_INFO(this->get_logger(), "EXPLORING: Saving Node %d @ [%.1f, %.1f, %.1f]. Parent node: %d.", node_count_, graph_.back().position.x(), graph_.back().position.y(), graph_.back().position.z(), graph_.back().id);
                 addNode(); 
             }
             computeNextGoal();
@@ -130,18 +137,22 @@ private:
                 publishTarget(current_target_);
                 has_target_ = true;
             } else {
-                RCLCPP_WARN(this->get_logger(), "No frontiers found. Switching to BACKTRACKING.");
+                //RCLCPP_WARN(this->get_logger(), "No frontiers found. Switching to BACKTRACKING.");
                 state_ = State::BACKTRACKING;
                 computeNextGoal();
             }
         }
-        
+
         // BACKTRACKING WORKFLOW
         else { 
             // Check for mission completion
             if (graph_.size() <= 1) {
                 is_active_ = false;
-                RCLCPP_INFO(this->get_logger(), "Backtracking complete. Mission finished.");
+                state_ = State::EXPLORING;
+                has_target_ = false;
+                node_count_ = 0;
+                graph_.clear();
+                //RCLCPP_INFO(this->get_logger(), "Mission finished.");
                 auto finish_msg = std_msgs::msg::Bool();
                 finish_msg.data = true;
                 pub_finished_->publish(finish_msg);
@@ -169,7 +180,7 @@ private:
             } 
             else {
                 // Pop the child node once reached
-                RCLCPP_INFO(this->get_logger(), "BACKTRACKING: Reached Node %d. Popping child %d.", target_id, graph_.back().id);
+                //RCLCPP_INFO(this->get_logger(), "BACKTRACKING: Reached Node %d. Popping child %d.", target_id, graph_.back().id);
                 graph_.pop_back();
                 has_target_ = false;
 
@@ -177,7 +188,7 @@ private:
                 octomap::point3d next_target;
                 int size_found;
                 if (findBestFrontier(next_target, size_found)) {
-                    RCLCPP_WARN(this->get_logger(), "New path found during backtrack! Resuming EXPLORING.");
+                    //RCLCPP_WARN(this->get_logger(), "New path found during backtrack! Resuming EXPLORING.");
                     state_ = State::EXPLORING;
                     current_target_ = next_target;
                     current_min_size_ = std::min(MIN_CLUSTER_SIZE, size_found + 20);
@@ -203,7 +214,7 @@ private:
             last_check_pos_ = current_pos_; // Update the anchor for the next 5m window
 
             if (!isPathClear(current_pos_, graph_.back().position)) {
-                RCLCPP_WARN(this->get_logger(), "Line-of-sight lost. Dropping connection node.");
+                //RCLCPP_WARN(this->get_logger(), "Line-of-sight lost. Dropping connection node.");
                 addNode(prev_pos);
             }
         }

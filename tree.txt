@@ -76,6 +76,7 @@
 │   │   │   │   ├── CMakeConfigureLog.yaml
 │   │   │   │   ├── CMakeDirectoryInformation.cmake
 │   │   │   │   ├── CMakeRuleHashes.txt
+│   │   │   │   ├── CMakeScratch
 │   │   │   │   ├── controller_lib.dir
 │   │   │   │   │   ├── build.make
 │   │   │   │   │   ├── cmake_clean.cmake
@@ -278,6 +279,7 @@
 │   │   │   ├── ament_cmake_uninstall_target
 │   │   │   │   └── ament_cmake_uninstall_target.cmake
 │   │   │   ├── AMENT_IGNORE
+│   │   │   ├── cave_explorer_3d_node
 │   │   │   ├── cmake_args.last
 │   │   │   ├── CMakeCache.txt
 │   │   │   ├── CMakeFiles
@@ -295,10 +297,38 @@
 │   │   │   │   │       ├── a.out
 │   │   │   │   │       ├── CMakeCXXCompilerId.cpp
 │   │   │   │   │       └── tmp
+│   │   │   │   ├── cave_explorer_3d_node.dir
+│   │   │   │   │   ├── build.make
+│   │   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   │   ├── compiler_depend.internal
+│   │   │   │   │   ├── compiler_depend.make
+│   │   │   │   │   ├── compiler_depend.ts
+│   │   │   │   │   ├── DependInfo.cmake
+│   │   │   │   │   ├── depend.make
+│   │   │   │   │   ├── flags.make
+│   │   │   │   │   ├── link.txt
+│   │   │   │   │   ├── progress.make
+│   │   │   │   │   └── src
+│   │   │   │   │       ├── cave_explorer_3D.cpp.o
+│   │   │   │   │       └── cave_explorer_3D.cpp.o.d
 │   │   │   │   ├── cmake.check_cache
 │   │   │   │   ├── CMakeConfigureLog.yaml
 │   │   │   │   ├── CMakeDirectoryInformation.cmake
 │   │   │   │   ├── CMakeRuleHashes.txt
+│   │   │   │   ├── errt_explorer_3d_node.dir
+│   │   │   │   │   ├── build.make
+│   │   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   │   ├── compiler_depend.internal
+│   │   │   │   │   ├── compiler_depend.make
+│   │   │   │   │   ├── compiler_depend.ts
+│   │   │   │   │   ├── DependInfo.cmake
+│   │   │   │   │   ├── depend.make
+│   │   │   │   │   ├── flags.make
+│   │   │   │   │   ├── link.txt
+│   │   │   │   │   ├── progress.make
+│   │   │   │   │   └── src
+│   │   │   │   │       ├── errt_explorer_3d.cpp.o
+│   │   │   │   │       └── errt_explorer_3d.cpp.o.d
 │   │   │   │   ├── exploration_pkg_uninstall.dir
 │   │   │   │   │   ├── build.make
 │   │   │   │   │   ├── cmake_clean.cmake
@@ -338,6 +368,20 @@
 │   │   │   │   │       └── nbv_explorer_3d.cpp.o.d
 │   │   │   │   ├── pkgRedirects
 │   │   │   │   ├── progress.marks
+│   │   │   │   ├── sappu_frontier_explorer_node.dir
+│   │   │   │   │   ├── build.make
+│   │   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   │   ├── compiler_depend.internal
+│   │   │   │   │   ├── compiler_depend.make
+│   │   │   │   │   ├── compiler_depend.ts
+│   │   │   │   │   ├── DependInfo.cmake
+│   │   │   │   │   ├── depend.make
+│   │   │   │   │   ├── flags.make
+│   │   │   │   │   ├── link.txt
+│   │   │   │   │   ├── progress.make
+│   │   │   │   │   └── src
+│   │   │   │   │       ├── sappu_frontier_explorer.cpp.o
+│   │   │   │   │       └── sappu_frontier_explorer.cpp.o.d
 │   │   │   │   ├── TargetDirectories.txt
 │   │   │   │   └── uninstall.dir
 │   │   │   │       ├── build.make
@@ -353,10 +397,113 @@
 │   │   │   ├── CTestConfiguration.ini
 │   │   │   ├── CTestCustom.cmake
 │   │   │   ├── CTestTestfile.cmake
+│   │   │   ├── errt_explorer_3d_node
 │   │   │   ├── frontier_explorer_node
 │   │   │   ├── install_manifest.txt
 │   │   │   ├── Makefile
-│   │   │   └── nbv_explorer_3d_node
+│   │   │   ├── nbv_explorer_3d_node
+│   │   │   └── sappu_frontier_explorer_node
+│   │   ├── lantern_hunting_pkg
+│   │   │   ├── ament_cmake_core
+│   │   │   │   ├── lantern_hunting_pkgConfig.cmake
+│   │   │   │   ├── lantern_hunting_pkgConfig-version.cmake
+│   │   │   │   ├── package.cmake
+│   │   │   │   └── stamps
+│   │   │   │       ├── ament_prefix_path.sh.stamp
+│   │   │   │       ├── nameConfig.cmake.in.stamp
+│   │   │   │       ├── nameConfig-version.cmake.in.stamp
+│   │   │   │       ├── package_xml_2_cmake.py.stamp
+│   │   │   │       ├── package.xml.stamp
+│   │   │   │       ├── path.sh.stamp
+│   │   │   │       └── templates_2_cmake.py.stamp
+│   │   │   ├── ament_cmake_environment_hooks
+│   │   │   │   ├── ament_prefix_path.dsv
+│   │   │   │   ├── local_setup.bash
+│   │   │   │   ├── local_setup.dsv
+│   │   │   │   ├── local_setup.sh
+│   │   │   │   ├── local_setup.zsh
+│   │   │   │   ├── package.dsv
+│   │   │   │   └── path.dsv
+│   │   │   ├── ament_cmake_index
+│   │   │   │   └── share
+│   │   │   │       └── ament_index
+│   │   │   │           └── resource_index
+│   │   │   │               ├── package_run_dependencies
+│   │   │   │               │   └── lantern_hunting_pkg
+│   │   │   │               ├── packages
+│   │   │   │               │   └── lantern_hunting_pkg
+│   │   │   │               └── parent_prefix_path
+│   │   │   │                   └── lantern_hunting_pkg
+│   │   │   ├── ament_cmake_package_templates
+│   │   │   │   └── templates.cmake
+│   │   │   ├── ament_cmake_uninstall_target
+│   │   │   │   └── ament_cmake_uninstall_target.cmake
+│   │   │   ├── AMENT_IGNORE
+│   │   │   ├── cmake_args.last
+│   │   │   ├── CMakeCache.txt
+│   │   │   ├── CMakeFiles
+│   │   │   │   ├── 3.28.3
+│   │   │   │   │   ├── CMakeCCompiler.cmake
+│   │   │   │   │   ├── CMakeCXXCompiler.cmake
+│   │   │   │   │   ├── CMakeDetermineCompilerABI_C.bin
+│   │   │   │   │   ├── CMakeDetermineCompilerABI_CXX.bin
+│   │   │   │   │   ├── CMakeSystem.cmake
+│   │   │   │   │   ├── CompilerIdC
+│   │   │   │   │   │   ├── a.out
+│   │   │   │   │   │   ├── CMakeCCompilerId.c
+│   │   │   │   │   │   └── tmp
+│   │   │   │   │   └── CompilerIdCXX
+│   │   │   │   │       ├── a.out
+│   │   │   │   │       ├── CMakeCXXCompilerId.cpp
+│   │   │   │   │       └── tmp
+│   │   │   │   ├── cmake.check_cache
+│   │   │   │   ├── CMakeConfigureLog.yaml
+│   │   │   │   ├── CMakeDirectoryInformation.cmake
+│   │   │   │   ├── CMakeRuleHashes.txt
+│   │   │   │   ├── CMakeScratch
+│   │   │   │   ├── hunting_node.dir
+│   │   │   │   │   ├── build.make
+│   │   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   │   ├── compiler_depend.internal
+│   │   │   │   │   ├── compiler_depend.make
+│   │   │   │   │   ├── compiler_depend.ts
+│   │   │   │   │   ├── DependInfo.cmake
+│   │   │   │   │   ├── depend.make
+│   │   │   │   │   ├── flags.make
+│   │   │   │   │   ├── link.txt
+│   │   │   │   │   ├── progress.make
+│   │   │   │   │   └── src
+│   │   │   │   │       ├── hunting_node.cpp.o
+│   │   │   │   │       └── hunting_node.cpp.o.d
+│   │   │   │   ├── lantern_hunting_pkg_uninstall.dir
+│   │   │   │   │   ├── build.make
+│   │   │   │   │   ├── cmake_clean.cmake
+│   │   │   │   │   ├── compiler_depend.make
+│   │   │   │   │   ├── compiler_depend.ts
+│   │   │   │   │   ├── DependInfo.cmake
+│   │   │   │   │   └── progress.make
+│   │   │   │   ├── Makefile2
+│   │   │   │   ├── Makefile.cmake
+│   │   │   │   ├── pkgRedirects
+│   │   │   │   ├── progress.marks
+│   │   │   │   ├── TargetDirectories.txt
+│   │   │   │   └── uninstall.dir
+│   │   │   │       ├── build.make
+│   │   │   │       ├── cmake_clean.cmake
+│   │   │   │       ├── compiler_depend.make
+│   │   │   │       ├── compiler_depend.ts
+│   │   │   │       ├── DependInfo.cmake
+│   │   │   │       └── progress.make
+│   │   │   ├── cmake_install.cmake
+│   │   │   ├── colcon_build.rc
+│   │   │   ├── colcon_command_prefix_build.sh
+│   │   │   ├── colcon_command_prefix_build.sh.env
+│   │   │   ├── CTestConfiguration.ini
+│   │   │   ├── CTestCustom.cmake
+│   │   │   ├── CTestTestfile.cmake
+│   │   │   ├── hunting_node
+│   │   │   ├── install_manifest.txt
+│   │   │   └── Makefile
 │   │   ├── mav_msgs
 │   │   │   ├── ament_cmake_core
 │   │   │   │   ├── mav_msgsConfig.cmake
@@ -492,6 +639,7 @@
 │   │   │   │   ├── CMakeConfigureLog.yaml
 │   │   │   │   ├── CMakeDirectoryInformation.cmake
 │   │   │   │   ├── CMakeRuleHashes.txt
+│   │   │   │   ├── CMakeScratch
 │   │   │   │   ├── Export
 │   │   │   │   │   └── e651ef29ce18aec11b713cc54a09df8b
 │   │   │   │   │       ├── export_mav_msgs__rosidl_generator_cExport.cmake
@@ -1332,6 +1480,7 @@
 │   │   │   │   ├── CMakeConfigureLog.yaml
 │   │   │   │   ├── CMakeDirectoryInformation.cmake
 │   │   │   │   ├── CMakeRuleHashes.txt
+│   │   │   │   ├── CMakeScratch
 │   │   │   │   ├── Export
 │   │   │   │   │   └── 74a2e4ec223c2b1d6b8ac945c8337160
 │   │   │   │   │       ├── export_mav_planning_msgs__rosidl_generator_cExport.cmake
@@ -2320,6 +2469,7 @@
 │   │   │   │   ├── CMakeConfigureLog.yaml
 │   │   │   │   ├── CMakeDirectoryInformation.cmake
 │   │   │   │   ├── CMakeRuleHashes.txt
+│   │   │   │   ├── CMakeScratch
 │   │   │   │   ├── Export
 │   │   │   │   │   └── 3ecaa7fb690a3dda892e3f309f497209
 │   │   │   │   │       ├── export_mav_trajectory_generationExport.cmake
@@ -3228,117 +3378,14 @@
 │   │   │   │       └── nlopt_ext-mkdirs.cmake
 │   │   │   ├── polynomial_timing_evaluation
 │   │   │   └── trajectory_sampler_node
-│   │   ├── path_planning_pkg
-│   │   │   ├── ament_cmake_core
-│   │   │   │   ├── package.cmake
-│   │   │   │   ├── path_planning_pkgConfig.cmake
-│   │   │   │   ├── path_planning_pkgConfig-version.cmake
-│   │   │   │   └── stamps
-│   │   │   │       ├── ament_prefix_path.sh.stamp
-│   │   │   │       ├── nameConfig.cmake.in.stamp
-│   │   │   │       ├── nameConfig-version.cmake.in.stamp
-│   │   │   │       ├── package_xml_2_cmake.py.stamp
-│   │   │   │       ├── package.xml.stamp
-│   │   │   │       ├── path.sh.stamp
-│   │   │   │       └── templates_2_cmake.py.stamp
-│   │   │   ├── ament_cmake_environment_hooks
-│   │   │   │   ├── ament_prefix_path.dsv
-│   │   │   │   ├── local_setup.bash
-│   │   │   │   ├── local_setup.dsv
-│   │   │   │   ├── local_setup.sh
-│   │   │   │   ├── local_setup.zsh
-│   │   │   │   ├── package.dsv
-│   │   │   │   └── path.dsv
-│   │   │   ├── ament_cmake_index
-│   │   │   │   └── share
-│   │   │   │       └── ament_index
-│   │   │   │           └── resource_index
-│   │   │   │               ├── package_run_dependencies
-│   │   │   │               │   └── path_planning_pkg
-│   │   │   │               ├── packages
-│   │   │   │               │   └── path_planning_pkg
-│   │   │   │               └── parent_prefix_path
-│   │   │   │                   └── path_planning_pkg
-│   │   │   ├── ament_cmake_package_templates
-│   │   │   │   └── templates.cmake
-│   │   │   ├── ament_cmake_uninstall_target
-│   │   │   │   └── ament_cmake_uninstall_target.cmake
-│   │   │   ├── ament_cppcheck
-│   │   │   ├── AMENT_IGNORE
-│   │   │   ├── ament_lint_cmake
-│   │   │   ├── ament_uncrustify
-│   │   │   ├── ament_xmllint
-│   │   │   ├── cmake_args.last
-│   │   │   ├── CMakeCache.txt
-│   │   │   ├── CMakeFiles
-│   │   │   │   ├── 3.28.3
-│   │   │   │   │   ├── CMakeCCompiler.cmake
-│   │   │   │   │   ├── CMakeCXXCompiler.cmake
-│   │   │   │   │   ├── CMakeDetermineCompilerABI_C.bin
-│   │   │   │   │   ├── CMakeDetermineCompilerABI_CXX.bin
-│   │   │   │   │   ├── CMakeSystem.cmake
-│   │   │   │   │   ├── CompilerIdC
-│   │   │   │   │   │   ├── a.out
-│   │   │   │   │   │   ├── CMakeCCompilerId.c
-│   │   │   │   │   │   └── tmp
-│   │   │   │   │   └── CompilerIdCXX
-│   │   │   │   │       ├── a.out
-│   │   │   │   │       ├── CMakeCXXCompilerId.cpp
-│   │   │   │   │       └── tmp
-│   │   │   │   ├── cmake.check_cache
-│   │   │   │   ├── CMakeConfigureLog.yaml
-│   │   │   │   ├── CMakeDirectoryInformation.cmake
-│   │   │   │   ├── CMakeRuleHashes.txt
-│   │   │   │   ├── CMakeScratch
-│   │   │   │   ├── Makefile2
-│   │   │   │   ├── Makefile.cmake
-│   │   │   │   ├── path_planner_node.dir
-│   │   │   │   │   ├── build.make
-│   │   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   │   ├── compiler_depend.make
-│   │   │   │   │   ├── compiler_depend.ts
-│   │   │   │   │   ├── DependInfo.cmake
-│   │   │   │   │   ├── depend.make
-│   │   │   │   │   ├── flags.make
-│   │   │   │   │   ├── link.txt
-│   │   │   │   │   ├── progress.make
-│   │   │   │   │   └── src
-│   │   │   │   │       ├── path_planner_node.cpp.o
-│   │   │   │   │       └── path_planner_node.cpp.o.d
-│   │   │   │   ├── path_planning_pkg_uninstall.dir
-│   │   │   │   │   ├── build.make
-│   │   │   │   │   ├── cmake_clean.cmake
-│   │   │   │   │   ├── compiler_depend.make
-│   │   │   │   │   ├── compiler_depend.ts
-│   │   │   │   │   ├── DependInfo.cmake
-│   │   │   │   │   └── progress.make
-│   │   │   │   ├── pkgRedirects
-│   │   │   │   ├── progress.marks
-│   │   │   │   ├── TargetDirectories.txt
-│   │   │   │   └── uninstall.dir
-│   │   │   │       ├── build.make
-│   │   │   │       ├── cmake_clean.cmake
-│   │   │   │       ├── compiler_depend.make
-│   │   │   │       ├── compiler_depend.ts
-│   │   │   │       ├── DependInfo.cmake
-│   │   │   │       └── progress.make
-│   │   │   ├── cmake_install.cmake
-│   │   │   ├── colcon_build.rc
-│   │   │   ├── colcon_command_prefix_build.sh
-│   │   │   ├── colcon_command_prefix_build.sh.env
-│   │   │   ├── CTestConfiguration.ini
-│   │   │   ├── CTestCustom.cmake
-│   │   │   ├── CTestTestfile.cmake
-│   │   │   ├── install_manifest.txt
-│   │   │   ├── Makefile
-│   │   │   └── path_planner_node
 │   │   ├── perception_pkg
 │   │   │   ├── build
 │   │   │   │   └── lib
 │   │   │   │       └── perception_pkg
 │   │   │   │           ├── __init__.py
 │   │   │   │           ├── lantern_detector (Old_Relative_position).py
-│   │   │   │           └── lantern_detector.py
+│   │   │   │           ├── lantern_detector.py
+│   │   │   │           └── lantern_tracker.py
 │   │   │   ├── colcon_build.rc
 │   │   │   ├── colcon_command_prefix_setup_py.sh
 │   │   │   ├── colcon_command_prefix_setup_py.sh.env
@@ -3415,6 +3462,7 @@
 │   │   │   │   ├── CMakeConfigureLog.yaml
 │   │   │   │   ├── CMakeDirectoryInformation.cmake
 │   │   │   │   ├── CMakeRuleHashes.txt
+│   │   │   │   ├── CMakeScratch
 │   │   │   │   ├── libsocket-complete
 │   │   │   │   ├── libsocket.dir
 │   │   │   │   │   ├── build.make
@@ -3955,7 +4003,6 @@
 │   │       ├── install_manifest.txt
 │   │       ├── Makefile
 │   │       └── trajectory_generator_node
-│   ├── create_publisher
 │   ├── install
 │   │   ├── COLCON_IGNORE
 │   │   ├── controller_pkg
@@ -4054,8 +4101,11 @@
 │   │   ├── exploration_pkg
 │   │   │   ├── lib
 │   │   │   │   └── exploration_pkg
+│   │   │   │       ├── cave_explorer_3d_node
+│   │   │   │       ├── errt_explorer_3d_node
 │   │   │   │       ├── frontier_explorer_node
-│   │   │   │       └── nbv_explorer_3d_node
+│   │   │   │       ├── nbv_explorer_3d_node
+│   │   │   │       └── sappu_frontier_explorer_node
 │   │   │   └── share
 │   │   │       ├── ament_index
 │   │   │       │   └── resource_index
@@ -4072,6 +4122,43 @@
 │   │   │           ├── cmake
 │   │   │           │   ├── exploration_pkgConfig.cmake
 │   │   │           │   └── exploration_pkgConfig-version.cmake
+│   │   │           ├── environment
+│   │   │           │   ├── ament_prefix_path.dsv
+│   │   │           │   ├── ament_prefix_path.sh
+│   │   │           │   ├── path.dsv
+│   │   │           │   └── path.sh
+│   │   │           ├── hook
+│   │   │           │   ├── cmake_prefix_path.dsv
+│   │   │           │   └── cmake_prefix_path.sh
+│   │   │           ├── local_setup.bash
+│   │   │           ├── local_setup.dsv
+│   │   │           ├── local_setup.sh
+│   │   │           ├── local_setup.zsh
+│   │   │           ├── package.bash
+│   │   │           ├── package.dsv
+│   │   │           ├── package.sh
+│   │   │           ├── package.xml
+│   │   │           └── package.zsh
+│   │   ├── lantern_hunting_pkg
+│   │   │   ├── lib
+│   │   │   │   └── lantern_hunting_pkg
+│   │   │   │       └── hunting_node
+│   │   │   └── share
+│   │   │       ├── ament_index
+│   │   │       │   └── resource_index
+│   │   │       │       ├── package_run_dependencies
+│   │   │       │       │   └── lantern_hunting_pkg
+│   │   │       │       ├── packages
+│   │   │       │       │   └── lantern_hunting_pkg
+│   │   │       │       └── parent_prefix_path
+│   │   │       │           └── lantern_hunting_pkg
+│   │   │       ├── colcon-core
+│   │   │       │   └── packages
+│   │   │       │       └── lantern_hunting_pkg
+│   │   │       └── lantern_hunting_pkg
+│   │   │           ├── cmake
+│   │   │           │   ├── lantern_hunting_pkgConfig.cmake
+│   │   │           │   └── lantern_hunting_pkgConfig-version.cmake
 │   │   │           ├── environment
 │   │   │           │   ├── ament_prefix_path.dsv
 │   │   │           │   ├── ament_prefix_path.sh
@@ -4894,57 +4981,23 @@
 │   │   │           ├── package.sh
 │   │   │           ├── package.xml
 │   │   │           └── package.zsh
-│   │   ├── path_planning_pkg
-│   │   │   ├── lib
-│   │   │   │   └── path_planning_pkg
-│   │   │   │       └── path_planner_node
-│   │   │   └── share
-│   │   │       ├── ament_index
-│   │   │       │   └── resource_index
-│   │   │       │       ├── package_run_dependencies
-│   │   │       │       │   └── path_planning_pkg
-│   │   │       │       ├── packages
-│   │   │       │       │   └── path_planning_pkg
-│   │   │       │       └── parent_prefix_path
-│   │   │       │           └── path_planning_pkg
-│   │   │       ├── colcon-core
-│   │   │       │   └── packages
-│   │   │       │       └── path_planning_pkg
-│   │   │       └── path_planning_pkg
-│   │   │           ├── cmake
-│   │   │           │   ├── path_planning_pkgConfig.cmake
-│   │   │           │   └── path_planning_pkgConfig-version.cmake
-│   │   │           ├── environment
-│   │   │           │   ├── ament_prefix_path.dsv
-│   │   │           │   ├── ament_prefix_path.sh
-│   │   │           │   ├── path.dsv
-│   │   │           │   └── path.sh
-│   │   │           ├── hook
-│   │   │           │   ├── cmake_prefix_path.dsv
-│   │   │           │   └── cmake_prefix_path.sh
-│   │   │           ├── local_setup.bash
-│   │   │           ├── local_setup.dsv
-│   │   │           ├── local_setup.sh
-│   │   │           ├── local_setup.zsh
-│   │   │           ├── package.bash
-│   │   │           ├── package.dsv
-│   │   │           ├── package.sh
-│   │   │           ├── package.xml
-│   │   │           └── package.zsh
 │   │   ├── perception_pkg
 │   │   │   ├── lib
 │   │   │   │   ├── perception_pkg
-│   │   │   │   │   └── lantern_detector
+│   │   │   │   │   ├── lantern_detector
+│   │   │   │   │   └── lantern_tracker
 │   │   │   │   └── python3.12
 │   │   │   │       └── site-packages
 │   │   │   │           ├── perception_pkg
 │   │   │   │           │   ├── __init__.py
 │   │   │   │           │   ├── lantern_detector (Old_Relative_position).py
 │   │   │   │           │   ├── lantern_detector.py
+│   │   │   │           │   ├── lantern_tracker.py
 │   │   │   │           │   └── __pycache__
 │   │   │   │           │       ├── __init__.cpython-312.pyc
 │   │   │   │           │       ├── lantern_detector.cpython-312.pyc
-│   │   │   │           │       └── lantern_detector (Old_Relative_position).cpython-312.pyc
+│   │   │   │           │       ├── lantern_detector (Old_Relative_position).cpython-312.pyc
+│   │   │   │           │       └── lantern_tracker.cpython-312.pyc
 │   │   │   │           └── perception_pkg-0.0.0-py3.12.egg-info
 │   │   │   │               ├── dependency_links.txt
 │   │   │   │               ├── entry_points.txt
@@ -4969,6 +5022,7 @@
 │   │   │           │   └── pythonpath.sh
 │   │   │           ├── launch
 │   │   │           │   ├── mapping.launch.py
+│   │   │           │   ├── mapping_rtab.launch.py
 │   │   │           │   └── __pycache__
 │   │   │           │       └── mapping.launch.cpython-312.pyc
 │   │   │           ├── package.bash
@@ -5318,7 +5372,6 @@
 │   │   │           │   ├── ld_library_path_lib.dsv
 │   │   │           │   └── ld_library_path_lib.sh
 │   │   │           ├── launch
-│   │   │           │   ├── full_simulation.lauch.py
 │   │   │           │   ├── __pycache__
 │   │   │           │   │   ├── simulation.launch.cpython-312.pyc
 │   │   │           │   │   └── unity_ros.launch.cpython-312.pyc
@@ -5411,1447 +5464,7 @@
 │   │               ├── package.xml
 │   │               └── package.zsh
 │   ├── log
-│   │   ├── build_2026-02-28_20-18-50
-│   │   │   ├── events.log
-│   │   │   └── logger_all.log
-│   │   ├── build_2026-02-28_20-19-00
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── path_planning_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_10-18-05
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_11-22-19
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_11-34-54
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_11-53-20
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_11-58-38
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_12-02-41
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_12-11-30
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_14-51-13
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_15-04-55
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_15-11-45
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_15-21-31
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_15-29-12
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_15-33-43
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_15-37-30
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_15-45-33
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_15-56-23
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_16-00-56
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_16-01-12
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_16-48-27
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_17-18-03
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_17-24-24
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_17-24-58
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_trajectory_generation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── perception_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── simulation
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── teleop_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── trajectory_generator_pkg
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_17-26-47
+│   │   ├── build_2026-03-01_22-44-34
 │   │   │   ├── events.log
 │   │   │   ├── exploration_pkg
 │   │   │   │   ├── command.log
@@ -6860,7 +5473,7 @@
 │   │   │   │   ├── stdout_stderr.log
 │   │   │   │   └── streams.log
 │   │   │   └── logger_all.log
-│   │   ├── build_2026-03-01_17-27-41
+│   │   ├── build_2026-03-01_22-44-55
 │   │   │   ├── controller_pkg
 │   │   │   │   ├── command.log
 │   │   │   │   ├── stderr.log
@@ -6923,7 +5536,7 @@
 │   │   │       ├── stdout.log
 │   │   │       ├── stdout_stderr.log
 │   │   │       └── streams.log
-│   │   ├── build_2026-03-01_17-32-24
+│   │   ├── build_2026-03-01_22-52-27
 │   │   │   ├── controller_pkg
 │   │   │   │   ├── command.log
 │   │   │   │   ├── stderr.log
@@ -6986,7 +5599,7 @@
 │   │   │       ├── stdout.log
 │   │   │       ├── stdout_stderr.log
 │   │   │       └── streams.log
-│   │   ├── build_2026-03-01_17-36-38
+│   │   ├── build_2026-03-01_22-54-18
 │   │   │   ├── controller_pkg
 │   │   │   │   ├── command.log
 │   │   │   │   ├── stderr.log
@@ -7049,85 +5662,7 @@
 │   │   │       ├── stdout.log
 │   │   │       ├── stdout_stderr.log
 │   │   │       └── streams.log
-│   │   ├── build_2026-03-01_17-39-06
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── simulation
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_17-43-10
-│   │   │   ├── controller_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── decision_making_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── events.log
-│   │   │   ├── exploration_pkg
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── logger_all.log
-│   │   │   ├── mav_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   ├── mav_planning_msgs
-│   │   │   │   ├── command.log
-│   │   │   │   ├── stderr.log
-│   │   │   │   ├── stdout.log
-│   │   │   │   ├── stdout_stderr.log
-│   │   │   │   └── streams.log
-│   │   │   └── simulation
-│   │   │       ├── command.log
-│   │   │       ├── stderr.log
-│   │   │       ├── stdout.log
-│   │   │       ├── stdout_stderr.log
-│   │   │       └── streams.log
-│   │   ├── build_2026-03-01_17-44-12
+│   │   ├── build_2026-03-01_22-54-43
 │   │   │   ├── controller_pkg
 │   │   │   │   ├── command.log
 │   │   │   │   ├── stderr.log
@@ -7190,7 +5725,7 @@
 │   │   │       ├── stdout.log
 │   │   │       ├── stdout_stderr.log
 │   │   │       └── streams.log
-│   │   ├── build_2026-03-01_17-50-09
+│   │   ├── build_2026-03-01_23-05-42
 │   │   │   ├── controller_pkg
 │   │   │   │   ├── command.log
 │   │   │   │   ├── stderr.log
@@ -7253,7 +5788,7 @@
 │   │   │       ├── stdout.log
 │   │   │       ├── stdout_stderr.log
 │   │   │       └── streams.log
-│   │   ├── build_2026-03-01_17-53-41
+│   │   ├── build_2026-03-02_00-46-32
 │   │   │   ├── controller_pkg
 │   │   │   │   ├── command.log
 │   │   │   │   ├── stderr.log
@@ -7316,7 +5851,7 @@
 │   │   │       ├── stdout.log
 │   │   │       ├── stdout_stderr.log
 │   │   │       └── streams.log
-│   │   ├── build_2026-03-01_17-58-57
+│   │   ├── build_2026-03-02_01-02-55
 │   │   │   ├── controller_pkg
 │   │   │   │   ├── command.log
 │   │   │   │   ├── stderr.log
@@ -7379,7 +5914,7 @@
 │   │   │       ├── stdout.log
 │   │   │       ├── stdout_stderr.log
 │   │   │       └── streams.log
-│   │   ├── build_2026-03-01_18-07-51
+│   │   ├── build_2026-03-02_01-14-25
 │   │   │   ├── controller_pkg
 │   │   │   │   ├── command.log
 │   │   │   │   ├── stderr.log
@@ -7442,7 +5977,7 @@
 │   │   │       ├── stdout.log
 │   │   │       ├── stdout_stderr.log
 │   │   │       └── streams.log
-│   │   ├── build_2026-03-01_18-24-54
+│   │   ├── build_2026-03-02_01-26-02
 │   │   │   ├── controller_pkg
 │   │   │   │   ├── command.log
 │   │   │   │   ├── stderr.log
@@ -7505,7 +6040,7 @@
 │   │   │       ├── stdout.log
 │   │   │       ├── stdout_stderr.log
 │   │   │       └── streams.log
-│   │   ├── build_2026-03-01_18-49-53
+│   │   ├── build_2026-03-02_01-35-55
 │   │   │   ├── controller_pkg
 │   │   │   │   ├── command.log
 │   │   │   │   ├── stderr.log
@@ -7568,7 +6103,7 @@
 │   │   │       ├── stdout.log
 │   │   │       ├── stdout_stderr.log
 │   │   │       └── streams.log
-│   │   ├── build_2026-03-01_18-52-16
+│   │   ├── build_2026-03-02_01-46-31
 │   │   │   ├── controller_pkg
 │   │   │   │   ├── command.log
 │   │   │   │   ├── stderr.log
@@ -7631,7 +6166,7 @@
 │   │   │       ├── stdout.log
 │   │   │       ├── stdout_stderr.log
 │   │   │       └── streams.log
-│   │   ├── build_2026-03-01_18-55-55
+│   │   ├── build_2026-03-02_01-54-01
 │   │   │   ├── controller_pkg
 │   │   │   │   ├── command.log
 │   │   │   │   ├── stderr.log
@@ -7694,7 +6229,7 @@
 │   │   │       ├── stdout.log
 │   │   │       ├── stdout_stderr.log
 │   │   │       └── streams.log
-│   │   ├── build_2026-03-01_19-18-13
+│   │   ├── build_2026-03-02_02-06-21
 │   │   │   ├── controller_pkg
 │   │   │   │   ├── command.log
 │   │   │   │   ├── stderr.log
@@ -7757,7 +6292,3253 @@
 │   │   │       ├── stdout.log
 │   │   │       ├── stdout_stderr.log
 │   │   │       └── streams.log
-│   │   ├── build_2026-03-01_19-24-34
+│   │   ├── build_2026-03-02_12-35-45
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_12-49-16
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_13-04-03
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_13-18-11
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_13-28-20
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_13-43-28
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   └── mav_msgs
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_13-47-47
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_13-57-05
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_14-07-50
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_14-20-02
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_14-20-19
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_14-38-26
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_18-01-30
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_18-15-44
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_18-16-26
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_18-17-16
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_18-18-03
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_18-19-18
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_18-26-33
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_18-33-44
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_18-49-18
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── lantern_hunting_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_19-00-38
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── lantern_hunting_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_19-47-06
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_20-22-42
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_20-23-09
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_20-26-10
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_20-40-09
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_20-57-44
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_22-13-58
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_22-19-35
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_22-23-52
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_22-25-06
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_23-02-35
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-02_23-06-27
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-03_00-16-46
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-03_00-45-51
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-03_00-46-55
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-03_00-47-36
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-03_00-58-57
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-03_01-23-33
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-03_01-33-43
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-03_01-36-18
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-03_02-03-00
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-03_03-06-25
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-03_04-13-18
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-03_04-15-57
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-03_12-20-13
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-03_12-21-22
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-03_12-42-55
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-03_13-21-18
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-03_13-30-50
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-03_13-31-32
+│   │   │   ├── controller_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── decision_making_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── events.log
+│   │   │   ├── exploration_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── logger_all.log
+│   │   │   ├── mav_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_planning_msgs
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── mav_trajectory_generation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── perception_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── simulation
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   ├── teleop_pkg
+│   │   │   │   ├── command.log
+│   │   │   │   ├── stderr.log
+│   │   │   │   ├── stdout.log
+│   │   │   │   ├── stdout_stderr.log
+│   │   │   │   └── streams.log
+│   │   │   └── trajectory_generator_pkg
+│   │   │       ├── command.log
+│   │   │       ├── stderr.log
+│   │   │       ├── stdout.log
+│   │   │       ├── stdout_stderr.log
+│   │   │       └── streams.log
+│   │   ├── build_2026-03-03_13-34-22
 │   │   │   ├── controller_pkg
 │   │   │   │   ├── command.log
 │   │   │   │   ├── stderr.log
@@ -7822,7 +9603,7 @@
 │   │   │       └── streams.log
 │   │   ├── COLCON_IGNORE
 │   │   ├── latest -> latest_build
-│   │   └── latest_build -> build_2026-03-01_19-24-34
+│   │   └── latest_build -> build_2026-03-03_13-34-22
 │   └── src
 │       ├── controller_pkg
 │       │   ├── CMakeLists.txt
@@ -7847,134 +9628,15 @@
 │       │       └── state_machine.cpp
 │       ├── exploration_pkg
 │       │   ├── CMakeLists.txt
-│       │   ├── exploration_pkg.md
+│       │   ├── package.xml
+│       │   ├── README.md
+│       │   └── src
+│       │       └── frontier_explorer.cpp
+│       ├── lantern_hunting_pkg
+│       │   ├── CMakeLists.txt
 │       │   ├── package.xml
 │       │   └── src
-│       │       ├── frontier_explorer_node.cpp
-│       │       └── nbv_explorer_3d.cpp
-│       ├── gbplanner_ros
-│       │   ├── CMakeLists.txt
-│       │   ├── gbplanner
-│       │   │   ├── CMakeLists.txt
-│       │   │   ├── config
-│       │   │   │   ├── rmf_obelix
-│       │   │   │   │   ├── gbplanner_config.yaml
-│       │   │   │   │   ├── planner_control_interface_sim_config.yaml
-│       │   │   │   │   └── voxblox_sim_config.yaml
-│       │   │   │   ├── rviz
-│       │   │   │   │   ├── m100.rviz
-│       │   │   │   │   ├── m100_sim_new.rviz
-│       │   │   │   │   ├── m100_sim.rviz
-│       │   │   │   │   ├── rmf_obelix.rviz
-│       │   │   │   │   └── smb.rviz
-│       │   │   │   └── smb
-│       │   │   │       ├── gbplanner_config.yaml
-│       │   │   │       ├── planner_control_interface_sim_config.yaml
-│       │   │   │       └── voxblox_sim_config.yaml
-│       │   │   ├── include
-│       │   │   │   └── gbplanner
-│       │   │   │       ├── gbplanner.h
-│       │   │   │       ├── gbplanner_rviz.h
-│       │   │   │       └── rrg.h
-│       │   │   ├── launch
-│       │   │   │   ├── rmf
-│       │   │   │   │   └── rmf_sim.launch
-│       │   │   │   └── smb
-│       │   │   │       ├── smb_gazebo.launch
-│       │   │   │       ├── smb_sim.launch
-│       │   │   │       └── smb_spawner.launch
-│       │   │   ├── package.xml
-│       │   │   └── src
-│       │   │       ├── gbplanner.cpp
-│       │   │       ├── gbplanner_ros_node.cpp
-│       │   │       ├── gbplanner_rviz.cpp
-│       │   │       └── rrg.cpp
-│       │   ├── kdtree
-│       │   │   ├── CMakeLists.txt
-│       │   │   ├── include
-│       │   │   │   └── kdtree
-│       │   │   │       └── kdtree.h
-│       │   │   ├── package.xml
-│       │   │   └── src
-│       │   │       └── kdtree.c
-│       │   ├── package.xml
-│       │   ├── planner_common
-│       │   │   ├── CMakeLists.txt
-│       │   │   ├── include
-│       │   │   │   └── planner_common
-│       │   │   │       ├── geofence_manager.h
-│       │   │   │       ├── graph_base.h
-│       │   │   │       ├── graph.h
-│       │   │   │       ├── graph_manager.h
-│       │   │   │       ├── map_manager.h
-│       │   │   │       ├── map_manager_voxblox_impl.h
-│       │   │   │       ├── params.h
-│       │   │   │       ├── random_sampler.h
-│       │   │   │       └── trajectory.h
-│       │   │   ├── package.xml
-│       │   │   └── src
-│       │   │       ├── geofence_manager.cpp
-│       │   │       ├── graph.cpp
-│       │   │       ├── graph_manager.cpp
-│       │   │       ├── params.cpp
-│       │   │       ├── random_sampler.cpp
-│       │   │       ├── trajectory.cpp
-│       │   │       └── voxblox
-│       │   │           ├── voxblox_alt_impl.cpp
-│       │   │           └── voxblox_common_impl.cpp
-│       │   ├── planner_control_interface
-│       │   │   ├── CMakeLists.txt
-│       │   │   ├── include
-│       │   │   │   └── planner_control_interface
-│       │   │   │       ├── pci_manager.h
-│       │   │   │       └── planner_control_interface.h
-│       │   │   ├── package.xml
-│       │   │   └── src
-│       │   │       └── planner_control_interface.cpp
-│       │   └── planner_msgs
-│       │       ├── action
-│       │       │   └── pathFollowerAction.action
-│       │       ├── CMakeLists.txt
-│       │       ├── msg
-│       │       │   ├── BehaviourPlannerLogger.msg
-│       │       │   ├── BoundMode.msg
-│       │       │   ├── CoveragePlannerLogger.msg
-│       │       │   ├── Edge.msg
-│       │       │   ├── ExecutionPathMode.msg
-│       │       │   ├── Graph.msg
-│       │       │   ├── PlannerStatus.msg
-│       │       │   ├── PlanningBound.msg
-│       │       │   ├── PlanningMode.msg
-│       │       │   ├── RectangleShape.msg
-│       │       │   ├── RobotStatus.msg
-│       │       │   ├── TriggerMode.msg
-│       │       │   └── Vertex.msg
-│       │       ├── package.xml
-│       │       └── srv
-│       │           ├── pci_geofence.srv
-│       │           ├── pci_global.srv
-│       │           ├── pci_homing_trigger.srv
-│       │           ├── pci_initialization.srv
-│       │           ├── pci_search.srv
-│       │           ├── pci_set_homing_pos.srv
-│       │           ├── pci_stop.srv
-│       │           ├── pci_to_waypoint.srv
-│       │           ├── pci_trigger.srv
-│       │           ├── planner_dynamic_global_bound.srv
-│       │           ├── planner_geofence.srv
-│       │           ├── planner_global.srv
-│       │           ├── planner_go_to_waypoint.srv
-│       │           ├── planner_homing.srv
-│       │           ├── planner_request_path.srv
-│       │           ├── planner_search.srv
-│       │           ├── planner_set_exp_mode.srv
-│       │           ├── planner_set_global_bound.srv
-│       │           ├── planner_set_homing_pos.srv
-│       │           ├── planner_set_planning_mode.srv
-│       │           ├── planner_set_search_mode.srv
-│       │           ├── planner_set_vel.srv
-│       │           ├── planner_srv.srv
-│       │           └── planner_string_trigger.srv
+│       │       └── hunting_node.cpp
 │       ├── mav_msgs
 │       │   ├── CHANGELOG.rst
 │       │   ├── CMakeLists.txt
@@ -8155,4 +9817,4 @@
 │           └── trajectory_generation_pkg.md
 └── tree.txt
 
-1455 directories, 6701 files
+1736 directories, 8082 files

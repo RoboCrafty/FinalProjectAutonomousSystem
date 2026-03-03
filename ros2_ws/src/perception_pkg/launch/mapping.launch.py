@@ -13,7 +13,7 @@ def generate_launch_description():
                 ('camera_info', '/realsense/depth/camera_info'),
                 ('points', '/realsense/depth/points')
             ],
-            output='screen'
+            output='log'
         ),
         
         # 2. Octomap Server (Keep Original Optimized 3D Settings)
@@ -36,11 +36,11 @@ def generate_launch_description():
             output='screen'
         ),
 
-        # 3. NEW: Lantern Tracker Node (Added Perception Script)
+        # 3. Lantern Tracker Node (Added Perception Script)
         Node(
             package='perception_pkg',
             executable='lantern_tracker',
             name='lantern_tracker',
-            output='screen'
+            output='log'
         )
     ])
