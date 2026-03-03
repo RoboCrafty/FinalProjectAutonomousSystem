@@ -28,6 +28,8 @@ setup(
     entry_points={
         'console_scripts': [
             'lantern_detector = perception_pkg.lantern_detector:main',
+            'lantern_tracker = perception_pkg.lantern_tracker:main',
+            
         ],
     },
 )
