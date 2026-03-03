@@ -134,3 +134,12 @@ ros2 launch decision_making_pkg mission.launch.py
 ---
 
 🛰️ Your autonomous drone should now begin exploring and building an OctoMap of the cave environment.
+
+
+# 🗺️ Generated OctoMap
+
+Below is an example of the generated 3D occupancy map produced during autonomous cave exploration:
+
+![OctoMap Result](map_result.png)
+
+> The drone autonomously explored the cave environment and incrementally built this OctoMap representation in real time.
