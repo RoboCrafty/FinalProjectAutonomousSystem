@@ -10,6 +10,7 @@ using namespace std::chrono_literals;
 enum class MissionState {
     APPROACH_CAVE,      // Hover, Approach, and Enter
     EXPLORE_CAVE,       // Wait for map and start frontier exploration
+    LANTERN_HUNTING,    // Not implemented in this version
     MISSION_COMPLETED,
 };
 
@@ -47,6 +48,10 @@ private:
 
             case MissionState::EXPLORE_CAVE:
                 handleExplorationPhase();
+                break;
+
+            case MissionState::LANTERN_HUNTING:
+                // Not implemented in this version
                 break;
 
             case MissionState::MISSION_COMPLETED:
