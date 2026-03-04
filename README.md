@@ -9,14 +9,16 @@ This repository contains a ROS 2 Jazzy-based autonomous drone exploration system
 ---
 
 ## Prerequisites
+### 1. OS
+We tested and developed this code on Ubuntu 24.04
 
-### 1. Install ROS 2 Jazzy
+### 2. Install ROS 2 Jazzy
 
 Ensure that ROS 2 Jazzy is installed on your system.
 
 **Reference:** [ROS 2 Jazzy Installation Guide](https://docs.ros.org/en/jazzy/Installation.html)
 
-### 2. Install Required System Dependencies
+### 3. Install Required System Dependencies
 
 Run the following command to install mapping, perception, TF2, and point cloud processing dependencies:
 
