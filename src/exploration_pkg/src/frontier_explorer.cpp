@@ -327,7 +327,10 @@ private:
             }
         }
 
-        std::sort(scored_clusters.rbegin(), scored_clusters.rend());
+        std::sort(scored_clusters.rbegin(), scored_clusters.rend(),
+        [](const std::pair<double, octomap::point3d>& a, const std::pair<double, octomap::point3d>& b) {
+            return a.first > b.first; // Sort by score (first element) descending
+        });
         return scored_clusters;
     }
 

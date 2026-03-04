@@ -24,7 +24,12 @@ ament_target_dependencies(state_machine_node
 )
 
 install(TARGETS state_machine_node
+  
   DESTINATION lib/${PROJECT_NAME}
+)
+install(
+  DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
 )
 
 if(BUILD_TESTING)
@@ -33,5 +38,6 @@ if(BUILD_TESTING)
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
 
 ament_package()
