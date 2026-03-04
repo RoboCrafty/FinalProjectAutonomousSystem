@@ -62,7 +62,7 @@ rosdep install --from-paths src -y --ignore-src
 colcon build
 
 ```
-
+---
 ## Simulator Setup (Unity)
 
 Two simulator versions are available:
@@ -70,7 +70,7 @@ Two simulator versions are available:
 - **Low-Quality (LQ)** – Recommended for less powerful machines  
 - **High-Quality (HQ)** – Better visuals
 
-# Setup Steps
+### Setup Steps
 
 1. Choose either the **LQ** or **HQ** simulator.
 2. Copy the simulator executable **and its corresponding data folder** into:
@@ -142,7 +142,7 @@ Acts as the high-level **Decision Making Layer**. It implements a **Finite State
 
 ### 2. Exploration Package (`exploration_pkg`)
 
-The autonomous core implementing a topological graph-based frontier exploration strategy via the `frontier_explorer.cpp` node.
+The `frontier_explorer` node is the autonomous core of the system. It implements a **Topological Graph-based Frontier Exploration** strategy. This node maintains a spatial memory of the environment to ensure a guaranteed, collision-free return path (backtracking) even in complex cave networks.
 
 **Frontier Detection & Clustering:**
 
@@ -202,14 +202,25 @@ Transforms raw sensor data into environmental representations.
 
 ---
 
-### 5. Lantern Detection Package (`lantern_detection_pkg`)
+### 5. Lantern Hunting Package (`lantern_hunting_pkg`)
 
-Specialized vision for identifying mission-specific objects.
+The `lantern_hunting_pkg` implements the specialized **Object Pursuit Layer** of the system. It enables the drone to transition from autonomous exploration to a dedicated "hunting" mode, where it utilizes real-time visual feedback to intercept and log specific points of interest (lanterns). The package features a multi-state machine that handles precision approach, data logging, and automated clearing maneuvers to ensure the drone safely exits the target zone after a successful find.
+
+**Core Functionalities:**
+
+* **Visual Servoing:** Implements an `autoSteer` logic that adjusts the drone's yaw and position based on target centering and depth data from the perception system.
+* **Adaptive Pursuit:** Features dynamic speed scaling and vertical "diving" logic to accurately approach targets as they are identified.
+* **Automated Post-Log Maneuvers:** Includes a `CLEARING_ZONE` state that executes a vertical climb and forward burst to prevent collisions with the target after logging is complete.
+* **State Machine Integration:** Responds to high-level activation signals (`/enable_hunting`) and reports completion (`/hunting_done`) back to the global coordinator.
 
 **Topic Interfaces:**
 | Topic | Type | Direction | Brief Explanation |
 | :--- | :--- | :--- | :--- |
-| `/Quadrotor/Sensors/SemanticCamera/image_raw` | `sensor_msgs/msg/Image` | **Sub** | Semantic image for color masking |
+| `/current_state_est` | `nav_msgs/msg/Odometry` | **Sub** | Tracks drone pose for initial pursuit anchoring |
+| `/lantern/target_data` | `geometry_msgs/msg/Vector3` | **Sub** | Receives visual tracking data (X-centering, Y-depth, Z-type) |
+| `/enable_hunting` | `std_msgs/msg/Bool` | **Sub** | Activation toggle sent from the Decision Making Layer |
+| `/command/trajectory` | `trajectory_msgs/msg/MultiDOFJointTrajectory` | **Pub** | Dispatches high-frequency pursuit trajectory points |
+| `/hunting_done` | `std_msgs/msg/Bool` | **Pub** | Signals mission phase completion to the State Machine |
 
 ---
 
